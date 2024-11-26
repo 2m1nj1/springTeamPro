@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-  국인 pc 에서 만든 jsp 파일입니다.
+
+수강신청 페이지 입니다.
+
 </body>
 </html>
