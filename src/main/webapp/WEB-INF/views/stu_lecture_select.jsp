@@ -48,7 +48,7 @@
      		<!-- Begin Page Content -->
             <div class="container-fluid">
      			
-     			홈페이지 입니다.
+     			강좌조회 페이지 입니다.
      		</div>
      	</div>
      </div>

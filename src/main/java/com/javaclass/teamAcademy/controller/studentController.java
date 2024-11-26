@@ -3,16 +3,14 @@ package com.javaclass.teamAcademy.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class academyController {
+public class studentController {
 
-	@RequestMapping("home.do")
-	public void home() { 
+	@RequestMapping("stu_{view}.do")
+	public String returnView(@PathVariable String view) {
+		
+		return "student/" + view;
+	} // end of returnView
 	
-	} //end of home()
-	
-	
-	
-} // end of academyController
+} // end of studentController

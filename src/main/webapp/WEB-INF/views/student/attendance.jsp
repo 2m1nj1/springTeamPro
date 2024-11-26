@@ -30,7 +30,7 @@
     <div id="wrapper">
     
     <!-- Sidebar -->
-   	<jsp:include page="./include/menu_tab.jsp">
+   	<jsp:include page="/resources/include/menu_tab.jsp">
    		<jsp:param name="pageName" value="menuTab"/>
    	</jsp:include>
     
@@ -41,14 +41,14 @@
         <div id="content">
      	
      		<!-- Topbar -->
-     		<jsp:include page="./include/top_bar.jsp">
+     		<jsp:include page="/resources/include/top_bar.jsp">
      			<jsp:param name="pageName" value="topBar"/>
      		</jsp:include>
      		
      		<!-- Begin Page Content -->
             <div class="container-fluid">
      			
-     			홈페이지 입니다.
+     			출결조회 페이지 입니다.
      		</div>
      	</div>
      </div>

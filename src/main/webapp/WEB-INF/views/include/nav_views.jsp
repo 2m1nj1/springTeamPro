@@ -15,13 +15,13 @@
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="resources/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../resources/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../resources/static/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -38,104 +38,153 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">교담</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.jsp">
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="home.jsp">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            <!-- <div class="sidebar-heading">
+                학생
+            </div> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>수강생</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.jsp">Buttons</a>
-                        <a class="collapse-item" href="cards.jsp">Cards</a>
+                        <a class="collapse-item" href="student/course_regi.do">수강신청</a>
+                        <a class="collapse-item" href="">강좌조회</a>
+                        <a class="collapse-item" href="">출결조회</a>
+                        <a class="collapse-item" href="">과제제출</a>
+                        <a class="collapse-item" href="">성적조회</a>      
                     </div>
                 </div>
             </li>
 
+			<!-- Divider -->
+            <hr class="sidebar-divider">
+			
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>선생</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.jsp">Colors</a>
-                        <a class="collapse-item" href="utilities-border.jsp">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.jsp">Animations</a>
-                        <a class="collapse-item" href="utilities-other.jsp">Other</a>
+                        <a class="collapse-item" href="utilities-color.jsp">수강생조회</a>
+                        <a class="collapse-item" href="utilities-border.jsp">출결관리</a>
+                        <a class="collapse-item" href="utilities-animation.jsp">과제관리</a>
+                        <a class="collapse-item" href="utilities-other.jsp">성적조회</a>
                     </div>
                 </div>
             </li>
-
+            
+            
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
+            
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.jsp">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>쪽지</span></a>
+            </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.jsp">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>커뮤니티</span></a>
+            </li>
+            
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.jsp">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>공지사항</span></a>
+            </li>
+            
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.jsp">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>문의하기</span></a>
+            </li>
+            
+            
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>마이페이지</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.jsp">Login</a>
-                        <a class="collapse-item" href="register.jsp">Register</a>
-                        <a class="collapse-item" href="forgot-password.jsp">Forgot Password</a>
+                        <h6 class="collapse-header">개인정보 설정 :</h6>
+                        <a class="collapse-item" href="login.jsp">수강생정보설정</a>
+                        <a class="collapse-item" href="register.jsp">강사정보설정</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.jsp">404 Page</a>
-                        <a class="collapse-item" href="blank.jsp">Blank Page</a>
+                        <h6 class="collapse-header">프로필 설정 :</h6>
+                        <a class="collapse-item" href="forgot-password.jsp">강사 프로필</a>
+                        <a class="collapse-item" href="forgot-password.jsp">수강생 프로필</a>
+                        <h6 class="collapse-header">결제:</h6>
+                        <a class="collapse-item" href="404.jsp">결제내역</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.jsp">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+            <!-- Nav Item - 관리자 -->
+         	<li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>관리자</span>
+                </a>
+                <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">시스템 관리 :</h6>
+                        <a class="collapse-item" href="login.jsp">수강생관리</a>
+                        <a class="collapse-item" href="register.jsp">강사관리</a>
+                        <a class="collapse-item" href="forgot-password.jsp">강좌관리</a>
+                        <a class="collapse-item" href="forgot-password.jsp">강의실관리</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">그 외 :</h6>
+                        <a class="collapse-item" href="">공지사항관리</a>
+                        <a class="collapse-item" href="">커뮤니티관리</a>
+                        <a class="collapse-item" href="">1:1문의관리</a>
+                        <a class="collapse-item" href="">신고관리</a>
+                        
+                    </div>
+                </div>
             </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.jsp">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
+         	
+           
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -293,21 +342,21 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="resources/static/vendor/jquery/jquery.min.js"></script>
-    <script src="resources/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../resources/static/vendor/jquery/jquery.min.js"></script>
+    <script src="../resources/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="resources/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../resources/static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="resources/static/js/sb-admin-2.min.js"></script>
+    <script src="../resources/static/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="resources/static/vendor/chart.js/Chart.min.js"></script>
+    <script src="../resources/static/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="resources/static/js/demo/chart-area-demo.js"></script>
-    <script src="resources/static/js/demo/chart-pie-demo.js"></script>
+    <script src="../resources/static/js/demo/chart-area-demo.js"></script>
+    <script src="../resources/static/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
