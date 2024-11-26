@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class studentController {
+public class systemController {
 
-	@RequestMapping("stu_{view}.do")
+	@RequestMapping("sys_{view}.do")
 	public String returnView(@PathVariable String view) {
 		
-		return "student/stu_" + view;
+		return "system/sys_" + view;
 	} // end of returnView
 	
-} // end of studentController
+} // end of systemController

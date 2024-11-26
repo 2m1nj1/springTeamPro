@@ -39,9 +39,9 @@
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
                         <a class="collapse-item" href="stu_course_regi.do">수강신청</a>
                         <a class="collapse-item" href="stu_lecture_select.do">강좌조회</a>
-                        <a class="collapse-item" href="stu_attendance">출결조회</a>
-                        <a class="collapse-item" href="stu_homework">과제제출</a>
-                        <a class="collapse-item" href="stu_grade">성적조회</a>
+                        <a class="collapse-item" href="stu_attendance.do">출결조회</a>
+                        <a class="collapse-item" href="stu_homework.do">과제제출</a>
+                        <a class="collapse-item" href="stu_grade.do">성적조회</a>
                     </div>
                 </div>
             </li>
@@ -57,10 +57,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.jsp">Colors</a>
-                        <a class="collapse-item" href="utilities-border.jsp">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.jsp">Animations</a>
-                        <a class="collapse-item" href="utilities-other.jsp">Other</a>
+                        <a class="collapse-item" href="tch_stu_select.do">수강생조회</a>
+                        <a class="collapse-item" href="tch_attendance.do">출결관리</a>
+                        <a class="collapse-item" href="tch_homework.do">과제관리</a>
+                        <a class="collapse-item" href="tch_garde.do">성적조회</a>
                     </div>
                 </div>
             </li>
@@ -69,43 +69,94 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <!-- <div class="sidebar-heading">
                 Addons
-            </div>
-
+            </div> -->
+            
+            
+            <!-- Nav Item - 쪽지 -->
+            <li class="nav-item">
+                <a class="nav-link" href="message.do">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>쪽지</span></a>
+            </li>
+	
+			<!-- Nav Item - 커뮤니티 -->
+            <li class="nav-item">
+                <a class="nav-link" href="community.do">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>커뮤니티</span></a>
+            </li>
+            
+            <!-- Nav Item - 공지사항 -->
+            <li class="nav-item">
+                <a class="nav-link" href="notice.do">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>공지사항</span></a>
+            </li>
+	
+			<!-- Nav Item - 문의사항 -->
+            <li class="nav-item">
+                <a class="nav-link" href="inquiry.do">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>문의하기</span></a>
+            </li>
+            
+			<!-- Divider -->
+            <hr class="sidebar-divider">
+			
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>마이페이지</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.jsp">Login</a>
-                        <a class="collapse-item" href="register.jsp">Register</a>
-                        <a class="collapse-item" href="forgot-password.jsp">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.jsp">404 Page</a>
-                        <a class="collapse-item" href="blank.jsp">Blank Page</a>
+                        <a class="collapse-item" href="stu_info.do">수강생개인정보</a>
+                        <a class="collapse-item" href="tch_info.do">강사개인정보</a>
+                        <a class="collapse-item" href="stu_profile.do">수강생프로필</a>
+                        <a class="collapse-item" href="tch_profile.do">강사프로필</a>
+                        <a class="collapse-item" href="stu_payment.do">결제관리</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
+			<!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.jsp">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>관리자</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="sys_student.do">수강생관리</a>
+                        <a class="collapse-item" href="sys_teacher.do">강사관리</a>
+                        <a class="collapse-item" href="sys_lecture.do">강좌관리</a>
+                        <a class="collapse-item" href="sys_classroom.do">강의실관리</a>
+                        <a class="collapse-item" href="sys_notice.do">공지사항관리</a>
+                        <a class="collapse-item" href="sys_community.do">커뮤니티관리</a>
+                        <a class="collapse-item" href="sys_inquriy.do">문의관리</a>
+                        <a class="collapse-item" href="sys_declar.do">신고관리</a>
+                        
+                    </div>
+                </div>
+            </li>
+				
+            <!-- Nav Item - 로그인 -->
+            <li class="nav-item">
+                <a class="nav-link" href="login.do">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>로그인</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
+            <!-- Nav Item - 로그아웃 -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.jsp">
+                <a class="nav-link" href="logout.do">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>로그아웃</span></a>
             </li>
 
             <!-- Divider -->
