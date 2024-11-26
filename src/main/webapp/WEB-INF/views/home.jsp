@@ -4,14 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>home.jsp</title>
 </head>
 <body>
 
-<a href="home.do"> 시작 ~ </a>
-
-
-
+<%@ include file = "./include/nav.jsp"%>
 
 </body>
 </html>
