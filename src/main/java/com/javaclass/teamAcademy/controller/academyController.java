@@ -13,6 +13,10 @@ public class academyController {
 	
 	} //end of home()
 	
-	
+	@RequestMapping("comm_{view}.do")
+	public String returnView(@PathVariable String view) {
+		
+		return "common/comm_" + view;
+	} // end of returnView
 	
 } // end of academyController

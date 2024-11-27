@@ -76,28 +76,28 @@
             
             <!-- Nav Item - 쪽지 -->
             <li class="nav-item">
-                <a class="nav-link" href="message.do">
+                <a class="nav-link" href="comm_message.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>쪽지</span></a>
             </li>
 	
 			<!-- Nav Item - 커뮤니티 -->
             <li class="nav-item">
-                <a class="nav-link" href="community.do">
+                <a class="nav-link" href="comm_community.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>커뮤니티</span></a>
             </li>
             
             <!-- Nav Item - 공지사항 -->
             <li class="nav-item">
-                <a class="nav-link" href="notice.do">
+                <a class="nav-link" href="comm_notice.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>공지사항</span></a>
             </li>
 	
 			<!-- Nav Item - 문의사항 -->
             <li class="nav-item">
-                <a class="nav-link" href="inquiry.do">
+                <a class="nav-link" href="comm_inquiry.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>문의하기</span></a>
             </li>
@@ -147,14 +147,14 @@
 				
             <!-- Nav Item - 로그인 -->
             <li class="nav-item">
-                <a class="nav-link" href="login.do">
+                <a class="nav-link" href="comm_login.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>로그인</span></a>
             </li>
 
             <!-- Nav Item - 로그아웃 -->
             <li class="nav-item">
-                <a class="nav-link" href="logout.do">
+                <a class="nav-link" href="comm_logout.do">
                     <i class="fas fa-fw fa-table"></i>
                     <span>로그아웃</span></a>
             </li>
