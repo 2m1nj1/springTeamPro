@@ -5,17 +5,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="academyMapper">
 
-	<insert id="userInsert" parameterType="LogVO">
-		INSERT INTO TEAM2(user_Id, user_Pass, user_Name )
-		VALUES(#{user_Id}, #{user_Pass}, #{user_Name})
-	</insert>
-	
-	<select id="idCheck" parameterType="LogVO" resultType="LogVO">
-		SELECT * FROM TEAM2
-		WHERE	user_Id = #{user_Id}
-			<if test="user_Pass != null">
-			AND user_Pass = #{user_Pass}
-			</if>
-	</select>
 	
 </mapper>
