@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>home.jsp</title>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -171,7 +169,7 @@
 							</div>
 
 
-							<!-- 탭 -->
+							<!-- tab -->
 							<div class="card shadow mb-4" >
 								<div class="card-body" id="sys_stu_tab">
 									<!-- 탭 버튼 -->
@@ -195,12 +193,12 @@
 									<!-- 탭 내용 -->
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab_stu_lecture">
-											<jsp:include page="../table/stu_lecture_table.jsp">
+											<jsp:include page="../table/com_lecture_table.jsp">
 												<jsp:param name="pageName" value="stu_lectures" />
 											</jsp:include>
 										</div>
 										<div class="tab-pane" id="tab_stu_timetable">
-											<jsp:include page="../table/stu_timetable_table.jsp">
+											<jsp:include page="../table/com_timetable_table.jsp">
 												<jsp:param name="pageName" value="stu_timetable" />
 											</jsp:include>
 										</div>
@@ -215,21 +213,35 @@
 											</jsp:include>
 										</div>
 										<div class="tab-pane" id="tab_stu_profile">
-											<jsp:include page="../table/stu_profile_table.jsp">
+											<jsp:include page="../table/com_profile_table.jsp">
 												<jsp:param name="pageName" value="stu_profile" />
 											</jsp:include>
 										</div>
 									</div>
+								</div>
+							</div>
+							<!-- end of tab -->
 
+							<div class="row">
+								<div class="col-3">
+									<a href="#" class="btn btn-secondary btn-block"><span
+										class="text">삭제</span></a>
+								</div>
+								
+								<div class="col-6"></div>
+								
+								<div class="col-3">
+									<a href="#" class="btn btn-primary btn-block"><span
+										class="text">등록</span></a>
 								</div>
 							</div>
 
-
-
-
 						</div>
 					</div>
+					
+					
 				</div>
+				<!-- end of container-fluid -->
 			</div>
 
 
@@ -256,6 +268,6 @@
 		
 		
 		<!-- 개인 추가 .js : 이민지 -->
-		<script type="text/javascript" src="/resources/js/system/sys_student.js"></script>
+		<script type="text/javascript" src="/resources/js/system/sys_tab.js"></script>
 </body>
 </html>
