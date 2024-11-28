@@ -107,7 +107,7 @@
 
                 // 과제 제출 버튼 (col-3)
                 let submitBtnCol = document.createElement('div');
-                submitBtnCol.className = 'col-3';
+                submitBtnCol.className = 'col-4';
                 let submitBtn = document.createElement('button');
                 submitBtn.className = 'btn btn-primary btn-block';
                 submitBtn.innerText = '과제 제출';
@@ -189,7 +189,7 @@
 
                 // 과제 상세보기 버튼 (col-3)
                 let detailBtnCol = document.createElement('div');
-                detailBtnCol.className = 'col-3';
+                detailBtnCol.className = 'col-4';
                 let detailBtn = document.createElement('button');
                 detailBtn.className = 'btn btn-info btn-block';
                 detailBtn.innerText = '과제 상세보기';
@@ -204,7 +204,7 @@
 
                 // 쪽지 보내기 버튼 (col-3)
                 let messageBtnCol = document.createElement('div');
-                messageBtnCol.className = 'col-3';
+                messageBtnCol.className = 'col-4';
                 let messageBtn = document.createElement('button');
                 messageBtn.className = 'btn btn-warning btn-block';
                 messageBtn.innerText = '쪽지 보내기';
@@ -338,7 +338,7 @@
 				</nav>
                 
                 <!-- 과제 정보 출력 박스 -->
-                <div class="row">ㄴ
+                <div class="row">
                     <!-- 과제 목록 출력 tbl -->
                     <div class="col">
                         <div class="card shadow mb-4">
@@ -357,8 +357,8 @@
                 </div> <!-- end of row - 과제 정보 출력 박스 -->
                 
                 <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_info" id="dataTable_info" role="status"
-                     aria-live="polite">Showing 1 to 10 of 57 entries</div> <!-- 동적생성으로 고쳐야 함 -->
+                    <div class="dataTables_info pagintion-info" id="dataTable_info" role="status"
+                     aria-live="polite"></div> <!-- 동적생성으로 고쳐야 함 -->
                 </div> <!-- 페이지 표시부분 -->
                 
                 <div class="col-sm-12 col-md-7">

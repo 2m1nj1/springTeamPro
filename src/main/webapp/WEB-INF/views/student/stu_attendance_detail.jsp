@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>stu_attendance_detail.jsp</title>
 
     <!-- Custom fonts for this template-->
     <link href="resources/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,7 +44,7 @@
      		</jsp:include>
      		
      		<!-- Begin Page Content -->
-            <div class="container-fluid">
+            <div class="container container-fluid">
      			
      			
      			
@@ -55,17 +55,17 @@
      			
      		<div class="row"> <!-- start of go-to-previous-page btn -->
 				<div class="col-4">
-					<a href="stu_attendance.do" class="btn btn-primary btn-icon-split btn">
+					<a href="stu_attendance.do" class="btn btn-secondary btn-icon-split btn">
 						<span class="icon text-white-50">
 							<i class="fas fa-arrow-right"></i>
-						</span>S
+						</span>
 						<span class="text">이전 화면</span>
 					</a>
 				</div>
 			</div> <!-- end of go-to-previous-page btn -->
      			
      			
-     		</div>
+     		</div><!-- class="container-fluid 끝" -->
      	</div>
      </div>
     

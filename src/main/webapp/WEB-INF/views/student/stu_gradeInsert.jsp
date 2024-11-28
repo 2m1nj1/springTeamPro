@@ -40,6 +40,7 @@
 		let txt1 = " * 표시는 필수기재항목. ";
 		let txt2 = " 응시=1, 미응시=0. ";
 
+		/* 버튼의 id 값을 infobtn1 대신에 넣어주면 됩니다 */
 		$('#infobtn1').click(function() {
 			// 버튼 옆에 문구가 없으면 추가하고, 있으면 토글
 			let infoText = $(this).next('.info-text');

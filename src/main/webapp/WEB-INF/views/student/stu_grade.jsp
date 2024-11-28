@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>stu_grade.jsp</title>
 
 <!-- Custom fonts for this template-->
 <link href="resources/static/vendor/fontawesome-free/css/all.min.css"
