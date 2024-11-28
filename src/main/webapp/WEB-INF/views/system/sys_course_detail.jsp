@@ -31,7 +31,7 @@
 	
 	/* 개인 css */
 	
-	#table_lecture thead th {
+	#table_lecture th, td {
 	    text-align: center;
 	}
 	
@@ -40,8 +40,16 @@
 	    width: 10%;
 	}
 	
+	#table_lecture th:nth-child(2) {
+	    width: 30%;
+	}
+	
 	#table_lecture th:last-child {
-	    width: 40%;
+	    width: 5%;
+	}
+	
+	#table_lecture input {
+		width: 100%;
 	}
 	
 </style>
@@ -212,12 +220,13 @@
 								<div class="card-body">
 									<div class="table-responsive">
 										<form action="" >
-											<table class="table table-bordered" id="table_lecture" width="100%" cellspacing="0">
+											<table class="table table-borderless" id="table_lecture" width="100%" cellspacing="0">
 												<thead>
 													<tr>
 														<th>강의회차</th>
 														<th>제목</th>
 														<th>세부내용</th>
+														<th></th>
 													</tr>
 												</thead>
 												
@@ -226,6 +235,16 @@
 														<td><input type="text" id="" name="" for="" value=""></td>
 														<td><input type="text" id="" name="" for="" value=""></td>
 														<td><input type="text" id="" name="" for="" value=""></td>
+														<td><a href="#" class="btn-sm btn-secondary btn_delete_lecture">
+															<i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+														</a></td>
+													</tr>
+													<tr>
+														<td colspan='4'>
+															<a href="#" class="btn-sm btn-primary btn-block btn_add_lecture">
+															<i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+														</a>
+														</td>
 													</tr>
 													
 												</tbody>
@@ -233,11 +252,27 @@
 										</form>
 									</div>
 								</div>
-								<!-- end of card-body -->
+								<!-- end of card-body -->		
 							</div>
 						</div>
 					</div>
 					<!-- end of 교육과정 등록 -->
+					
+					<!-- 하단 버튼 -->
+					<div class="row">
+						<div class="col-2">
+							<a href="#" class="btn btn-secondary btn-block"><span
+								class="text">취소</span></a>
+						</div>
+
+						<div class="col-8"></div>
+
+						<div class="col-2">
+							<a href="#" class="btn btn-primary btn-block"><span
+								class="text">등록</span></a>
+						</div>
+					</div>
+					<!-- end of 하단 버튼 -->
 
 				</div>
 				<!-- end of Begin Page Content -->

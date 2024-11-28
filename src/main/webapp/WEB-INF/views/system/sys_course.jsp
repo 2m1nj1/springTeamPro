@@ -141,14 +141,25 @@
 						</div>
 					</div>
 					
+					<!-- 모달 -->
+					<jsp:include page="sys_modal.jsp">
+						<jsp:param name="pageName" value="modal" />
+					</jsp:include>
+					
+					
+					
 					
 					<!-- 검색 조건 설정 -->
 					<div class="row">
 						<div class="col">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">
+									<h6 class="m-0 font-weight-bold text-primary"
+									style="display: inline; padding-right:10px">
 									검색 조건 설정</h6>
+									<a href="#" class="btn-sm btn-secondary btnConClear"> <span
+										class="text">초기화</span>
+									</a>
 								</div>
 								
 								<div class="card-body">
@@ -157,15 +168,25 @@
 											<div class="row">
 												<label class="col-sm-4 col-form-label">강사명</label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
+													<div class="input-group">
+														<input type="text" class="form-control form-control-sm"
+														id="course_instructor" name="" value="">
+														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_instructor">
+															<i class="fa-solid fa-magnifying-glass"></i>
+														</button>
+													</div>
 												</div>
 											</div>
 											<div class="row">
 												<label class="col-sm-4 col-form-label">강의실</label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
+													<div class="input-group">
+														<input type="text" class="form-control form-control-sm"
+														id="course_classroom" name="" value="">
+														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_classroom">
+															<i class="fa-solid fa-magnifying-glass"></i>
+														</button>
+													</div>
 												</div>
 											</div>
 											<div class="row">
@@ -181,8 +202,13 @@
 											<div class="row">
 												<label class="col-sm-3 col-form-label">강좌명</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
+													<div class="input-group">
+														<input type="text" class="form-control form-control-sm"
+														id="course_name" name="" value="">
+														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_name">
+															<i class="fa-solid fa-magnifying-glass"></i>
+														</button>
+													</div>
 												</div>
 											</div>
 											<div class="row">
@@ -311,9 +337,10 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="resources/static/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="resources/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+ 	<script
+ 		src="resources/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+	
 	<!-- Core plugin JavaScript-->
 	<script
 		src="resources/static/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -327,6 +354,8 @@
 	<!-- Page level custom scripts -->
 	<script src="resources/static/js/demo/chart-area-demo.js"></script>
 	<script src="resources/static/js/demo/chart-pie-demo.js"></script>
-
+		
+	<!-- 개인 추가 .js : 이민지 -->
+	<script type="text/javascript" src="/resources/js/system/sys_modal.js"></script>
 </body>
 </html>
