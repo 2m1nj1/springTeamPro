@@ -16,12 +16,20 @@
 <!-- Custom fonts for this template-->
 <link href="resources/static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
 <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+<style type="text/css">
+   *{
+      font-family: 'Noto Sans KR', sans-serif;
+   }
+</style>
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -80,10 +88,10 @@
 				</jsp:include>
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container container-fluid">
 
 					<!-- 페이지 명 -->
-					<h1 class="h3 mb-4 text-gray-800">성적 입력</h1>
+					<h5 class="h3 mb-4 text-gray-800">성적 입력</h5>
 
 					<!-- 시험 정보 입력 박스 -->
 					<div class="row ">
@@ -166,23 +174,21 @@
 														<input type="text" class="form-control form-control-sm"
 															name="kor" id="kor" value="">
 													</div>
-													<label class="col-sm-4 col-form-label">*국어 응시 여부 : </label>
-													<div class="col-sm-8">
-														<input type="checkbox" class="form-control form-control-sm" 
-														name="kor_took" id="kor_took">
-													</div> <!-- end of row -->
+													<div class="custom-control custom-checkbox small">
+                                                		<input type="checkbox" class="custom-control-input" name="kor_took" id="kor_took">
+                                            			<label class="custom-control-label" for="kor_took">* 국어 응시 여부 : </label>
+                                            		</div> <!-- end of row -->
 												</div> <!-- end of col -->
 												<div class="row">
 													<label class="col-sm-4 col-form-label">*수학 : </label>
 													<div class="col-sm-8">
 														<input type="text" class="form-control form-control-sm"
 															name="math" id="math" value="">
-													</div>	
-													<label class="col-sm-4 col-form-label">*수학 응시 여부 : </label>
-													<div class="col-sm-8">
-														<input type="checkbox" class="form-control form-control-sm"
-														name="math_took" id="math_took">
 													</div>
+													<div class="custom-control custom-checkbox small">
+                                                		<input type="checkbox" class="custom-control-input" name="math_took" id="math_took">
+                                            			<label class="custom-control-label" for="math_took">* 수학 응시 여부 : </label>
+                                            		</div>
 												</div>
 												<div class="row">
 													<label class="col-sm-4 col-form-label">*영어 : </label>
@@ -190,12 +196,11 @@
 														<input type="text" class="form-control form-control-sm"
 															name="english" id="english" value="">
 													</div>
-													<label class="col-sm-4 col-form-label">*영어 응시 여부 : </label>
-													<div class="col-sm-8">
-														<input type="checkbox" class="form-control form-control-sm"
-														name="eng_took" id="eng_took">
-													</div>
-												</div> <!-- row -->
+													<div class="custom-control custom-checkbox small">
+                                                		<input type="checkbox" class="custom-control-input" name="eng_took" id="eng_took">
+                                            			<label class="custom-control-label" for="eng_took">* 영어 응시 여부 : </label>
+                                            		</div>
+												</div> <!-- end of last row -->
 											</div> <!-- end of col -->
 									</div> <!-- end of row-5 -->
 									<!-- end of right -->

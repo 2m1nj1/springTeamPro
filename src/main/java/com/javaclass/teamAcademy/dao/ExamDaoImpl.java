@@ -13,6 +13,6 @@ public class ExamDaoImpl implements ExamDao{
 	private SqlSessionTemplate ss;
 	
 	public void insertExam(ExamVO vo){
-		ss.insert("exanInfo.insertExamInfo", vo);
+		ss.insert("exan.insertExam", vo);
 	}
 }

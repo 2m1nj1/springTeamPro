@@ -21,9 +21,9 @@ public class ServiceTxImpl implements ServiceTx{
 	//#########
 	@Transactional
 	@Override
-	public void addAll(GradeVO svo, ExamVO eivo) throws Exception {
+	public void addAll(GradeVO svo, ExamVO evo) throws Exception {
 		// TODO Auto-generated method stub
-		edao.insertExam(eivo);
+		edao.insertExam(evo);
 		System.out.println("ExamOK");
 		sdao.insertGrade(svo);
 		System.out.println("GradeOK");
