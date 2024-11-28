@@ -151,10 +151,16 @@ let scoreTrendChart = new Chart(ctx, {
                         </div>
                     </div><!-- end of 시험 점수 추이 그래프 -->
                     
-                    <div>
-						<a href="stu_gradeInsert.do"> <input type="button" value="성적 입력">
-						</a>
-					</div>
+                    <div class="row"> <!-- stu_gradeInsert.jsp 로 넘어가는 버튼 -->
+						<div class="col-4">
+							<a href="stu_gradeInsert.do" class="btn btn-primary btn-icon-split btn">
+								<span class="icon text-white-50">
+									<i class="fas fa-arrow-up"></i>
+								</span>
+								<span class="text">성적 입력</span>
+							</a>
+						</div>
+					</div> <!-- end of stu_gradeInsert.jsp btn -->
                     
 						<!-- //시험 정보  -->
 					</div> <!-- end of container-fluid-->

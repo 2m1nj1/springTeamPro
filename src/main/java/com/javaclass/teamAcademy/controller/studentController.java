@@ -9,7 +9,7 @@ public class studentController {
 
 	@RequestMapping("stu_{view}.do")
 	public String returnView(@PathVariable String view) {
-		
+
 		return "student/stu_" + view;
 	} // end of returnView
 	

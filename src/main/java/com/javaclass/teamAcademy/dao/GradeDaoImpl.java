@@ -1,4 +1,4 @@
-package com.javaclass.teamAcademy.javassem.dao;
+package com.javaclass.teamAcademy.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

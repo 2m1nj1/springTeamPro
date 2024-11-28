@@ -1,4 +1,4 @@
-package com.javaclass.teamAcademy.javassem.dao;
+package com.javaclass.teamAcademy.dao;
 
 import com.javaclass.teamAcademy.vo.GradeVO;
 

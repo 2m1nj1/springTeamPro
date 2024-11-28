@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaclass.teamAcademy.dao.ExamDao;
-import com.javaclass.teamAcademy.javassem.dao.GradeDao;
+import com.javaclass.teamAcademy.dao.GradeDao;
 import com.javaclass.teamAcademy.vo.ExamVO;
 import com.javaclass.teamAcademy.vo.GradeVO;
 
@@ -15,7 +15,7 @@ public class ServiceTxImpl implements ServiceTx{
 	@Autowired
 	private ExamDao edao;
 	@Autowired
-	private GradeDao sdao;
+	private GradeDao gdao;
 	//각자 Autowired 걸어줘야만 함 기억해줘요
 
 	//#########
@@ -25,7 +25,7 @@ public class ServiceTxImpl implements ServiceTx{
 		// TODO Auto-generated method stub
 		edao.insertExam(evo);
 		System.out.println("ExamOK");
-		sdao.insertGrade(svo);
+		gdao.insertGrade(svo);
 		System.out.println("GradeOK");
 	}
 }
