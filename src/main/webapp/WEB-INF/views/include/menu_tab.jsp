@@ -134,7 +134,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="sys_student.do">수강생관리</a>
                         <a class="collapse-item" href="sys_teacher.do">강사관리</a>
-                        <a class="collapse-item" href="sys_lecture.do">강좌관리</a>
+                        <a class="collapse-item" href="sys_course.do">강좌관리</a>
                         <a class="collapse-item" href="sys_classroom.do">강의실관리</a>
                         <a class="collapse-item" href="sys_notice.do">공지사항관리</a>
                         <a class="collapse-item" href="sys_community.do">커뮤니티관리</a>

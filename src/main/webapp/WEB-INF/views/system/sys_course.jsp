@@ -17,12 +17,18 @@
 <link href="resources/static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
 <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+<style type="text/css">
+	*{
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+</style>
 
 </head>
 <body id="page-top">
@@ -47,7 +53,7 @@
 				</jsp:include>
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container container-fluid">
 
 					<!-- 페이지 명 -->
 					<h1 class="h3 mb-4 text-gray-800">강좌관리</h1>
@@ -136,8 +142,123 @@
 					</div>
 					
 					
-					<!-- 검색 창 -->
-					
+					<!-- 검색 조건 설정 -->
+					<div class="row">
+						<div class="col">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">
+									검색 조건 설정</h6>
+								</div>
+								
+								<div class="card-body">
+									<div class="row">
+										<div class="col-3">
+											<div class="row">
+												<label class="col-sm-4 col-form-label">강사명</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control form-control-sm"
+														id="" name="" value="">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-sm-4 col-form-label">강의실</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control form-control-sm"
+														id="" name="" value="">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-sm-4 col-form-label">강의요일</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control form-control-sm"
+														id="" name="" value="">
+												</div>
+											</div>
+										</div>
+
+										<div class="col-6">
+											<div class="row">
+												<label class="col-sm-3 col-form-label">강좌명</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control form-control-sm"
+														id="" name="" value="">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-sm-3 col-form-label">강좌기간</label>
+												<div class="col-sm-9">
+													<div class="row">
+														<div class="col">
+															<input type="date" class="form-control form-control-sm"
+															id="" name="" value="">
+														</div>
+														~
+														<div class="col">
+															<input type="date" class="form-control form-control-sm"
+															id="" name="" value="">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-sm-3 col-form-label">강의시간</label>
+												<div class="col-sm-9">
+													<div class="row">
+														<div class="col">
+															<input type="time" class="form-control form-control-sm"
+															id="" name="" value="">
+														</div>
+														~
+														<div class="col">
+															<input type="time" class="form-control form-control-sm"
+															id="" name="" value="">
+														</div>
+													</div>
+													
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-3">
+											<div class="row">
+												<label class="col-sm-4 col-form-label">정원</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control form-control-sm"
+														id="" name="" value="">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-sm-4 col-form-label">진행률</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control form-control-sm"
+														id="" name="" value="">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-sm-4 col-form-label">상태</label>
+												<div class="col-sm-8">
+													<input type="text" class="form-control form-control-sm"
+														id="" name="" value="">
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<label class="col-sm-1 col-form-label">태그</label>
+										<div class="col-sm-11">
+											<input type="text" class="form-control form-control-sm" id=""
+												name="" value="">
+										</div>
+									</div>
+									
+								</div>
+								<!-- end of card body  -->
+							</div>
+						</div>
+					</div>
+					<!-- end of 검색 조건 설정 -->
 					
 					
 					
@@ -148,7 +269,7 @@
 								<div class="card-body">
 									
 									<!-- table 불러오기 -->
-									<jsp:include page="../table/com_lecture_table.jsp">
+									<jsp:include page="../table/com_course_table.jsp">
 										<jsp:param name="pageName" value="tch_lectures" />
 									</jsp:include>
 									
@@ -162,7 +283,7 @@
 					<div class="row">
 						<div class="col-2">
 							<a href="#" class="btn btn-secondary btn-block"><span
-								class="text">삭제</span></a>
+								class="text">선택 삭제</span></a>
 						</div>
 
 						<div class="col-6"></div>
@@ -172,7 +293,7 @@
 								class="text">일괄 등록</span></a>
 						</div>
 						<div class="col-2">
-							<a href="sys_lecture_insert.do" class="btn btn-primary btn-block"><span
+							<a href="sys_course_detail.do" class="btn btn-primary btn-block"><span
 								class="text">강좌 등록</span></a>
 						</div>
 					</div>

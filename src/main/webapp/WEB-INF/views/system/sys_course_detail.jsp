@@ -17,12 +17,35 @@
 <link href="resources/static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
 <!-- Custom styles for this template-->
 <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+<style type="text/css">
+	*{
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+	
+	/* 개인 css */
+	
+	#table_lecture thead th {
+	    text-align: center;
+	}
+	
+	
+	#table_lecture th:first-child {
+	    width: 10%;
+	}
+	
+	#table_lecture th:last-child {
+	    width: 40%;
+	}
+	
+</style>
+
 
 </head>
 <body id="page-top">
@@ -47,10 +70,10 @@
 				</jsp:include>
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container container-fluid">
 
 					<!-- 페이지 명 -->
-					<h1 class="h3 mb-4 text-gray-800">강좌등록</h1>
+					<h1 class="h3 mb-4 text-gray-800">강좌 상세</h1>
 					
 					<!-- 강좌 정보 -->
 					<div class="row">
@@ -170,6 +193,51 @@
 					</div>
 					<!-- end of 강좌 정보 -->
 					
+					<!-- 교육과정 등록 -->
+					<div class="row">
+						<div class="col">
+							<div class="card shadow mb-4">
+								<!-- card-header -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary"
+										style="display: inline; padding-right:10px">교육과정 등록</h6>
+										
+									<a href="#" class="btn-sm btn-secondary"> <span
+										class="text">일괄등록</span>
+									</a>
+								</div>
+								<!-- end of card-header -->
+								
+								<!-- card-body -->
+								<div class="card-body">
+									<div class="table-responsive">
+										<form action="" >
+											<table class="table table-bordered" id="table_lecture" width="100%" cellspacing="0">
+												<thead>
+													<tr>
+														<th>강의회차</th>
+														<th>제목</th>
+														<th>세부내용</th>
+													</tr>
+												</thead>
+												
+												<tbody>
+													<tr>
+														<td><input type="text" id="" name="" for="" value=""></td>
+														<td><input type="text" id="" name="" for="" value=""></td>
+														<td><input type="text" id="" name="" for="" value=""></td>
+													</tr>
+													
+												</tbody>
+											</table>
+										</form>
+									</div>
+								</div>
+								<!-- end of card-body -->
+							</div>
+						</div>
+					</div>
+					<!-- end of 교육과정 등록 -->
 
 				</div>
 				<!-- end of Begin Page Content -->

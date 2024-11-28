@@ -16,12 +16,21 @@
 <!-- Custom fonts for this template-->
 <link href="resources/static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
 <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+<style type="text/css">
+	*{
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+</style>
 
 </head>
 <body id="page-top">
@@ -46,174 +55,171 @@
 				</jsp:include>
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container container-fluid">
 
 					<!-- 페이지 명 -->
 					<h1 class="h3 mb-4 text-gray-800">강사관리</h1>
 
+					<!-- 간단 통계 -->
+					<div class="row">
+						<!-- 전체 강사 -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text font-weight-bold text-primary text-uppercase mb-1">
+												전체 강사</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-users fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- 강의 중인 강사 -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-success shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text font-weight-bold text-success text-uppercase mb-1">
+												강의 중인 강사</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-chalkboard-user fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						<!-- 강좌가 없는 강사 -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-danger shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text font-weight-bold text-danger text-uppercase mb-1">
+												강좌가 없는 강사</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-user-xmark fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- 퇴사한 강사 -->
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-secondary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text font-weight-bold text-secondary text-uppercase mb-1">
+												퇴사한 강사</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-user-minus fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<!-- end of 간단 통계 -->
 
-					<!-- 수강생 개인 정보 -->
-					<div class="row ">
 
-
-						<!-- 개인정보 -->
+					<!-- 키워드 검색 -->
+					<div class="row">
 						<div class="col">
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">강사 개인정보</h6>
-								</div>
 								<div class="card-body">
 									<div class="row">
-										<!-- 프로필 이미지 출력 -->
+										<div class="col-8">
+											<div class="input-group">
+												<button class="btn btn-outline-secondary dropdown-toggle"
+													type="button" data-bs-toggle="dropdown"
+													aria-expanded="false">검색어 선택</button>
+												<ul class="dropdown-menu">
+													<li><a class="dropdown-item" href="#">Action</a></li>
+													<li><a class="dropdown-item" href="#">Another
+															action</a></li>
+													<li><a class="dropdown-item" href="#">Something
+															else here</a></li>
+													<li><hr class="dropdown-divider"></li>
+													<li><a class="dropdown-item" href="#">Separated
+															link</a></li>
+												</ul>
+												<input type="text" class="form-control"
+													aria-label="Text input with dropdown button">
+											</div>
+										</div>
+										
 										<div class="col-2">
-											<div>
-												<div class="card mb-4">
-													<div class="card-body">프로필사진이 여기에 뜹니다~</div>
-												</div>
-											</div>
-
-											<!-- 프로필 이미지 삭제/등록 버튼 -->
-											<div class="row">
-												<div class="col">
-													<a href="#" class="btn btn-secondary btn-block"><span
-														class="text">삭제</span></a>
-												</div>
-												<div class="col">
-													<a href="#" class="btn btn-primary btn-block"><span
-														class="text">등록</span></a>
-												</div>
-											</div>
-
-
+											<a href="#" class="btn btn-secondary btn-block"><span
+											class="text">검색 초기화</span></a>
+										</div>
+										
+										<div class="col-2">
+											<a href="#" class="btn btn-primary btn-block"><span
+												class="text">검색</span></a>
 										</div>
 
-										<!-- left -->
-										<div class="col-5">
-											<div class="row">
-												<label class="col-sm-4 col-form-label">회원번호</label>
-												<div class="col-sm-8">
-													<input type="text" readonly class="form-control-plaintext"
-														id="user_no" name="" value="회원번호 값 출력">
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">이름</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">성별</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">개인 연락처</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
-
-										</div>
-
-										<div class="col-5">
-
-											<!-- right -->
-											<div class="col">
-												<div class="row">
-													<label class="col-sm-4 col-form-label">이메일</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control form-control-sm"
-															id="" name="" value="">
-													</div>
-												</div>
-												<div class="row">
-													<label class="col-sm-4 col-form-label">주소</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control form-control-sm"
-															id="" name="" value="">
-													</div>
-												</div>
-												<div class="row">
-													<label class="col-sm-4 col-form-label">생년월일</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control form-control-sm"
-															id="" name="" value="">
-													</div>
-												</div>
-												<div class="row">
-													<label class="col-sm-4 col-form-label">계정생성일</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control-plaintext" id=""
-															name="" value="등록날짜 값 출력">
-													</div>
-												</div>
-											</div>
-										</div>
 									</div>
+								
+									
+									
 								</div>
 							</div>
-
-
-							<!-- tab -->
-							<div class="card shadow mb-4">
-								<div class="card-body" id="sys_stu_tab">
-									<!-- 탭 버튼 -->
-									<ul class="nav nav-tabs">
-										<li class="nav-item"><a class="nav-link active"
-											aria-current="page" href="#tab_tch_lecture">담당 강좌</a></li>
-										<li class="nav-item"><a class="nav-link"
-											href="#tab_tch_timetable">시간표</a></li>
-										<li class="nav-item"><a class="nav-link"
-											href="#tab_tch_profile">프로필</a></li>
-									</ul>
-
-									<!-- 탭 내용 -->
-									<div class="tab-content">
-										<div class="tab-pane active" id="tab_tch_lecture">
-											<jsp:include page="../table/com_lecture_table.jsp">
-												<jsp:param name="pageName" value="tch_lectures" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_tch_timetable">
-											<jsp:include page="../table/com_timetable_table.jsp">
-												<jsp:param name="pageName" value="tch_timetable" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="#tab_tch_profile">
-											<jsp:include page="../table/com_profile_table.jsp">
-												<jsp:param name="pageName" value="tch_profile" />
-											</jsp:include>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- end of tab -->
-
-							<!-- 하단 버튼 -->
-							<div class="row">
-								<div class="col-2">
-									<a href="#" class="btn btn-secondary btn-block"><span
-										class="text">삭제</span></a>
-								</div>
-
-								<div class="col-8"></div>
-
-								<div class="col-2">
-									<a href="#" class="btn btn-primary btn-block"><span
-										class="text">등록</span></a>
-								</div>
-							</div>
-							<!-- end of 하단 버튼 -->
-							
-
 						</div>
 					</div>
 
+					<!-- 수강생 리스트 -->
+					<div class="row">
+						<div class="col">
+							<div class="card shadow mb-4">
+								<div class="card-body">
+									강사 리스트 뜰 곳
+								</div>
+							</div>
+						</div>
+					</div>
+					
+
+					<!-- 하단 버튼 -->
+					<div class="row">
+						<div class="col-2">
+							<a href="#" class="btn btn-secondary btn-block"><span
+								class="text">선택 삭제</span></a>
+						</div>
+
+						<div class="col-6"></div>
+
+						<div class="col-2">
+							<a href="#" class="btn btn-primary btn-block"><span
+								class="text">일괄 등록</span></a>
+						</div>
+
+						<div class="col-2">
+							<a href="sys_teacher_detail.do" class="btn btn-primary btn-block"><span
+								class="text">강사 등록</span></a>
+						</div>
+					</div>
+					<!-- end of 하단 버튼 -->
 
 				</div>
 				<!-- end of container-fluid -->
