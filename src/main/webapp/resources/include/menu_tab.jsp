@@ -132,6 +132,7 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                    	<a class="collapse-item" href="sys_home.do">관리자홈</a>
                         <a class="collapse-item" href="sys_student.do">수강생관리</a>
                         <a class="collapse-item" href="sys_teacher.do">강사관리</a>
                         <a class="collapse-item" href="sys_course.do">강좌관리</a>
