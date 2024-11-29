@@ -208,7 +208,39 @@ $(document).ready(function() {
 
 					<!-- 페이지 명 -->
 					<h5 class="h3 mb-4 text-gray-800">성적 조회</h5>
-
+					
+					<!-- 시험 응시 연도 조회 -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">응시 연도 조회</h6>
+                                </div>
+                                <div class="card-body">
+                                     <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+									    <a class="navbar-brand" href="#">Navbar</a>
+									    <ul class="navbar-nav ml-auto">
+									        <li class="nav-item dropdown">
+									            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									                <span id="selectedCourse">응시 연도 선택</span> <!-- 기본 텍스트 -->
+									            </a>
+									            <div class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="navbarDropdown">
+									                <a class="dropdown-item" href="#" onclick="selectYear('2024')">2024</a>
+									                <a class="dropdown-item" href="#" onclick="selectYear('2023')">2023</a>
+									                <a class="dropdown-item" href="#" onclick="selectYear('2022')">2022</a>
+									                <a class="dropdown-item" href="#" onclick="selectYear('2021')">2021</a>
+									                
+									                <div class="dropdown-divider"></div>
+									                <a class="dropdown-item" href="#">Something else here</a>
+									            </div>
+									        </li>
+									    </ul>
+									</nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end of 시험 응시 연도 조회 -->
+					
 					<!-- 시험 정보 출력 박스 -->
                     <div class="row">
                         <!-- 시험 정보 테이블 표시단 -->
@@ -277,7 +309,7 @@ $(document).ready(function() {
 
         <!-- Custom scripts for all pages-->
         <script src="resources/static/js/sb-admin-2.min.js"></script>
-    	</div> <!-- end of wrapper -->
+    </div> <!-- end of wrapper -->
 
 		<!-- Bootstrap core JavaScript-->
 		<script src="resources/static/vendor/jquery/jquery.min.js"></script>

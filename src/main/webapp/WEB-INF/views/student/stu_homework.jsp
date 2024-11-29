@@ -322,23 +322,36 @@
                 <!-- 페이지 명 -->
                 <h5 class="h3 mb-4 text-gray-800">과제 제출 페이지</h5>
                 
-                <!-- 카테고리 드랍박스; 수강중인 강의 목록 가져와서 그에 대한 과제 표시토록 할 것임 -->
-                <nav class="navbar navbar-expand navbar-light bg-light mb-4">
-				    <a class="navbar-brand" href="#">Navbar</a>
-				    <ul class="navbar-nav ml-auto">
-				        <li class="nav-item dropdown">
-				            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				                <span id="selectedCourse">수강중인 강좌 선택</span> <!-- 기본 텍스트 -->
-				            </a>
-				            <div class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="navbarDropdown">
-				                <a class="dropdown-item" href="#" onclick="selectCourse('IT front+back')">IT front+back</a>
-				                <a class="dropdown-item" href="#" onclick="selectCourse('ㅇㅅㅇ')">ㅇㅅㅇ</a>
-				                <div class="dropdown-divider"></div>
-				                <a class="dropdown-item" href="#">Something else here</a>
-				            </div>
-				        </li>
-				    </ul>
-				</nav>
+                <!-- 출결 조회하려는 수강 중 강좌 선택 nav 바 -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">수강중인 강좌 선택</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- 카테고리 드랍박스; 수강중인 강의 목록 가져와서 그에 대한 과제 표시토록 할 것임 -->
+					                <nav class="navbar navbar-expand navbar-light bg-light mb-4">
+									    <a class="navbar-brand" href="#">Navbar</a>
+									    <ul class="navbar-nav ml-auto">
+									        <li class="nav-item dropdown">
+									            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									                <span id="selectedCourse">수강중인 강좌 선택</span> <!-- 기본 텍스트 -->
+									            </a>
+									            <div class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="navbarDropdown">
+									                <a class="dropdown-item" href="#" onclick="selectCourse('IT front+back')">IT front+back</a>
+									                <a class="dropdown-item" href="#" onclick="selectCourse('ㅇㅅㅇ')">ㅇㅅㅇ</a>
+									                <div class="dropdown-divider"></div>
+									                <a class="dropdown-item" href="#">Something else here</a>
+									            </div>
+									        </li>
+									    </ul>
+									</nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end of 시험 응시 연도 조회 -->
+
                 
                 <!-- 과제 정보 출력 박스 -->
                 <div class="row">

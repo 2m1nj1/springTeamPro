@@ -381,7 +381,7 @@
                 <div class="col">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">국영수 성적 상세보기</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">국영수 성적 상위 30%와 비교해보기</h6>
                         </div>
                         <div class="card-body">
                             <canvas id="myBarChart" style="height: 400px;"></canvas>
@@ -395,7 +395,7 @@
 			    <div class="col">
 			        <div class="card shadow mb-4">
 			            <div class="card-header py-3">
-			                <h6 class="m-0 font-weight-bold text-primary">국영수 월별 성적 비교</h6>
+			                <h6 class="m-0 font-weight-bold text-primary">국영수 월별 성적 추이</h6>
 			            </div>
 			            <div class="card-body">
 			                <canvas id="myMonthlyChart" style="height: 400px;"></canvas>
