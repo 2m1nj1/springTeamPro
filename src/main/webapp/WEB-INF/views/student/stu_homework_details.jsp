@@ -28,6 +28,9 @@
        }
     </style>
 
+<!-- js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 // 나중에 hw_no parameter 받아와서 출력토록 연결시켜줘야 함.
 </script>

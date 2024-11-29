@@ -3,8 +3,10 @@ package com.javaclass.teamAcademy.vo;
 import lombok.Data;
 
 @Data
+//@Alias("hvo")
 public class HomeworkVO {
-
+	// 학생의 과제 목록 조회, 과제 상세보기, 과제 제출 기준으로 작성함
+	
 	private int hw_course; // 강좌 번호
 	private int course_instructor; // 담당 강사 번호
 	private String couse_name; //강좌 이름

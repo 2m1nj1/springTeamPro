@@ -28,6 +28,9 @@
         }
     </style>
 
+<!-- js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <script type="text/javascript">
  // 예시 과제 데이터 (서버에서 전달받은 데이터를 동적으로 처리할 예정.)
     let assignments = [

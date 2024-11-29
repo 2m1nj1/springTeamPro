@@ -12,6 +12,7 @@ public class GradeDaoImpl implements GradeDao{
 	private SqlSessionTemplate ss;
 	
 	public void insertGrade(GradeVO vo){
+		
 		ss.insert("grade.insertGrade", vo);
 	}
 }
