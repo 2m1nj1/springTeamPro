@@ -212,20 +212,20 @@
 
 							<div class="row">
 								<div class="col-4">
-									<a href="#" class="btn btn-primary btn-icon-split btn">
-										<span class="icon text-white-50">
-											<i class="fas fa-paper-plane"></i>
-										</span>
-										<span class="text">등록</span>
-									</a>
-								</div>
-								<div class="col-4"></div>
-								<div class="col-4">
 									<a href="stu_grade.do" class="btn-secondary btn-icon-split btn">
 										<span class="icon text-white-50">
 											<i class="fas fa-arrow-right"></i>
 										</span>
 										<span class="text">이전 화면</span>
+									</a>
+								</div>
+							<div class="col-4"></div>
+								<div class="col-4">
+									<a href="#" class="btn btn-primary btn-icon-split btn">
+										<span class="icon text-white-50">
+											<i class="fas fa-paper-plane"></i>
+										</span>
+										<span class="text">등록</span>
 									</a>
 								</div>
 							</div>
