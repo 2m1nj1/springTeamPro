@@ -24,6 +24,8 @@
 
 <!-- Custom styles for this template-->
 <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+<link href="resources/css/system.css" rel="stylesheet">
 <style type="text/css">
 	*{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -109,7 +111,7 @@
 											</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">5</div>
 												</div>
 											</div>
 										</div>
@@ -356,6 +358,6 @@
 	<script src="resources/static/js/demo/chart-pie-demo.js"></script>
 		
 	<!-- 개인 추가 .js : 이민지 -->
-	<script type="text/javascript" src="/resources/js/system/sys_modal.js"></script>
+	<script type="text/javascript" src="/resources/js/system/sys_main.js"></script>
 </body>
 </html>

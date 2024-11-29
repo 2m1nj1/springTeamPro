@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+
+/* 테이블 head 고정 */
+.table-head-fix tbody {
+	display : block;
+	max-height : 500px;
+	overflow-y: scroll; 
+}
+
+.table-head-fix thead, .table-head-fix tbody tr {
+	display: table;
+	width: 100%;
+	
+}
+
+.classroomModal {
+	padding-left:30px;
+	padding-right:30px;
+	
+}
+
+
+/* 수강생 관리 - table */
+#stuList th, td {
+    text-align: center;
+}
+
+
+#stuList th:first-child {
+    width: 5%;
+}
+
+/* #table_student th:nth-child(2) { */
+/*     width: 10%; */
+/* } */
+

@@ -99,7 +99,7 @@
 
 <!-- Modal : 강의실 목록 -->
 <div class="modal fade" id="modal_course_classroom" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="">강의실 선택</h5>
@@ -107,34 +107,88 @@
         	<i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="modal-body">
-        <table class="table table-hover" id="" width="100%" cellspacing="0">
-        	<thead>
-        		<tr>
-        			<th></th>
-        			<th>강의실명</th>
-        			<th>위치</th>
-        		</tr>
-        	</thead>
-        	
-        	<tbody>
-        		<tr>
-        			<td><input class="chk_classroom" type="radio" name="chk_classroom" id="" value="1"></td>
-        			<td>101호</td>
-        			<td>1층 오른쪽</td>
-        		</tr>
-        		<tr>
-        			<td><input class="chk_classroom" type="radio" name="chk_classroom" id="" value="2"></td>
-        			<td>102호</td>
-        			<td>1층 왼쪽</td>
-        		</tr>
-        		<tr>
-        			<td><input class="chk_classroom" type="radio" name="chk_classroom" id="" value="3"></td>
-        			<td>201호</td>
-        			<td>2층 어딘가...</td>
-        		</tr>
-        	</tbody>
-        </table>
+      <div class="modal-body row">
+      	
+      	<!-- 강의실 조회 -->
+      	<div class="col-7 classroomModal">
+      		<div class="row mb-3">
+      			<div class="text font-weight-bold text-uppercase">
+					강의실 조회
+				</div>
+      		</div>
+      		<div class="row mb-3">
+      			<div class="col-9">
+      				<input type="text" class="form-control">
+      			</div>
+      			<div class="col-3">
+      				<a href="#" class="btn btn-primary btn-block">검색</a>
+      			</div>
+      		</div>
+      		
+      		<div class="row">
+      			<table class="table table-hover table-head-fix" id="" cellspacing="0">
+	        	<thead>
+	        		<tr>
+	        			<th></th>
+	        			<th>강의실명</th>
+	        			<th>위치</th>
+	        		</tr>
+	        	</thead>
+	        	
+	        	<tbody>
+	        		<tr>
+	        			<td><input class="chk_classroom" type="radio" name="chk_classroom" id="" value="1"></td>
+	        			<td>101호</td>
+	        			<td>1층 오른쪽</td>
+	        		</tr>
+	        		<tr>
+	        			<td><input class="chk_classroom" type="radio" name="chk_classroom" id="" value="2"></td>
+	        			<td>102호</td>
+	        			<td>1층 왼쪽</td>
+	        		</tr>
+	        		<tr>
+	        			<td><input class="chk_classroom" type="radio" name="chk_classroom" id="" value="3"></td>
+	        			<td>201호</td>
+	        			<td>2층 어딘가...</td>
+	        		</tr>
+	        		
+	        	</tbody>
+	        </table>
+      		</div>
+      		
+      	</div>
+      	
+      	
+      	<!-- 새 강의실 등록 -->
+      	<div class="col-5 classroomModal">
+      		<div class="row mb-3">
+      			<div class="text font-weight-bold text-uppercase">
+					강의실 등록
+				</div>
+      		</div>
+      		<div class="row mb-3">
+				<label class="col-sm-4 col-form-label">강의실명</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control form-control-sm"
+						id="" name="" value="">
+				</div>
+      		</div>
+      		
+      		<div class="row mb-3">
+				<label class="col-sm-4 col-form-label">위치</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control form-control-sm"
+						id="" name="" value="">
+				</div>
+      		</div>
+      		
+      		<div class="row mb-3">
+				<a href="#" class="btn btn-primary btn-block">등록</a>
+      		</div>
+      		
+      	</div>
+      
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>

@@ -28,6 +28,7 @@
 
 <!-- Custom styles for this template-->
 <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="resources/css/system.css" rel="stylesheet">
 <style type="text/css">
 	*{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -246,7 +247,28 @@
 						<div class="col">
 							<div class="card shadow mb-4">
 								<div class="card-body">
-									수강생 리스트 뜰 곳
+									
+									<div class="table-responsive">
+										<form action="" >
+											<table class="table table-border" id="stuList" width="100%" cellspacing="0">
+												<thead>
+													<tr>
+														<th><input type="checkbox" name="students" id="allStuChk"></th>
+														<th>회원번호</th>
+														<th>이름</th>
+														<th>개인 연락처</th>
+														<th>보호자 연락처</th>
+														<th>등록일자</th>
+													</tr>
+												</thead>
+												
+												<tbody>
+												
+												</tbody>
+											</table>
+										</form>
+									</div>
+									
 								</div>
 							</div>
 						</div>
@@ -254,7 +276,7 @@
 					
 
 					<!-- 하단 버튼 -->
-					<div class="row">
+					<div class="row mb-3">
 						<div class="col-2">
 							<a href="#" class="btn btn-secondary btn-block"><span
 								class="text">선택 삭제</span></a>
@@ -268,7 +290,7 @@
 						</div>
 
 						<div class="col-2">
-							<a href="sys_student_detail.do" class="btn btn-primary btn-block"><span
+							<a href="sys_student_insert.do" class="btn btn-primary btn-block"><span
 								class="text">수강생 등록</span></a>
 						</div>
 					</div>
@@ -305,5 +327,6 @@
 
 		<!-- 개인 추가 .js : 이민지 -->
 		<script type="text/javascript" src="/resources/js/system/sys_tab.js"></script>
+		<script type="text/javascript" src="/resources/js/table/stuList.js"></script>
 </body>
 </html>

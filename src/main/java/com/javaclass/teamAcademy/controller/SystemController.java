@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class systemController {
+public class SystemController {
 
 	@RequestMapping("sys_{view}.do")
 	public String returnView(@PathVariable String view) {

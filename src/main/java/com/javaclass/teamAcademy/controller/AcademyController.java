@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class academyController {
+public class AcademyController {
 
 	@RequestMapping("home.do")
 	public void home() { 

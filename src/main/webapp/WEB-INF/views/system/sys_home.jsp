@@ -58,6 +58,181 @@
 
 				<!-- Begin Page Content -->
 				<div class="container container-fluid">
+					
+					<div class="row">
+						<div class="col">
+							<div class="card shadow mb-3">
+								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary ">수강생 관리</h6>
+									<div class="dropdown no-arrow">
+                                        <a class="button" href="sys_student.do" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                    </div>
+								</div>	
+								<div class="card-body d-flex flex-row align-items-center justify-content-between">
+									<div class="text font-weight-bold text-uppercase mb-1">
+										전체 수강생
+									</div>
+									<div class="row align-items-center">
+										<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+										<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">명</div>
+									</div>
+									
+								</div>
+							</div>
+							<a href="#" class="btn btn-primary btn-block mb-4 shadow"><span class="text">납부 관리</span></a>
+						</div>
+						
+						<div class="col">
+							<div class="card shadow mb-3">
+								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">강사 관리</h6>
+									<div class="dropdown no-arrow">
+                                        <a class="button" href="sys_teacher.do" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                    </div>
+								</div>	
+								<div class="card-body d-flex flex-row align-items-center justify-content-between">
+									<div class="text font-weight-bold text-uppercase mb-1">
+										전체 강사
+									</div>
+									<div class="row align-items-center">
+										<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+										<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">명</div>
+									</div>
+									
+								</div>
+							</div>
+							<a href="#" class="btn btn-primary btn-block mb-4 shadow"><span class="text">강의실 관리</span></a>
+						</div>
+						
+						<div class="col">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">강좌 관리</h6>
+									<div class="dropdown no-arrow">
+                                        <a class="button" href="sys_course.do" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                    </div>
+								</div>	
+								<div class="card-body">
+									<div class="d-flex flex-row align-items-center justify-content-between">
+										<div class="text font-weight-bold text-uppercase mb-1">
+											진행 중인 강좌</div>
+										<div class="row align-items-center">
+											<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="text font-weight-bold text-uppercase mb-0"
+												style="padding-left: 5px">개</div>
+										</div>
+									</div>
+									<div class="col" style="padding-top: 16px"></div>
+									<div class="d-flex flex-row align-items-center justify-content-between">
+										<div class="text font-weight-bold text-uppercase mb-1">
+											모집 중인 강좌</div>
+										<div class="row align-items-center">
+											<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="text font-weight-bold text-uppercase mb-0"
+												style="padding-left: 5px">개</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-8">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">월별 수강생 통계</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-area">
+										<div class="chartjs-size-monitor">
+											<div class="chartjs-size-monitor-expand">
+												<div class=""></div>
+											</div>
+											<div class="chartjs-size-monitor-shrink">
+												<div class=""></div>
+											</div>
+										</div>
+										<canvas id="myAreaChart" width="757" height="320"
+											style="display: block; width: 757px; height: 320px;"
+											class="chartjs-render-monitor">
+										</canvas>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col">
+									<div class="card shadow mb-4">
+										<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+											<h6 class="m-0 font-weight-bold text-primary">1:1 문의</h6>
+											<div class="dropdown no-arrow">
+		                                        <a class="button" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+		                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i>
+		                                        </a>
+		                                    </div>
+										</div>
+										
+										<div class="card-body d-flex flex-row align-items-center justify-content-between">
+											<div class="text font-weight-bold text-uppercase mb-1">
+												새로 들어온 문의
+											</div>
+											<div class="row align-items-center">
+												<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+												<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">개</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+
+								<div class="col">
+									<div class="card shadow mb-4">
+										<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+											<h6 class="m-0 font-weight-bold text-primary">신고</h6>
+											<div class="dropdown no-arrow">
+		                                        <a class="button" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+		                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i>
+		                                        </a>
+		                                    </div>
+										</div>
+										<div class="card-body d-flex flex-row align-items-center justify-content-between">
+											<div class="text font-weight-bold text-uppercase mb-1">
+												새로 들어온 신고
+											</div>
+											<div class="row align-items-center">
+												<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+												<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">개</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+						
+						<div class="col-4">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">뭐넣지....</h6>
+								</div>	
+								<div class="card-body"></div>
+							</div>
+						</div>
+					</div>
+					
+					
+					
 
 
 				</div>
