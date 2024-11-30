@@ -9,7 +9,7 @@ public class HomeworkVO {
 	
 	private int hw_course; // 강좌 번호
 	private int course_instructor; // 담당 강사 번호
-	private String couse_name; //강좌 이름
+	private String course_name; //강좌 이름
 	private String ins_name; // 담당 강사 이름
 	
 	private int user_no; // (과제 조회하는) 학생 회원 번호

@@ -1,0 +1,144 @@
+	<!-- mapper에 넣을 sql 구문들... -->
+
+	<!-- 과제 상세보기 [학생] -->
+	<!-- 학생 번호를 파라미터로 받아와서 -> homeworkVO 결과물로 가져옴. -->
+    <!-- <select id="getHomework" parameterType="int" resultType="HomeworkVO">
+		SELECT 
+	        h.hw_no,
+	        h.hw_title,
+	        h.hw_context,
+	        h.hw_startdate,
+	        h.hw_enddate,
+	        c.course_name,
+	        c.course_instructor,
+	        u.user_no,
+	        i.ins_name
+	    FROM 
+	        HOMEWORK h
+	    INNER JOIN COURSE c
+	     ON h.hw_course = c.course_no
+	    INNER JOIN USER_ACCOUNT u
+	     ON h.user_no = u.user_no
+	    INNER JOIN INSTRUCTOR i
+	     ON c.course_instructor = i.ins_no
+	    WHERE 
+	        u.user_no = #{userNo}
+	    ORDER BY 
+	        h.hw_startdate ASC;
+	</select> -->
+
+
+    <!-- 과제 목록 가져오기 - [학생] -->
+    <!-- <select id="getHomeworkList" parameterType="int" resultType="HomeworkVO">
+	    SELECT 
+		    h.hw_no, 
+		    h.hw_title, 
+		    h.hw_context, 
+		    h.hw_startdate, 
+		    h.hw_enddate, 
+		    c.course_name, 
+		    c.course_instructor, 
+		    u.user_no, 
+		    i.ins_name
+		FROM 
+		    HOMEWORK h
+		INNER JOIN COURSE c
+		 ON h.hw_course = c.course_no
+		INNER JOIN USER_ACCOUNT u
+		 ON h.user_no = u.user_no
+		INNER JOIN INSTRUCTOR i
+		 ON c.course_instructor = i.ins_no
+		WHERE 
+		    u.user_no = #{userNo} -- Optional filter to get homework for a specific user
+		ORDER BY 
+		    h.hw_startdate ASC;
+	</select> -->
+
+
+    <!-- 과제 업데이트 / HOMEWORK_DONE 테이블에 정보 입력 (제출된 과제 수정) - [학생] -->
+  	<!-- <update id="updateHomework" parameterType="HomeworkVO">
+	    UPDATE homework
+	    SET hw_title = #{hw_title}, 
+	        hw_context = #{hw_context},
+	        hw_startdate = #{hw_startdate},
+	        hw_enddate = #{hw_enddate},
+	        upload_no = #{upload_no}  -- Include if submission is linked to uploads
+	    WHERE hw_no = #{hw_no};
+	</update> -->
+	
+	
+	<!-- UPLOAD 테이블에 업로드된 과제 파일 정보 삽입하는거 맞...? -->
+	<!-- <insert id="insertFile" parameterType="UploadVO">
+	    INSERT INTO UPLOAD (upload_no, file_name, file_path, file_size)
+	    VALUES (#{uploadNo}, #{fileName}, #{filePath}, #{fileSize});
+	</insert> -->
+
+	<!-- HOMEWORK_DONE '과제 제출 완료'로 바뀌는 버튼 기능 넣으려고 해 주는 것 -->
+	<!-- <insert id="updateHomework" parameterType="HomeworkDoneVO">
+	    INSERT INTO HOMEWORK_DONE (done_no, user_no, hw_no, upload_no, done_date)
+	    VALUES (#{doneNo}, #{userNo}, #{hwNo}, #{uploadNo}, NOW())
+	    ON DUPLICATE KEY UPDATE 
+	        upload_no = #{uploadNo}, 
+	        done_date = NOW();
+	</insert> -->
+
+    
+    <!-- 과제 등록 - [강사] -->
+	<!-- <insert id="insertHomework" parameterType="com.javaclass.teamAcademy.vo.HomeworkVO">
+	    INSERT INTO homework (hw_course, hw_title, hw_context, hw_startdate, hw_enddate, upload_no)
+	    VALUES (#{hw_course}, #{hw_title}, #{hw_context}, #{hw_startdate}, #{hw_enddate}, #{upload_no});
+	</insert>
+	 -->
+
+	<!-- 과제 삭제 - [강사] -->
+	<!-- <delete id="deleteHomework" parameterType="com.javaclass.teamAcademy.vo.HomeworkVO">
+	    DELETE FROM homework
+	    WHERE hw_no = #{hw_no}
+	      AND NOT EXISTS (SELECT 1 FROM homework_done WHERE hw_no = #{hw_no}); -- Prevent deletion if submissions exist
+	</delete> -->
+	
+	
+	
+	
+	<!-- 출석부 조회 - [학생] -->
+	<!-- 특정 출석 기록 열람 -->
+	<select id="getAttendance" parameterType="AttendanceVO" resultType="AttendanceVO">
+	    SELECT 
+	        a.attendance_date, 
+	        c.course_name, 
+	        i.ins_name AS course_instructor, 
+	        a.attendance_status
+	    FROM 
+	        ATTENDANCE a
+	    INNER JOIN 
+	        COURSE c ON a.course_no = c.course_no
+	    INNER JOIN 
+	        INSTRUCTOR i ON c.course_instructor = i.ins_no
+	    WHERE 
+	        a.user_no = #{userNo}
+	        AND a.course_no = #{courseNo}
+	        AND a.attendance_date = #{attendanceDate};
+	</select>
+
+
+	<!-- 특정 강좌에 대한 학생의 출석 기록 전체 불러오기 -->
+	<select id="getAttendanceList" parameterType="AttendanceVO" resultType="AttendanceVO">
+	    SELECT 
+	        a.attendance_date, 
+	        c.course_name, 
+	        i.ins_name AS course_instructor, 
+	        a.attendance_status
+	    FROM 
+	        ATTENDANCE a
+	    INNER JOIN 
+	        COURSE c ON a.course_no = c.course_no
+	    INNER JOIN 
+	        INSTRUCTOR i ON c.course_instructor = i.ins_no
+	    WHERE 
+	        a.user_no = #{userNo}
+	        AND a.course_no = #{courseNo}
+	    ORDER BY 
+	        a.attendance_date DESC;
+	</select>
+	
+	

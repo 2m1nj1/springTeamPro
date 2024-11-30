@@ -27,7 +27,7 @@
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/</url-pattern> <!-- 모든 URL을 처리하도록 설정 -->
 	</servlet-mapping>
 
 </web-app>

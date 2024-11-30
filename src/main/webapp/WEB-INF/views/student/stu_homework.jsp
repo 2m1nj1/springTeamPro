@@ -385,7 +385,6 @@
     				</div><!-- end of dataTable_paginate -->
 				</div><!-- end of pagination area -->
 
-                
             </div> <!-- end of container-fluid -->
         </div> <!-- end of content -->
     </div> <!-- end of content Wrapper -->

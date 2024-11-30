@@ -11,7 +11,5 @@
 <a href="home.do"> 시작 ~ </a>
 
 
-
-
 </body>
 </html>

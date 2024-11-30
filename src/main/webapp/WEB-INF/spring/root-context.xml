@@ -28,6 +28,7 @@
 			<value>com.javaclass.teamAcademy.vo.GradeVO</value>
 			<value>com.javaclass.teamAcademy.vo.ExamVO</value>
 			<value>com.javaclass.teamAcademy.vo.HomeworkVO</value>
+			<value>com.javaclass.teamAcademy.vo.BoardVO</value>
 		</list>
 		</property>
 	</bean>
@@ -35,6 +36,11 @@
  	<!-- ##### SqlSessionTemplate 빈 지정  #####  -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	
+	<!-- 인터페이스들 스캔하여 자동으로 빈 등록 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="basePackage" value="com.javassem.dao" />
 	</bean>
 		
 </beans>
