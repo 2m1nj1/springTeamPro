@@ -110,10 +110,10 @@
 					</a>
 				</div>
 			</div> <!-- end of go-to-previous-page btn -->
-     		
      	</div> <!-- end of container-fluid -->
-
     </div> <!-- end of content -->
+    </div> <!-- end of content-wrapper -->
+    </div> <!-- end of wrapper -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="resources/static/vendor/jquery/jquery.min.js"></script>

@@ -16,14 +16,20 @@ public class AttendanceServiceImpl implements AttendanceService{
 	private AttendanceDao adao;
 	
 	// 출결 상세보기
-	public AttendanceVO getAttendance(AttendanceVO vo){
+	public AttendanceVO getAttendanceDetail(AttendanceVO vo){
 		//System.out.println(vo.toString());
-		return adao.getAttendance(vo);
+		return adao.getAttendanceDetail(vo);
 	}
 	// 출결 목록보기
 	@Override
 	public List<AttendanceVO> getAttendanceList(AttendanceVO vo) {
 		//System.out.println(vo.toString());
 		return adao.getAttendanceList(vo);
-	};
+	}
+	// [학생] nav bar 에 표시될 수강중인 강좌들 불러오기  
+	@Override
+	public List<String> getCoursesByStudent(int user_no) {
+		//System.out.println("user_no= " + user_no);
+		return adao.getCoursesByStudent(user_no);
+	}
 }

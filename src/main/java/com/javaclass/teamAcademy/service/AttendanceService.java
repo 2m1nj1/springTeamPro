@@ -9,8 +9,12 @@ public interface AttendanceService {
 	// 출석 조회만 할 수 있어야 함;
 	
 	// 출석 상세 조회
-	AttendanceVO getAttendance(AttendanceVO vo);
+	AttendanceVO getAttendanceDetail(AttendanceVO vo);
 	
 	// 출석 목록 조회
 	List<AttendanceVO> getAttendanceList(AttendanceVO vo);
+
+	// 학생 아이디로 강좌 목록
+	List<String> getCoursesByStudent(int user_no);
+	
 }

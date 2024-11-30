@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AttendanceDao">
+
+	<!-- 학생에 대한 특정 강좌의 출결 기록 불러오기 -->
+    <select id="getAttendanceList" parameterType="AttendanceVO" resultType="AttendanceVO">
+        SELECT 
+            a.attendance_date AS attendanceDate,
+            c.course_name AS courseName,
+            i.ins_name AS courseInstructor,
+            a.attendance_status AS attendanceStatus
+        FROM 
+            ATTENDANCE a
+        INNER JOIN 
+            COURSE c ON a.course_no = c.course_no
+        INNER JOIN 
+            INSTRUCTOR i ON c.course_instructor = i.ins_no
+        WHERE 
+            a.user_no = #{userNo}
+            AND a.course_no = #{courseNo}
+        ORDER BY 
+            a.attendance_date DESC;
+    </select>
+
+    <!-- 특정 출결기록 불러오기 - attendance_no로  -->
+    <select id="getAttendanceDetail" parameterType="AttendanceVO" resultType="AttendanceVO">
+        SELECT 
+            a.attendance_date AS attendanceDate,
+            c.course_name AS courseName,
+            i.ins_name AS courseInstructor,
+            a.attendance_status AS attendanceStatus
+        FROM 
+            ATTENDANCE a
+        INNER JOIN 
+            COURSE c ON a.course_no = c.course_no
+        INNER JOIN 
+            INSTRUCTOR i ON c.course_instructor = i.ins_no
+        WHERE 
+            a.user_no = #{userNo}
+            AND a.attendance_date = TO_DATE(#{attendanceDate}, 'YYYY-MM-DD');
+    </select>
+    
+    <!-- 특정 학생(user_no)에 등록된 강좌 목록 불러오기 -->
+    <select id="getCoursesByStudent" parameterType="int" resultType="String">
+        SELECT 
+            c.course_name 
+        FROM 
+            COURSE c
+        INNER JOIN 
+            STUDENT_COURSE sc ON c.course_no = sc.course_no
+        WHERE 
+            sc.user_no = #{user_no}
+        ORDER BY 
+            c.course_name;
+    </select>
+    
+</mapper>

@@ -28,204 +28,192 @@
         }
     </style>
 
-<!-- js -->
+<!-- js - ajax 이용... -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script type="text/javascript">
- // 예시 과제 데이터 (서버에서 전달받은 데이터를 동적으로 처리할 예정.)
-    let assignments = [
-        { id: 1, title: '회차 1', attendanceDate: '2024-12-05 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '출석' },
-        { id: 2, title: '회차 2', attendanceDate: '2024-12-07 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '조퇴' },
-        { id: 3, title: '회차 3', attendanceDate: '2024-12-09 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '결석' },
-        { id: 4, title: '회차 4', attendanceDate: '2024-12-11 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '출석' },
-        { id: 5, title: '회차 5', attendanceDate: '2024-12-13 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '출석' },
-        { id: 6, title: '회차 6', attendanceDate: '2024-12-15 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '조퇴' },
-        { id: 7, title: '회차 7', attendanceDate: '2024-12-17 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '결석' },
-        { id: 8, title: '회차 8', attendanceDate: '2024-12-19 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '출석' },
-        { id: 9, title: '회차 9', attendanceDate: '2024-12-21 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '조퇴' },
-        { id: 10, title: '회차 10', attendanceDate: '2024-12-23 09:28:00', course: 'Java Programming', instructor: '김 강사', attendanceStatus: '결석' }
-    ];
+<script type="text/javascript">
+        let attendanceRecords = [];
+        let currentPage = 1;
+        const itemsPerPage = 3;
 
-    let currentPage = 1; // 현재 페이지
-    const itemsPerPage = 3; // 한 페이지에 표시할 출석정보 개수
-
- 	// 출석 상태를 관리하는 변수 (초기값은 '출석')
-    var attendanceStatus = '결석';
-
-    // 출석 목록 동적 생성 함수
-    function loadAttendances() {
-        let assignmentList = document.getElementById('attendance-list');
-        assignmentList.innerHTML = ''; // 기존 항목 제거
-
-        // 페이지에 맞는 출석 정보들만 가져오기
-        let startIndex = (currentPage - 1) * itemsPerPage;
-        let endIndex = startIndex + itemsPerPage;
-        let assignmentsToShow = assignments.slice(startIndex, endIndex);
-
-        assignmentsToShow.forEach(function(assignment) {
-            // 각 회차에 대한 출석정보 카드 div 생성
-            let cardDiv = document.createElement('div');
-            cardDiv.className = 'card shadow mb-4';
-
-            // 카드(Collapsable Card Example) 헤더
-            let cardHeader = document.createElement('a');
-            cardHeader.href = '#collapse' + assignment.id;
-            cardHeader.className = 'd-block card-header py-3';
-            cardHeader.setAttribute('data-toggle', 'collapse');
-            cardHeader.setAttribute('role', 'button');
-            cardHeader.setAttribute('aria-expanded', 'false');
-            cardHeader.setAttribute('aria-controls', 'collapse' + assignment.id);
-
-            let headerTitle = document.createElement('h6');
-            headerTitle.className = 'm-0 font-weight-bold text-primary';
-            headerTitle.innerText = assignment.title;
-            cardHeader.appendChild(headerTitle);
-
-            // 카드 본문 (Collapsible 부분)
-            let collapseDiv = document.createElement('div');
-            collapseDiv.className = 'collapse';
-            collapseDiv.id = 'collapse' + assignment.id;
-
-            let cardBody = document.createElement('div');
-            cardBody.className = 'card-body';
-
-            // 출석 일시, 강의명, 담당 강사명 추가
-            let attendanceDate = document.createElement('p');
-            attendanceDate.className = 'font-weight-bold';
-            attendanceDate.innerText = '출석일시: ' + assignment.attendanceDate;
-
-            let courseName = document.createElement('p');
-            courseName.className = 'font-weight-bold';
-            courseName.innerText = '강의명: ' + assignment.course;
-
-            let instructorName = document.createElement('p');
-            instructorName.className = 'font-weight-bold';
-            instructorName.innerText = '담당 강사: ' + assignment.instructor;
-
-            // 카드 본문에 출석 일시, 강의명, 담당 강사명 추가
-            cardBody.appendChild(attendanceDate);
-            cardBody.appendChild(courseName);
-            cardBody.appendChild(instructorName);
-
-            // 버튼 추가 ( 출석/조퇴/결석, 과제 담당 강사에게 쪽지보내기)
-            let buttonContainer = document.createElement('div');
-            buttonContainer.className = 'row mt-3';
-
-            // 출석/조퇴/결석 표시 버튼 (col-3)
-            let submitBtnCol = document.createElement('div');
-            submitBtnCol.className = 'col-4';
-
-            let submitBtn = document.createElement('button');
-            submitBtn.className = 'btn btn-block';
-
-            // 출석 상태에 따라 색상 변경
-            if (attendanceStatus === '출석') {
-                submitBtn.classList.add('btn-success');
-                submitBtn.innerText = '출석';
-            } else if (attendanceStatus === '조퇴') {
-                submitBtn.classList.add('btn-warning');
-                submitBtn.innerText = '조퇴';
-            } else if (attendanceStatus === '결석') {
-                submitBtn.classList.add('btn-danger');
-                submitBtn.innerText = '결석';
-            }
-
-            submitBtnCol.appendChild(submitBtn);
-            buttonContainer.appendChild(submitBtnCol);
-
-            // 버튼 사이 여백 추가 (col-3)
-            let detailBtnCol = document.createElement('div');
-            detailBtnCol.className = 'col-4'; // 여백 공간
-            buttonContainer.appendChild(detailBtnCol);
-
-            // (담당 강사에게)쪽지 보내기 버튼 (col-3)
-            let messageBtnCol = document.createElement('div');
-            messageBtnCol.className = 'col-4';
-            let messageBtn = document.createElement('button');
-            messageBtn.className = 'btn btn-primary btn-block';
-            messageBtn.innerText = '쪽지 보내기';
-            messageBtn.onclick = function() {
-                alert('담당 강사에게 쪽지 보내기 기능은 아직 구현되지 않았습니다.');
-            };
-            messageBtnCol.appendChild(messageBtn);
-            buttonContainer.appendChild(messageBtnCol);
-
-            cardBody.appendChild(buttonContainer);
-            collapseDiv.appendChild(cardBody);
-            cardDiv.appendChild(cardHeader);
-            cardDiv.appendChild(collapseDiv);
-            assignmentList.appendChild(cardDiv);
-        });
-
-        // 페이지네이션 업데이트
-        updatePagination();
-    }
-
-    // 페이지네이션 업데이트 함수
-    function updatePagination() {
-        let totalPages = Math.ceil(assignments.length / itemsPerPage);
-        let pagination = document.getElementById('pagination');
-        pagination.innerHTML = '';
-
-        // Previous 버튼
-        let prevBtn = document.createElement('li');
-        prevBtn.className = 'paginate_button page-item ' + (currentPage === 1 ? 'disabled' : '');
-        let prevLink = document.createElement('a');
-        prevLink.href = '#';
-        prevLink.className = 'page-link';
-        prevLink.innerText = 'Previous';
-        prevLink.onclick = function() {
-            if (currentPage > 1) {
-                currentPage--;
-                loadAttendances();
-            }
-        };
-        prevBtn.appendChild(prevLink);
-        pagination.appendChild(prevBtn);
-
-        // 페이지 번호들
-        for (let i = 1; i <= totalPages; i++) {
-            let pageBtn = document.createElement('li');
-            pageBtn.className = 'paginate_button page-item ' + (i === currentPage ? 'active' : '');
-            let pageLink = document.createElement('a');
-            pageLink.href = '#';
-            pageLink.className = 'page-link';
-            pageLink.innerText = i;
-            pageLink.onclick = function() {
-                currentPage = i;
-                loadAttendances();
-            };
-            pageBtn.appendChild(pageLink);
-            pagination.appendChild(pageBtn);
+        // Load attendance data for the selected course
+        function loadAttendances(courseNo, userNo) {
+            $.ajax({
+                type: "GET",
+                url: "getAttendanceList", // Your backend endpoint to fetch attendance data
+                data: {
+                    courseNo: courseNo,
+                    userNo: userNo
+                },
+                success: function (response) {
+                    attendanceRecords = response;
+                    renderAttendances();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to load attendance records:", error);
+                    alert("출석 정보를 불러오는 데 실패했습니다.");
+                }
+            });
         }
 
-        // Next 버튼
-        let nextBtn = document.createElement('li');
-        nextBtn.className = 'paginate_button page-item ' + (currentPage === totalPages ? 'disabled' : '');
-        let nextLink = document.createElement('a');
-        nextLink.href = '#';
-        nextLink.className = 'page-link';
-        nextLink.innerText = 'Next';
-        nextLink.onclick = function() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                loadAttendances();
-            }
-        };
-        nextBtn.appendChild(nextLink);
-        pagination.appendChild(nextBtn);
-    }
+        // Render attendance records dynamically
+        function renderAttendances() {
+            let attendanceList = document.getElementById("attendance-list");
+            attendanceList.innerHTML = "";
 
-    // 페이지 로딩 시 과제 목록 불러오기
-    window.onload = function() {
-        loadAttendances();
-    };
- 	// 강좌 선택 시 호출되는 함수
-    function selectCourse(courseName) {
-        // 선택한 강좌명을 #selectedCourse에 표시
-        document.getElementById('selectedCourse').textContent = courseName;
-    }
-    </script>
+            let startIndex = (currentPage - 1) * itemsPerPage;
+            let endIndex = startIndex + itemsPerPage;
+            let recordsToShow = attendanceRecords.slice(startIndex, endIndex);
+
+            recordsToShow.forEach(function (record) {
+                let cardDiv = document.createElement("div");
+                cardDiv.className = "card shadow mb-4";
+
+                // Card Header
+                let cardHeader = document.createElement("a");
+                cardHeader.href = `#collapse${record.attendance_date}`;
+                cardHeader.className = "d-block card-header py-3";
+                cardHeader.setAttribute("data-toggle", "collapse");
+                cardHeader.setAttribute("role", "button");
+                cardHeader.setAttribute("aria-expanded", "false");
+                cardHeader.setAttribute("aria-controls", `collapse${record.attendance_date}`);
+
+                let headerTitle = document.createElement("h6");
+                headerTitle.className = "m-0 font-weight-bold text-primary";
+                headerTitle.innerText = `출석일: ${record.attendance_date}`;
+                cardHeader.appendChild(headerTitle);
+
+                // Card Body
+                let collapseDiv = document.createElement("div");
+                collapseDiv.className = "collapse";
+                collapseDiv.id = `collapse${record.attendance_date}`;
+
+                let cardBody = document.createElement("div");
+                cardBody.className = "card-body";
+
+                let courseName = document.createElement("p");
+                courseName.className = "font-weight-bold";
+                courseName.innerText = `강의명: ${record.course_name}`;
+
+                let instructorName = document.createElement("p");
+                instructorName.className = "font-weight-bold";
+                instructorName.innerText = `담당 강사: ${record.course_instructor}`;
+
+                let attendanceStatus = document.createElement("p");
+                attendanceStatus.className = "font-weight-bold";
+                attendanceStatus.innerText = `상태: ${record.attendance_status}`;
+
+                cardBody.appendChild(courseName);
+                cardBody.appendChild(instructorName);
+                cardBody.appendChild(attendanceStatus);
+
+                // Buttons
+                let buttonContainer = document.createElement("div");
+                buttonContainer.className = "row mt-3";
+
+                let submitBtnCol = document.createElement("div");
+                submitBtnCol.className = "col-4";
+
+                let submitBtn = document.createElement("button");
+                submitBtn.className = "btn btn-primary btn-block";
+                submitBtn.innerText = "출석 상세보기";
+                submitBtn.onclick = function () {
+                    alert(`출석 상세보기 기능 준비 중: ${record.attendance_date}`);
+                };
+
+                submitBtnCol.appendChild(submitBtn);
+                buttonContainer.appendChild(submitBtnCol);
+
+                let messageBtnCol = document.createElement("div");
+                messageBtnCol.className = "col-4 offset-4";
+
+                let messageBtn = document.createElement("button");
+                messageBtn.className = "btn btn-primary btn-block";
+                messageBtn.innerText = "쪽지 보내기";
+                messageBtn.onclick = function () {
+                    alert(`담당 강사에게 쪽지 보내기 기능 준비 중: ${record.course_instructor}`);
+                };
+
+                messageBtnCol.appendChild(messageBtn);
+                buttonContainer.appendChild(messageBtnCol);
+
+                cardBody.appendChild(buttonContainer);
+                collapseDiv.appendChild(cardBody);
+                cardDiv.appendChild(cardHeader);
+                cardDiv.appendChild(collapseDiv);
+
+                attendanceList.appendChild(cardDiv);
+            });
+
+            updatePagination();
+        }
+
+        // Pagination
+        function updatePagination() {
+            let totalPages = Math.ceil(attendanceRecords.length / itemsPerPage);
+            let pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            let prevBtn = document.createElement("li");
+            prevBtn.className = `paginate_button page-item ${currentPage == 1 ? "disabled" : ""}`;
+            let prevLink = document.createElement("a");
+            prevLink.href = "#";
+            prevLink.className = "page-link";
+            prevLink.innerText = "Previous";
+            prevLink.onclick = function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderAttendances();
+                }
+            };
+            prevBtn.appendChild(prevLink);
+            pagination.appendChild(prevBtn);
+
+            for (let i = 1; i <= totalPages; i++) {
+                let pageBtn = document.createElement("li");
+                pageBtn.className = `paginate_button page-item ${i == currentPage ? "active" : ""}`;
+                let pageLink = document.createElement("a");
+                pageLink.href = "#";
+                pageLink.className = "page-link";
+                pageLink.innerText = i;
+                pageLink.onclick = function () {
+                    currentPage = i;
+                    renderAttendances();
+                };
+                pageBtn.appendChild(pageLink);
+                pagination.appendChild(pageBtn);
+            }
+
+            let nextBtn = document.createElement("li");
+            nextBtn.className = `paginate_button page-item ${currentPage == totalPages ? "disabled" : ""}`;
+            let nextLink = document.createElement("a");
+            nextLink.href = "#";
+            nextLink.className = "page-link";
+            nextLink.innerText = "Next";
+            nextLink.onclick = function () {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderAttendances();
+                }
+            };
+            nextBtn.appendChild(nextLink);
+            pagination.appendChild(nextBtn);
+        }
+
+        // Select course
+        function selectCourse(courseNo, courseName) {
+            document.getElementById("selectedCourse").textContent = courseName;
+            let userNo = document.getElementById("userNo").value; // Assuming there's a hidden input for userNo
+            loadAttendances(courseNo, userNo);
+        }
+
+        // Initial load
+        window.onload = function () {
+            let initialCourseNo = 1; // Default course ID (update as needed)
+            let userNo = document.getElementById("userNo").value; // Fetch from hidden input
+            loadAttendances(initialCourseNo, userNo);
+        };
+</script>
 
 </head>
 <body id="page-top">
@@ -267,14 +255,12 @@
 									    <a class="navbar-brand" href="#">Navbar</a>
 									    <ul class="navbar-nav ml-auto">
 									        <li class="nav-item dropdown">
-									            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									            <a class="nav-link dropdown-toggle" href="#" id="lectureDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									                <span id="selectedCourse">수강중인 강좌 선택</span> <!-- 기본 텍스트 -->
 									            </a>
 									            <div class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="navbarDropdown">
-									                <a class="dropdown-item" href="#" onclick="selectCourse('IT front+back')">IT front+back</a>
-									                <a class="dropdown-item" href="#" onclick="selectCourse('Java Programming')">Java Programming</a>
-									                <div class="dropdown-divider"></div>
-									                <a class="dropdown-item" href="#">Something else here</a>
+									                <a class="dropdown-item" href="#" onclick="selectCourse(1, 'IT front+back')">IT front+back</a>
+                									<a class="dropdown-item" href="#" onclick="selectCourse(2, 'Java Programming')">Java Programming</a>
 									            </div>
 									        </li>
 									    </ul>
