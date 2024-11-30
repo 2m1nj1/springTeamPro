@@ -9,7 +9,7 @@ $(function(){
 	// ---------------------------------
 	// 			    모달 띄우기
 	// ---------------------------------
-	$('button.btnModal').click(function(){
+	$('.btnModal').click(function(){
 		// click 한 btn의 id 값에 해당되는 modal 창을 연다.
 		// e.g.) 
 		// 	btn의 id 	: btnModal_course_instructor

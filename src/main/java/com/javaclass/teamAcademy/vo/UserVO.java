@@ -15,6 +15,7 @@ public class UserVO {
 	private String	user_addr;			// 주소
 	private String	user_tel;			// 개인 연락처
 	private String	user_parent_tel;	// 보호자 연락처
+	private	String	user_gender;		// 성별
 	private String 	user_birthday;		// 생일
 	private String	user_signupdate;	// 가입
 	private String	user_school;		// 학교

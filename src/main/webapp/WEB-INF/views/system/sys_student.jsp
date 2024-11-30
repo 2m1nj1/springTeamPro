@@ -59,6 +59,7 @@
 
 				<!-- Begin Page Content -->
 				<div class="container container-fluid">
+				
 
 					<!-- 페이지 명 -->
 					<h1 class="h3 mb-4 text-gray-800">수강생관리</h1>
@@ -250,7 +251,7 @@
 									
 									<div class="table-responsive">
 										<form action="" >
-											<table class="table table-border" id="stuList" width="100%" cellspacing="0">
+											<table class="table table-border table-hover" id="stuList" width="100%" cellspacing="0">
 												<thead>
 													<tr>
 														<th><input type="checkbox" name="students" id="allStuChk"></th>
@@ -290,7 +291,7 @@
 						</div>
 
 						<div class="col-2">
-							<a href="sys_student_insert.do" class="btn btn-primary btn-block"><span
+							<a href="sys_stuInsert.do" class="btn btn-primary btn-block"><span
 								class="text">수강생 등록</span></a>
 						</div>
 					</div>
@@ -327,6 +328,6 @@
 
 		<!-- 개인 추가 .js : 이민지 -->
 		<script type="text/javascript" src="/resources/js/system/sys_tab.js"></script>
-		<script type="text/javascript" src="/resources/js/table/stuList.js"></script>
+		<script type="text/javascript" src="/resources/js/system/sys_stu.js"></script>
 </body>
 </html>

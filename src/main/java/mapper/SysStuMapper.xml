@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SysStuDAO">
+	
+	<select id="selectStuList" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT 	USER_NO
+				, USER_NAME
+				, USER_TEL
+				, USER_PARENT_TEL
+				, TO_CHAR(USER_SIGNUPDATE, 'yyyy-mm-dd') user_signupdate 
+		FROM USER_ACCOUNT
+		WHERE user_cate_no = 1
+		ORDER BY USER_NO
+	</select>
+	
+	<select id="selectStuDetail" parameterType="com.javaclass.teamAcademy.vo.UserVO" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT 	USER_NO
+				, USER_CATE_NO
+				, USER_NAME
+				, USER_EMAIL
+				, USER_ADDR
+				, USER_TEL
+				, USER_PARENT_TEL
+				, USER_GENDER
+				, TO_CHAR(USER_BIRTHDAY, 'yyyy-mm-dd') USER_BIRTHDAY
+				, USER_SIGNUPDATE
+				, USER_SCHOOL
+				, USER_GRADE 
+		FROM USER_ACCOUNT
+		WHERE user_cate_no = 1 AND user_no = #{user_no}
+	</select>
+	
+	<update id="updateStuDetail" parameterType="com.javaclass.teamAcademy.vo.UserVO">
+		UPDATE 	USER_ACCOUNT SET
+				USER_NAME 			= #{user_name}
+				, USER_EMAIL 		= #{user_email}
+				, USER_ADDR 		= #{user_addr}
+				, USER_TEL 			= #{user_tel}
+				, USER_PARENT_TEL 	= #{user_parent_tel}
+				, USER_GENDER 		= #{user_gender}
+				, USER_BIRTHDAY 	= #{user_birthday}
+				, USER_SCHOOL 		= #{user_school}
+				, USER_GRADE 		= #{user_grade}
+		WHERE  user_cate_no = 1 AND user_no = #{user_no}
+	</update>
+	
+</mapper>
