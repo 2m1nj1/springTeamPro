@@ -14,6 +14,10 @@ public class SysStuDAOImpl implements SysStuDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	@Override
+	public int selectStuAllCount() {
+		return mybatis.selectOne("SysStuDAO.selectStuAllCount");
+	} // end of selectStuCount()
 	
 	@Override
 	public List<UserVO> selectStuList() {	
@@ -26,10 +30,21 @@ public class SysStuDAOImpl implements SysStuDAO {
 		return mybatis.selectOne("SysStuDAO.selectStuDetail", vo);
 	} // end of selectStuDetail()
 
-
 	@Override
 	public void updateStuDetail(UserVO vo) {
 		mybatis.update("SysStuDAO.updateStuDetail",vo);
 	} // end of updateStuDetail()
+	
+	@Override
+	public void deleteStu(UserVO vo) {
+		mybatis.update("SysStuDAO.deleteStu", vo);
+	} // end of deleteStu()
+	
+	@Override
+	public void insertStu(UserVO vo) {
+		mybatis.insert("SysStuDAO.insertStu", vo);
+	} // end of insertStu()
+
+	
 	
 } // end of ListDaoImpl

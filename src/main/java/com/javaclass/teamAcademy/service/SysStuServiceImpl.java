@@ -13,7 +13,12 @@ public class SysStuServiceImpl implements SysStuService {
 
 	@Autowired
 	private SysStuDAO sysStuDao;
-
+	
+	@Override
+	public int selectStuAllCount() {
+		return sysStuDao.selectStuAllCount();
+	} // end of selectStuCount()
+	
 	@Override
 	public List<UserVO> selectStuList() {
 		return sysStuDao.selectStuList();
@@ -29,6 +34,17 @@ public class SysStuServiceImpl implements SysStuService {
 		sysStuDao.updateStuDetail(vo);
 	} // end of updateStuDetail()
 	
+	
+	@Override
+	public void deleteStu(UserVO vo) {
+		sysStuDao.deleteStu(vo);
+	} // end of deleteStu()
+	
+	@Override
+	public void insertStu(UserVO vo) {
+		sysStuDao.insertStu(vo);
+	} // end of insertStu()
+
 	
 	
 } // end of ListService

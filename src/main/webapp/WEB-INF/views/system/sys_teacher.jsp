@@ -25,7 +25,7 @@
 
 <!-- Custom styles for this template-->
 <link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
-
+<link href="resources/css/system.css" rel="stylesheet">
 <style type="text/css">
 	*{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -71,7 +71,7 @@
 											<div
 												class="text font-weight-bold text-primary text-uppercase mb-1">
 												전체 강사</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+											<div id="tchAllCount" class="h5 mb-0 font-weight-bold text-gray-800"></div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-users fa-2x text-gray-300"></i>
@@ -188,12 +188,34 @@
 						</div>
 					</div>
 
-					<!-- 수강생 리스트 -->
+					<!-- 강사 리스트 -->
 					<div class="row">
 						<div class="col">
 							<div class="card shadow mb-4">
 								<div class="card-body">
-									강사 리스트 뜰 곳
+									
+									<div class="table-responsive">
+										<form action="" >
+											<table class="table table-border table-hover" id="tchList" width="100%" cellspacing="0">
+												<thead>
+													<tr>
+														<th><input type="checkbox" name="teacher" id="allStuChk" class="checkbox_all"></th>
+														<th>회원번호</th>
+														<th>이름</th>
+														<th>연락처</th>
+														<th>이메일</th>
+														<th>계정생성일</th>
+														<th></th>
+													</tr>
+												</thead>
+												
+												<tbody>
+												
+												</tbody>
+											</table>
+										</form>
+									</div>
+									
 								</div>
 							</div>
 						</div>
@@ -215,7 +237,7 @@
 						</div>
 
 						<div class="col-2">
-							<a href="sys_teacher_detail.do" class="btn btn-primary btn-block"><span
+							<a href="sys_tchInsert.do" class="btn btn-primary btn-block"><span
 								class="text">강사 등록</span></a>
 						</div>
 					</div>
@@ -250,6 +272,6 @@
 
 	<!-- 개인 추가 .js : 이민지 -->
 	<script type="text/javascript" src="/resources/js/system/sys_tab.js"></script>
-
+	<script type="text/javascript" src="/resources/js/system/sys_tch.js"></script>
 </body>
 </html>

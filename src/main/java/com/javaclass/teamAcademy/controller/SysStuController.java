@@ -18,15 +18,24 @@ public class SysStuController {
 	@Autowired
 	private SysStuService sysStuService;
 	
+	
+	// ----------------------------------
+	//        	전체 수강생 수
+	// ----------------------------------
+	@GetMapping("stuAllCount")
+	@ResponseBody
+	public int selectStuAllCount() {
+		return sysStuService.selectStuAllCount();
+	} // end of selectStuCount()
+	
+	
 	// ----------------------------------
 	// 			수강생 목록 불러오기
 	// ----------------------------------
 	@GetMapping("stuList")
 	@ResponseBody
 	public List<UserVO> selectStuList(){
-		List<UserVO> result = sysStuService.selectStuList();
-		
-		return result;
+		return sysStuService.selectStuList();
 	} // end of selectStuList()
 	
 	
@@ -49,10 +58,29 @@ public class SysStuController {
 	public String updateStuDetail(UserVO vo) {
 		sysStuService.updateStuDetail(vo);
 		
-		System.out.println(">> " + vo.toString());
-		
 		return "redirect:stuDetail.do?user_no=" + vo.getUser_no();
 	} // end of updateStuDetail()
 	
 	
+	// ----------------------------------
+	// 			   수강생 삭제
+	// ----------------------------------
+	@GetMapping("stuDelete.do")
+	public String deleteStu(UserVO vo) {
+		sysStuService.deleteStu(vo);
+		
+		return "system/sys_student";
+	} // end of deleteStu
+	
+	
+	// ----------------------------------
+	// 			   수강생 등록
+	// ----------------------------------
+	@PostMapping("stuInsert.do")
+	public String insertStu(UserVO vo) {
+		sysStuService.insertStu(vo);
+		
+		return "system/sys_student";
+	} // end of insertStu()
+		
 } // end of ListController

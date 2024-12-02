@@ -1,4 +1,5 @@
 $(function(){
+
 	// ---------------------------------
 	// 			전체 input 초기화
 	// ---------------------------------
@@ -14,14 +15,18 @@ $(function(){
 		// e.g.) 
 		// 	btn의 id 	: btnModal_course_instructor
 		//  modal id 	: modal_course_instructor
-		$("#modal_" + $(this).attr("id").replace("btnModal_", "")).modal();
+		let target = $(this).attr("id").replace("btnModal_", "");
+		
+		$("#modal_" + target).modal(); // 모달 실행
 	}); // end of .click()
-	
 	
 	$('button.btnSysModalAdd').click(function(){
 		
 		// 선택한 라디오의 바로 다음 열 값
-		let selectedRs = $("input[type='radio']:checked").parent("td").next().html();
+		let selectedRs 	= "("
+						+ $("input[type='radio']:checked").parents("tr").find('td').eq(1).html()
+						+ ") "
+						+ $("input[type='radio']:checked").parents("tr").find('td').eq(2).html();
 		
 		// 열려있는 modal의 id 값
 		let modalId = $(this).parents("div.modal").attr("id");
@@ -32,7 +37,10 @@ $(function(){
 		// modal 닫기
 		$('#' + modalId).modal('hide');
 	
-	});
+	}); // end of .click()
+	
+	
+	
 	
 	
 }); // end of .function()

@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="SysStuDAO">
 	
+	<select id="selectStuAllCount" resultType="int">
+		SELECT count(*)
+		FROM USER_ACCOUNT
+		WHERE USER_CATE_NO = 1
+	</select>
+	
 	<select id="selectStuList" resultType="com.javaclass.teamAcademy.vo.UserVO">
 		SELECT 	USER_NO
 				, USER_NAME
@@ -21,7 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				, USER_CATE_NO
 				, USER_NAME
 				, USER_EMAIL
-				, USER_ADDR
+				, USER_ADDR1
+				, USER_ADDR2
 				, USER_TEL
 				, USER_PARENT_TEL
 				, USER_GENDER
@@ -37,7 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE 	USER_ACCOUNT SET
 				USER_NAME 			= #{user_name}
 				, USER_EMAIL 		= #{user_email}
-				, USER_ADDR 		= #{user_addr}
+				, USER_ADDR1 		= #{user_addr1}
+				, USER_ADDR2 		= #{user_addr2}
 				, USER_TEL 			= #{user_tel}
 				, USER_PARENT_TEL 	= #{user_parent_tel}
 				, USER_GENDER 		= #{user_gender}
@@ -46,5 +54,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				, USER_GRADE 		= #{user_grade}
 		WHERE  user_cate_no = 1 AND user_no = #{user_no}
 	</update>
+	
+	<update id="deleteStu" parameterType="com.javaclass.teamAcademy.vo.UserVO">
+		UPDATE USER_ACCOUNT SET
+			USER_CATE_NO = 11
+			, USER_SECDATE = sysdate
+		WHERE  user_cate_no = 1 AND user_no = #{user_no}
+	</update>
+	
+	
+	<insert id="insertStu" parameterType="com.javaclass.teamAcademy.vo.UserVO">
+		INSERT INTO USER_ACCOUNT (
+			USER_NO 
+			, USER_ID
+			, USER_PASS 
+			, USER_NAME 
+			, USER_EMAIL 
+			, USER_ADDR1
+			, USER_ADDR2
+			, USER_TEL 
+			, USER_PARENT_TEL
+			, USER_GENDER 
+			, USER_BIRTHDAY
+			, USER_SIGNUPDATE
+			, USER_SCHOOL
+			, USER_GRADE
+			, USER_CATE_NO 
+		) VALUES (
+			seq_user_no.nextval
+			, #{user_id}
+			, #{user_pass} 
+			, #{user_name}
+			, #{user_email}
+			, #{user_addr1}
+			, #{user_addr2}
+			, #{user_tel} 
+			, #{user_parent_tel}
+			, #{user_gender}
+			, #{user_birthday}
+			, sysdate
+			, #{user_school}
+			, #{user_grade}
+			, 1
+		)	
+	</insert>
 	
 </mapper>

@@ -4,7 +4,7 @@
 /* 테이블 head 고정 */
 .table-head-fix tbody {
 	display : block;
-	max-height : 500px;
+	max-height : 400px;
 	overflow-y: scroll; 
 }
 
@@ -32,7 +32,7 @@
 }
 
 #stuList th:nth-child(2) {
-    width: 10%;
+    width: 9%;
 }
 
 #stuList th:nth-child(3) {
@@ -40,18 +40,74 @@
 }
 
 #stuList th:nth-child(4) {
-    width: 25%;
+    width: 19%;
 }
 
 #stuList th:nth-child(5) {
-    width: 25%;
+    width: 19%;
 }
 
 #stuList th:nth-child(6) {
     width: 20%;
 }
 
-/* #table_student th:nth-child(2) { */
-/*     width: 10%; */
-/* } */
+#stuList th:nth-child(7) {
+    width: 11%;
+}
 
+
+/* 강사 관리 - table */
+#tchList th, td {
+    text-align: center;
+}
+
+#tchList th:first-child {
+    width: 5%;
+}
+
+#tchList th:nth-child(2) {
+    width: 10%;
+}
+
+#tchList th:nth-child(3) {
+    width: 15%;
+}
+
+#tchList th:nth-child(4) {
+    width: 20%;
+}
+
+#tchList th:nth-child(5) {
+    width: 20%;
+}
+
+#tchList th:nth-child(6) {
+    width: 20%;
+}
+
+#tchList th:nth-child(7) {
+    width: 10%;
+}
+
+
+
+/* 모달 - 강사 */
+#modalTchList th, td {
+    text-align: center;
+}
+
+#modalTchList th:first-child {
+    width: 10%;
+}
+
+#modalTchList th:nth-child(2) {
+    width: 20%;
+}
+
+#modalTchList th:nth-child(3) {
+    width: 30%;
+}
+
+#modalTchList th:nth-child(4) {
+    width: 40%;
+}

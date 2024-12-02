@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SysTchDAO">
+	
+	<select id="selectTchAllCount" resultType="int">
+		SELECT count(*)
+		FROM USER_ACCOUNT
+		WHERE USER_CATE_NO = 2
+	</select>
+	
+	<select id="selectTchList" parameterType="com.javaclass.teamAcademy.vo.UserVO" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT 	USER_NO
+				, USER_NAME
+				, USER_TEL
+				, USER_EMAIL
+				, TO_CHAR(USER_SIGNUPDATE, 'yyyy-mm-dd') user_signupdate 
+		FROM USER_ACCOUNT
+		WHERE user_cate_no = 2
+		
+		<if test="user_no != null and user_no != 0">
+			AND USER_NO = #{user_no}
+		</if>
+		<if test="user_name != null">
+			AND USER_NAME LIKE CONCAT(CONCAT('%', #{user_name}), '%')
+		</if>
+		
+		ORDER BY USER_NO
+	</select>
+	
+	<select id="selectTchDetail" parameterType="com.javaclass.teamAcademy.vo.UserVO" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT 	USER_NO
+				, USER_CATE_NO
+				, USER_NAME
+				, USER_EMAIL
+				, USER_ADDR1
+				, USER_ADDR2
+				, USER_TEL
+				, USER_GENDER
+				, TO_CHAR(USER_BIRTHDAY, 'yyyy-mm-dd') USER_BIRTHDAY
+				, USER_SIGNUPDATE
+		FROM USER_ACCOUNT
+		WHERE user_cate_no = 2 AND user_no = #{user_no}
+	</select>
+	
+	<update id="updateTchDetail" parameterType="com.javaclass.teamAcademy.vo.UserVO">
+		UPDATE 	USER_ACCOUNT SET
+				USER_NAME 			= #{user_name}
+				, USER_EMAIL 		= #{user_email}
+				, USER_ADDR1 		= #{user_addr1}
+				, USER_ADDR2 		= #{user_addr2}
+				, USER_TEL 			= #{user_tel}
+				, USER_GENDER 		= #{user_gender}
+				, USER_BIRTHDAY 	= #{user_birthday}
+		WHERE  user_cate_no = 2 AND user_no = #{user_no}
+	</update>
+	
+	<update id="deleteTch" parameterType="com.javaclass.teamAcademy.vo.UserVO">
+		UPDATE USER_ACCOUNT SET
+			USER_CATE_NO = 12
+			, USER_SECDATE = sysdate
+		WHERE  user_cate_no = 2 AND user_no = #{user_no}
+	</update>
+	
+	
+	<insert id="insertTch" parameterType="com.javaclass.teamAcademy.vo.UserVO">
+		INSERT INTO USER_ACCOUNT (
+			USER_NO 
+			, USER_ID
+			, USER_PASS 
+			, USER_NAME 
+			, USER_EMAIL 
+			, USER_ADDR1
+			, USER_ADDR2
+			, USER_TEL 
+			, USER_GENDER 
+			, USER_BIRTHDAY
+			, USER_SIGNUPDATE
+			, USER_CATE_NO 
+		) VALUES (
+			seq_user_no.nextval
+			, #{user_id}
+			, #{user_pass} 
+			, #{user_name}
+			, #{user_email}
+			, #{user_addr1}
+			, #{user_addr2}
+			, #{user_tel} 
+			, #{user_gender}
+			, #{user_birthday}
+			, sysdate
+			, 2
+		)	
+	</insert>
+	
+</mapper>

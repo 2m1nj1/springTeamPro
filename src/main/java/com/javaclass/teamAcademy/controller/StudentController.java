@@ -23,9 +23,6 @@ public class StudentController {
 		return "student/stu_" + view;
 	} // end of returnView
 	
-<<<<<<< HEAD
-} // end of studentController
-=======
 	// 데이터 물어오는 라우팅(루팅, routing) - [학생] 과제제출 페이지랑 연결.
     @RequestMapping("/homeworkList")
     public String getHomeworkList(Model m, HomeworkVO vo) {
@@ -36,4 +33,4 @@ public class StudentController {
     }
 	
 } // end of studentController
->>>>>>> e0fcf96 (pull이 하고싶어요)
+

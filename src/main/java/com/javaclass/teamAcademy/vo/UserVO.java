@@ -12,7 +12,8 @@ public class UserVO {
 	private String	user_name;			// 이름
 	private String	user_CI;			// CI 번호
 	private String	user_email;			// 이메일
-	private String	user_addr;			// 주소
+	private String	user_addr1;			// 주소
+	private String	user_addr2;			// 상세 주소
 	private String	user_tel;			// 개인 연락처
 	private String	user_parent_tel;	// 보호자 연락처
 	private	String	user_gender;		// 성별
