@@ -1,5 +1,5 @@
 $(function(){
-
+	
 	// ---------------------------------
 	// 			전체 input 초기화
 	// ---------------------------------
@@ -22,11 +22,20 @@ $(function(){
 	
 	$('button.btnSysModalAdd').click(function(){
 		
-		// 선택한 라디오의 바로 다음 열 값
-		let selectedRs 	= "("
-						+ $("input[type='radio']:checked").parents("tr").find('td').eq(1).html()
-						+ ") "
-						+ $("input[type='radio']:checked").parents("tr").find('td').eq(2).html();
+		//let resultPk = $("input[type='radio']:checked").parents("tr").find('.pkElement').val();
+		
+		//alert(resultPk);
+		
+		let resultPk 	= $("input[type='radio']:checked").parents("tr").find('td').eq(1).html();
+		let resultName 	= $("input[type='radio']:checked").parents("tr").find('td').eq(2).html();
+		
+		let selectedRs;
+		
+		if (resultPk === undefined || resultName === undefined) { // 선택 값이 없을 시 
+			selectedRs = "";
+		} else { // 선택 값이 있을 시
+			selectedRs = "(" + resultPk + ") " + resultName;;
+		} // end of if
 		
 		// 열려있는 modal의 id 값
 		let modalId = $(this).parents("div.modal").attr("id");

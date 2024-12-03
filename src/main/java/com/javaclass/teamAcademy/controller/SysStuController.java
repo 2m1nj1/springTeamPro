@@ -19,9 +19,7 @@ public class SysStuController {
 	private SysStuService sysStuService;
 	
 	
-	// ----------------------------------
-	//        	전체 수강생 수
-	// ----------------------------------
+	// 전체 수강생 수
 	@GetMapping("stuAllCount")
 	@ResponseBody
 	public int selectStuAllCount() {
@@ -29,31 +27,23 @@ public class SysStuController {
 	} // end of selectStuCount()
 	
 	
-	// ----------------------------------
-	// 			수강생 목록 불러오기
-	// ----------------------------------
+	// 수강생 목록 불러오기
 	@GetMapping("stuList")
 	@ResponseBody
 	public List<UserVO> selectStuList(){
 		return sysStuService.selectStuList();
 	} // end of selectStuList()
 	
-	
-	// ----------------------------------
-	// 		    수강생 상세 페이지 이동
-	// ----------------------------------
+	// 수강생 상세 페이지 이동
 	@GetMapping("stuDetail.do")
 	public String selectStuDetail(UserVO vo, Model m) {
 		UserVO resultVO = sysStuService.selectStuDetail(vo);
 		m.addAttribute("student", resultVO);
 		
-		return "system/sys_stuDetail";
+		return "redirect:sys_stuDetail.do";
 	} // end of selectStuDetail
 	
-	
-	// ----------------------------------
-	// 			수강생 정보 수정
-	// ----------------------------------
+	// 수강생 정보 수정
 	@PostMapping("stuDetailUpdate.do")
 	public String updateStuDetail(UserVO vo) {
 		sysStuService.updateStuDetail(vo);
@@ -62,9 +52,7 @@ public class SysStuController {
 	} // end of updateStuDetail()
 	
 	
-	// ----------------------------------
-	// 			   수강생 삭제
-	// ----------------------------------
+	// 수강생 삭제
 	@GetMapping("stuDelete.do")
 	public String deleteStu(UserVO vo) {
 		sysStuService.deleteStu(vo);
@@ -72,12 +60,11 @@ public class SysStuController {
 		return "system/sys_student";
 	} // end of deleteStu
 	
-	
-	// ----------------------------------
-	// 			   수강생 등록
-	// ----------------------------------
+
+	// 수강생 등록
 	@PostMapping("stuInsert.do")
 	public String insertStu(UserVO vo) {
+		System.out.println(">> " + vo.toString());
 		sysStuService.insertStu(vo);
 		
 		return "system/sys_student";

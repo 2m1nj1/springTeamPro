@@ -22,5 +22,7 @@ public class UserVO {
 	private String	user_school;		// 학교
 	private String 	user_grade;			// 학년
 	
+	private String	user_email_id;		// 이메일 id
+	private String	user_email_domain;	// 이메일 도메인
 	
 } // end of UserVO

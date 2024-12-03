@@ -73,14 +73,16 @@ $(function(){
 		// 선택한 행의 pk(회원번호) 값
 		let user_no = $(this).parents('tr').find('td').eq(1).text();
 		window.location = "tchDetail.do?user_no=" + user_no; 
-	});
+	}); // end of .on click()
+	
 	
 	// ----------------------------------
 	// 		    강사 정보 수정
 	// ----------------------------------
 	$('div#btnSave').click(function(){
 		$('form#tchDetailForm').submit();
-	}); 
+	}); // end of .click()
+	
 	
 	// ----------------------------------
 	// 		       강사 삭제
@@ -88,7 +90,7 @@ $(function(){
 	$('button#btnDelete').click(function(){
 		let user_no = $(this).val();
 		window.location = "tchDelete.do?user_no=" + user_no;
-	});
+	}); // end of .click()
 
 	// ----------------------------------
 	// 		       강사 등록

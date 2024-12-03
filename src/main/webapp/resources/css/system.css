@@ -111,3 +111,26 @@
 #modalTchList th:nth-child(4) {
     width: 40%;
 }
+
+
+/* 모달 - 강의실 */
+#modalClassroomList th, td {
+    text-align: center;
+}
+
+#modalClassroomList th:first-child {
+    width: 10%;
+}
+
+#modalClassroomList th:nth-child(2) {
+    width: 40%;
+}
+
+#modalClassroomList th:nth-child(3) {
+    width: 40%;
+}
+
+#modalClassroomList th:nth-child(4) {
+    width: 10%;
+}
+

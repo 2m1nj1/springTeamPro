@@ -159,10 +159,18 @@
 												<div class="col">
 													<div class="row">
 														<label class="col-sm-3 col-form-label">이메일</label>
-														<div class="col-sm-9">
+														<div class="col-sm-4">
 															<input type="text" class="form-control form-control-sm"
-																id="user_email" name="user_email"
-																value="${student.user_email}">
+																id="user_email_id" name="user_email_id"
+																value="">
+														</div>
+														<div class="col-sm-5">
+															<select class="custom-select custom-select-sm" name="user_email_domain">
+																<option value="">이메일 선택</option>
+																<c:forEach var="item" items="${emailDomainList}">
+																	<option value="${item.domain_name}">${item.domain_name}</option>
+																</c:forEach>
+															</select>
 														</div>
 													</div>
 													<div class="row">

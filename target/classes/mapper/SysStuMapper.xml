@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateStuDetail" parameterType="com.javaclass.teamAcademy.vo.UserVO">
 		UPDATE 	USER_ACCOUNT SET
 				USER_NAME 			= #{user_name}
-				, USER_EMAIL 		= #{user_email}
+				, USER_EMAIL 		= #{user_email_id} || #{user_email_domain}
 				, USER_ADDR1 		= #{user_addr1}
 				, USER_ADDR2 		= #{user_addr2}
 				, USER_TEL 			= #{user_tel}
@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, #{user_id}
 			, #{user_pass} 
 			, #{user_name}
-			, #{user_email}
+			, #{user_email_id} || #{user_email_domain}
 			, #{user_addr1}
 			, #{user_addr2}
 			, #{user_tel} 

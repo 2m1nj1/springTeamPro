@@ -5,8 +5,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="SystemDAO">
 	
+	<select id="selectEmailDomainList" resultType="com.javaclass.teamAcademy.vo.EmailDomainVO">
+		SELECT *
+		FROM EMAIL_DOMAIN
+	</select>
+	
 	<select id="selectClassroomList" parameterType="com.javaclass.teamAcademy.vo.ClassroomVO" resultType="com.javaclass.teamAcademy.vo.ClassroomVO">
 		SELECT CLASSROOM_NO, CLASSROOM_NAME, CLASSROOM_LOCATION 
 		FROM CLASSROOM 
+		
+		<if test="classroom_name != null">
+			WHERE CLASSROOM_NAME LIKE CONCAT(CONCAT('%', #{classroom_name}), '%')
+		</if>
+		
+		ORDER BY CLASSROOM_NAME
 	</select>
+	
+	<select id="selectClassroomDetail" parameterType="com.javaclass.teamAcademy.vo.ClassroomVO" resultType="com.javaclass.teamAcademy.vo.ClassroomVO">
+		SELECT CLASSROOM_NO, CLASSROOM_NAME, CLASSROOM_LOCATION 
+		FROM CLASSROOM 
+		WHERE CLASSROOM_NO = #{classroom_no}
+	</select>
+	
+	<update id="updateClassroom" parameterType="com.javaclass.teamAcademy.vo.ClassroomVO">
+		UPDATE CLASSROOM SET
+			CLASSROOM_NAME = #{classroom_name}
+			, CLASSROOM_LOCATION = #{classroom_location}
+		WHERE CLASSROOM_NO  = #{classroom_no}
+	</update>
+	
+	<delete id="deleteClassroom" parameterType="com.javaclass.teamAcademy.vo.ClassroomVO">
+		DELETE FROM CLASSROOM
+		WHERE CLASSROOM_NO = #{classroom_no}
+	</delete>
+	
+	<insert id="insertClassroom" parameterType="com.javaclass.teamAcademy.vo.ClassroomVO">
+		INSERT INTO CLASSROOM (
+			CLASSROOM_NO
+			, CLASSROOM_NAME
+			, CLASSROOM_LOCATION
+		)
+		VALUES (
+			seq_classroom_no.nextval
+			, #{classroom_name}
+			, #{classroom_location}
+		)
+	</insert>
+	
 </mapper>
