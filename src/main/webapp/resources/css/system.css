@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+#setDateOfWeekAndTime{
+	border : 0;
+}
+
+
+.btnSetDayOfWeek{
+	margin : 5px;
+}
+
 
 /* 테이블 head 고정 */
 .table-head-fix tbody {

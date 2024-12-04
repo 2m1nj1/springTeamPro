@@ -57,7 +57,7 @@
 						data-dismiss="modal">닫기</button>
 				</div>
 				<div class="col">
-					<button type="button"
+					<button type="button" id="btnTeacher"
 						class="btn btn-primary btn-block btnSysModalAdd">선택</button>
 				</div>
 			</div>
@@ -151,7 +151,7 @@
 					
 					<div class="row">
 						<table id="modalClassroomList"
-							class="table table-hover table-head-fix" id="" cellspacing="0">
+							class="table table-hover table-head-fix" cellspacing="0">
 							<thead>
 								<tr>
 									<th></th>
@@ -249,10 +249,6 @@
 				</div>
 				<!-- end of right -->
 
-
-
-
-
 			</div>
 
 			<div class=" modal-body row">
@@ -261,7 +257,7 @@
 						data-dismiss="modal">닫기</button>
 				</div>
 				<div class="col">
-					<button type="button"
+					<button type="button" id="btnClassroom"
 						class="btn btn-primary btn-block btnSysModalAdd">선택</button>
 				</div>
 			</div>
