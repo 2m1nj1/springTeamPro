@@ -40,7 +40,7 @@ public class SysStuController {
 		UserVO resultVO = sysStuService.selectStuDetail(vo);
 		m.addAttribute("student", resultVO);
 		
-		return "redirect:sys_stuDetail.do";
+		return "system/sys_stuDetail";
 	} // end of selectStuDetail
 	
 	// 수강생 정보 수정
