@@ -30,41 +30,6 @@
    }
 </style>
 
-<!-- js -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<!-- exam score input page custom script -->
-<script type="text/javascript">
-	$(function() {
-		// 버튼 옆에 문구 없으면 추가, 있으면 토글.
-		let txt1 = " * 표시는 필수기재항목. ";
-		let txt2 = " 응시=1, 미응시=0. ";
-
-		/* 버튼의 id 값을 infobtn1 대신에 넣어주면 됩니다 */
-		$('#infobtn1').click(function() {
-			// 버튼 옆에 문구가 없으면 추가하고, 있으면 토글
-			let infoText = $(this).next('.info-text');
-			if (infoText.length == 0) {
-				//문구 없으면 추가
-				$(this).after('<span class="info-text">' + txt1 + '</span>')
-			} else {
-				// 문구 있으면 토글(보이거나 숨김)
-				infoText.toggle();
-			}
-
-		});// end of infobtn1 click
-
-		$('#infobtn2').click(function() {
-			let infoText = $(this).next('.info-text');
-			if (infoText.length == 0) {
-				$(this).after('<span class="info-text">' + txt2 + '</span>')
-			} else {
-				infoText.toggle();
-			}
-		});// end of infobtn2 click
-
-	});// end of function
-</script>
 
 </head>
 <body id="page-top">
@@ -90,6 +55,9 @@
 
 				<!-- Begin Page Content -->
 				<div class="container container-fluid">
+					
+					<!-- hidden input - userNo -->
+					<input type="hidden" id="userNo" name="userNo" value="${param.userNo}">
 
 					<!-- 페이지 명 -->
 					<h5 class="h3 mb-4 text-gray-800">성적 입력</h5>
@@ -110,58 +78,62 @@
 								<div class="card-body">
 									<div class="row">
 									<!-- left -->
-										<div class="col-5">
+										<div class="col-6">
 											<div class="row">
 												<label class="col-sm-4 col-form-label">*시험 일자 : </label>
 												<div class="col-sm-8">
-													<input type="date" class="form-control form-control-sm"
-														 name="examdate" id="examdate">
+													<input type="date" class="form-control form-control-sm" required
+														 name="exam_date" id="exam_date" placeholder="시험 일자 입력">
 												</div>
 											</div>
 											<div class="row">
 												<label class="col-sm-4 col-form-label">*시험명 : </label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														name="examname" id="examname">
+													<input type="text" class="form-control form-control-sm" required
+														name="exam_name" id="exam_name" placeholder="시험명 입력">
 												</div>
 											</div>
 											<div class="row">
-												<label class="col-sm-4 col-form-label">*수험번호 : </label>
+												<label class="col-sm-4 col-form-label">*시험 정보 : </label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														name="examno" id="examno">
+													<input type="text" class="form-control form-control-sm" required
+														name="exam_context" id="exam_context" placeholder="시험 상세설명 - 수능/모평/모의고사 등.">
+												</div>
+											</div>
+											<div class="row">
+												<label class="col-sm-4 col-form-label">*수험 번호 : </label>
+												<div class="col-sm-8">
+													<input type="number" class="form-control form-control-sm" required
+														name="exam_no" id="exam_no" placeholder="수험번호 입력(6자리 숫자)">
 												</div>
 											</div>
 											<div class="row">
 												<label class="col-sm-4 col-form-label">*이름 : </label>
 												<div class="col-sm-8">
-													 <input type="text" class="form-control form-control-sm"
-														name="user_name" id="user_name">
+													 <input type="text" class="form-control form-control-sm" required
+														name="user_name" id="user_name" placeholder="수험생 이름 입력">
 												</div>
 											</div>
 											<div class="row">
 												<label class="col-sm-4 col-form-label">*원점수 총합   : </label>
 												<div class="col-sm-8"> 
-													<input type="text" class="form-control form-control-sm"
-													 name="original_score" id="original_score">
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">*표준점수 총합: </label>
-												<div class="col-sm-8"> 
-													<input type="text" class="form-control form-control-sm"
-													 name="standard_score" id="standard_score">
+													<input type="number" class="form-control form-control-sm" required
+													min="0" max="300"
+													 name="original_score" id="original_score" placeholder="국영수 원점수 총점 입력(0~300)">
 												</div>
 											</div>
 											<div class="row">
 												<label class="col-sm-4 col-form-label">*백분위 총합 : </label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-													 name="percentile_score" id="percentile_score">
+													<input type="number" class="form-control form-control-sm" required
+													min="0"
+													 name="percentile_score" id="percentile_score" placeholder="국영수 백분위 총점 입력">
 												</div>		
 											</div> <!-- end of row -->
 										</div> <!-- end of col-5 -->
 										<!-- end of left -->
+										
+										<div class="col-1"></div>
 										
 										<!-- right -->
 										<div class="col-5">
@@ -170,40 +142,50 @@
 										</button>
 											<div class="col">
 												<div class="row">
+													<div class="custom-control custom-checkbox small">
+                                                		<input type="checkbox" class="custom-control-input"
+                                                		 name="kor_took" id="kor_took" checked>
+                                            			<label class="custom-control-label" for="kor_took">* 국어 응시 여부 : </label>
+                                            		</div>
+                                            	</div>
+												<div class="row">	
 													<label class="col-sm-4 col-form-label">*국어 : </label>
 													<div class="col-sm-8">
-														<input type="text" class="form-control form-control-sm"
-															name="kor" id="kor" value="">
+														<input type="number" class="form-control form-control-sm"
+														min="0" max="100" required
+															name="kor" id="kor" value="" placeholder="국어 점수 입력(0~100)">
 													</div>
+												</div>
+												<div class="row">		
 													<div class="custom-control custom-checkbox small">
-                                                		<input type="checkbox" class="custom-control-input" name="kor_took" id="kor_took">
-                                            			<label class="custom-control-label" for="kor_took">* 국어 응시 여부 : </label>
-                                            		</div> <!-- end of row -->
-												</div> <!-- end of col -->
+                                                		<input type="checkbox" class="custom-control-input" name="math_took" id="math_took" checked>
+                                            			<label class="custom-control-label" for="math_took">* 수학 응시 여부 : </label>
+                                            		</div>
+												</div>
 												<div class="row">
 													<label class="col-sm-4 col-form-label">*수학 : </label>
 													<div class="col-sm-8">
-														<input type="text" class="form-control form-control-sm"
-															name="math" id="math" value="">
+														<input type="number" class="form-control form-control-sm"
+														min="0" max="100" required
+															name="math" id="math" value="" placeholder="수학 점수 입력(0~100)">
 													</div>
+												</div>
+												<div class="row">
 													<div class="custom-control custom-checkbox small">
-                                                		<input type="checkbox" class="custom-control-input" name="math_took" id="math_took">
-                                            			<label class="custom-control-label" for="math_took">* 수학 응시 여부 : </label>
+                                                		<input type="checkbox" class="custom-control-input" name="eng_took" id="eng_took" checked>
+                                            			<label class="custom-control-label" for="eng_took">* 영어 응시 여부 : </label>
                                             		</div>
 												</div>
 												<div class="row">
 													<label class="col-sm-4 col-form-label">*영어 : </label>
 													<div class="col-sm-8">
-														<input type="text" class="form-control form-control-sm"
-															name="english" id="english" value="">
+														<input type="number" class="form-control form-control-sm"
+														min="0" max="100" required
+															name="eng" id="eng" value="" placeholder="영어 점수 입력(0~100)">
 													</div>
-													<div class="custom-control custom-checkbox small">
-                                                		<input type="checkbox" class="custom-control-input" name="eng_took" id="eng_took">
-                                            			<label class="custom-control-label" for="eng_took">* 영어 응시 여부 : </label>
-                                            		</div>
-												</div> <!-- end of last row -->
-											</div> <!-- end of col -->
-									</div> <!-- end of row-5 -->
+												</div>
+											</div>
+										</div> <!-- end of row-5 -->
 									<!-- end of right -->
 									</div> <!-- row -->
 								</div> <!-- end of card-body -->
@@ -219,14 +201,15 @@
 										<span class="text">이전 화면</span>
 									</a>
 								</div>
-							<div class="col-4"></div>
-								<div class="col-4">
-									<a href="#" class="btn btn-primary btn-icon-split btn">
+								<div class="col-6"></div>
+								<div class="col-2">
+									<!-- 등록 버튼 클릭시 먼저 유효성 검사. 추후 괜춘하면 이동. -->
+									<button type="submit" class="btn btn-primary btn-icon-split btn" id="stu_gradeInsertButton">
 										<span class="icon text-white-50">
 											<i class="fas fa-paper-plane"></i>
 										</span>
 										<span class="text">등록</span>
-									</a>
+									</button>
 								</div>
 							</div>
 							
@@ -259,5 +242,11 @@
 		<!-- Page level custom scripts -->
 		<script src="resources/static/js/demo/chart-area-demo.js"></script>
 		<script src="resources/static/js/demo/chart-pie-demo.js"></script>
+		
+		<!-- stu_gradeInsert js -->
+		<!-- exam score input page custom script -->
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script type="text/javascript" src="resources/js/student/stu_gradeInsert.js"></script>
+		
 </body>
 </html>

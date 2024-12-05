@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="GradeDao">
+
+	<!-- Grade List 가져올 것임 -->
+	<select id="fetchGradeList" parameterType="int" resultType="com.javaclass.teamAcademy.vo.GradeVO">
+		SELECT 
+		    g.grade_no
+		    , g.exam_no
+		    , g.user_no
+		    , g.original_score
+		    , g.percentile_score
+		    , g.kor
+		    , g.math
+		    , g.eng
+		    , g.kor_took
+		    , g.math_took
+		    , g.eng_took
+		    , u.user_name
+		    , e.exam_name
+		    , e.exam_context
+		    , TO_CHAR(e.exam_date, 'YYYY-MM-DD') AS exam_date
+		FROM 
+		    grade g
+		INNER JOIN 
+		    user_account u 
+		 ON g.user_no = u.user_no
+		INNER JOIN
+			exam e
+		 ON g.exam_no = e.exam_no
+		WHERE 
+		    g.user_no = #{userNo}
+		ORDER BY g.grade_no ASC
+	</select>
+	
+	<!-- 연도 가져옴. -->
+	<select id="fetchGradeListByYear" parameterType="map" resultType="com.javaclass.teamAcademy.vo.GradeVO">
+		SELECT 
+			DISTINCT TO_CHAR(exam_date, 'YYYY') AS exam_year
+		FROM 
+			exam e
+		INNER JOIN
+			grade g
+		ON
+			e.exam_no = g.grade_no
+		INNER JOIN
+			user_account ua
+		ON
+			g.user_no = ua.user_no
+		WHERE 
+			g.user_no = 28
+			AND EXTRACT(YEAR FROM exam_date) = 2024
+		ORDER BY 
+			exam_year DESC
+	</select>
+	
+	<!-- !Grade + Exam 정보 삽입! -->
+	<insert id="insertGradesAndExams" parameterType="map">
+	    DECLARE
+	        v_exam_no NUMBER;
+	    BEGIN
+	        INSERT INTO EXAM (exam_no, exam_name, exam_context, exam_date)
+	        VALUES (team2.seq_exam_no.nextval, #{exam_name}, #{exam_context}, #{exam_date})
+	        
+	        RETURNING exam_no INTO v_exam_no;
+
+	        INSERT INTO GRADE (grade_no, user_no, exam_no, original_score, percentile_score, kor, kor_took, math, math_took, eng, eng_took)
+	        VALUES (team2.seq_grade_no.nextval, #{user_no}, v_exam_no, #{original_score}, #{percentile_score}, #{kor}, #{kor_took}, #{math}, #{math_took}, #{eng}, #{eng_took});
+	    END;
+	</insert>
+	
+</mapper>

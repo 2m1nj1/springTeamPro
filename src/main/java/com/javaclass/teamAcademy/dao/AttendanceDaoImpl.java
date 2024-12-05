@@ -1,12 +1,14 @@
 package com.javaclass.teamAcademy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+import com.javaclass.teamAcademy.vo.CourseVO;
 
 @Repository
 public class AttendanceDaoImpl implements AttendanceDao{
@@ -14,21 +16,29 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	
 	@Autowired
 	private SqlSessionTemplate sqlsession;
+
+	//private static final String NAMESPACE = "com.javaclass.teamAcademy.mapper.AttendanceDao";
 	
-	// 출결 상세조회
-	public AttendanceVO getAttendanceDetail(AttendanceVO vo) {
-		System.out.println("mybatis getAttendance() 호출");
-		return (AttendanceVO) sqlsession.selectOne("AttendanceDao.getAttendance", vo);
-	}
-	// 출결 목록 조회
-	public List<AttendanceVO> getAttendanceList(AttendanceVO vo) {
-		System.out.println("mybatis getAttendanceList() 호출");
-		return sqlsession.selectList("AttendanceDao.getAttendanceList", vo);
-	}
 	// [학생] nav bar 에 표시될 수강중인 강좌들 불러오기
 	@Override
-	public List<String> getCoursesByStudent(int user_no) {
-		System.out.println("mybatis getCoursesByStudent() 호출");
-		return sqlsession.selectList("AttendanceDao.getCoursesByStudent", user_no);
+	public List<CourseVO> fetchOngoingCourses(int userNo) {
+		System.out.println("Dao Layer fetchOngoingCourses() 호출" + userNo);
+		List<CourseVO> courses = sqlsession.selectList( "AttendanceDao.fetchOngoingCourses", userNo );
+		System.out.println("Courses fetched: " + courses);
+		return courses;
 	}
+
+	// 출결 목록 조회
+	@Override
+	public List<AttendanceVO> fetchAttendanceRecords(Map<String, Object> params) {
+		return sqlsession.selectList( "AttendanceDao.fetchAttendanceRecords", params );
+	}
+	
+	/*
+	 * // 출결 기록 전체 갯수 가져오기...
+	 * 
+	 * @Override public int getTotalAttendanceCount(Map<String, Object> params) {
+	 * return sqlsession.selectOne( "AttendanceDao.getTotalAttendanceCount",
+	 * params); }
+	 */
 }

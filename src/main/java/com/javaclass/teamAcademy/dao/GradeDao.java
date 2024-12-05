@@ -1,7 +1,17 @@
 package com.javaclass.teamAcademy.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import com.javaclass.teamAcademy.vo.ExamVO;
 import com.javaclass.teamAcademy.vo.GradeVO;
 
 public interface GradeDao {
-	public void insertGrade(GradeVO vo);
+	
+	List<GradeVO> fetchGradeList(int userNo);
+
+	List<GradeVO> fetchGradeListByYear(int userNo, int year);
+
+	void insertGradesAndExams(Map<String, Object> data);
+
 }

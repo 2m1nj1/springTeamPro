@@ -3,7 +3,6 @@ package com.javaclass.teamAcademy.vo;
 import lombok.Data;
 
 @Data
-//@Alias("avo")
 public class AttendanceVO {
 	// 학생 출결 조회 페이지 기준으로 만듦
 	private String attendance_date;		// 출석일시

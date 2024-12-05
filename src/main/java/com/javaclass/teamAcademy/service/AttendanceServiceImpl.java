@@ -1,12 +1,14 @@
 package com.javaclass.teamAcademy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaclass.teamAcademy.dao.AttendanceDao;
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+import com.javaclass.teamAcademy.vo.CourseVO;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService{
@@ -15,21 +17,28 @@ public class AttendanceServiceImpl implements AttendanceService{
 	@Autowired
 	private AttendanceDao adao;
 	
-	// 출결 상세보기
-	public AttendanceVO getAttendanceDetail(AttendanceVO vo){
-		//System.out.println(vo.toString());
-		return adao.getAttendanceDetail(vo);
-	}
-	// 출결 목록보기
-	@Override
-	public List<AttendanceVO> getAttendanceList(AttendanceVO vo) {
-		//System.out.println(vo.toString());
-		return adao.getAttendanceList(vo);
-	}
+	
 	// [학생] nav bar 에 표시될 수강중인 강좌들 불러오기  
 	@Override
-	public List<String> getCoursesByStudent(int user_no) {
-		//System.out.println("user_no= " + user_no);
-		return adao.getCoursesByStudent(user_no);
+	public List<CourseVO> getOngoingCourses(int userNo) {
+		System.out.println("Service Layer - OngoingCourses for userNo " + userNo );
+        return adao.fetchOngoingCourses(userNo);
+    }
+
+	// 출결 목록 가져오기
+	@Override
+	public List<AttendanceVO> getAttendanceRecords(Map<String, Object> params) {
+		// 비었거나 null 값인 parameter 들 삭제.
+		params.entrySet().removeIf( entry -> entry.getValue() == null || entry.getValue().toString().trim().isEmpty());
+		
+		System.out.println("Service Layer - getAttendanceList for params :" + params);
+		return adao.fetchAttendanceRecords(params);
 	}
+	
+	/*
+	 * // 출결 기록 전체 갯수 가져오기...
+	 * 
+	 * @Override public int getTotalAttendanceCount(Map<String, Object> params) {
+	 * return adao.getTotalAttendanceCount(params); }
+	 */
 }

@@ -45,6 +45,4 @@ public class SysStuDAOImpl implements SysStuDAO {
 		mybatis.insert("SysStuDAO.insertStu", vo);
 	} // end of insertStu()
 
-	
-	
 } // end of ListDaoImpl
