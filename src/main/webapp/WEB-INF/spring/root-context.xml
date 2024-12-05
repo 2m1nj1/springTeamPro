@@ -27,6 +27,16 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"></property>
+		<property name="typeAliases">
+		<list>
+			<value>com.javaclass.teamAcademy.vo.AttendanceVO</value>
+			<value>com.javaclass.teamAcademy.vo.GradeVO</value>
+			<value>com.javaclass.teamAcademy.vo.ExamVO</value>
+			<value>com.javaclass.teamAcademy.vo.HomeworkVO</value>
+			<value>com.javaclass.teamAcademy.vo.BoardVO</value>
+		</list>
+		</property>
+	
 	</bean>
  
  	<!-- ##### SqlSessionTemplate 빈 지정  #####  -->
