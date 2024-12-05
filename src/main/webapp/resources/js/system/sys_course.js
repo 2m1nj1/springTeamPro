@@ -224,15 +224,104 @@ $(function(){
 		$.ajax({
 			type: 'post'
 			, url: 'courseCateList'
-			, success: function(){
+			, dataType: 'json'
+			, success: function(result){
 				
+				// json -> jstee 양식으로 변환
+				let treeData = result.map(row => ({
+				    id: row.course_cate_no
+				    , parent: row.course_cate_upno === 0 ? "#" : row.course_cate_upno
+				    , text: row.course_cate_name
+				    , state: {
+				    	opened: true
+				    }
+				})); // end of map()
+				
+				// 지정 위치에 jstree 생성
+				$('#jstreeCourseCate').jstree({
+					'core': {
+						'data': treeData
+						, 'multiple': false
+			          }
+					,'checkbox': {
+					        'keep_selected_style': false
+					        , 'three_state' : false
+							, 'cascade' : 'none'
+					    }
+					, 'plugins': ['checkbox']
+			    }); // end of jstree()
+								
 			} , error: function() {
 				alert('모달 - 강좌 분류 목록 로딩 실패');
 			}
 		}); // end of .ajax()
-		
-		
 	}); // end of .click()
+	
+	// [선택] 버튼 누르면, input에 값 지정
+	$('button#btnCourseCateAdd').click(function(){
+		let selected = $('#jstreeCourseCate').jstree('get_selected',true);
+		
+		$('input#courseCatePk').val(selected[0].id);
+		$('input#courseCateText').val(selected[0].text);
+		$('#modal_course_cate').modal('hide');
+	}); // end of .click()
+	
+	
+	// ---------------------------------
+	// 		 		교육과정 등록
+	// ---------------------------------
+	$('div#btnAddLecture').click(function(){
+		
+		let tr = $('<tr/>');
+		
+		 // 새로운 tr에 번호 추가
+	    let rowCount = $('table#table_lecture tbody tr').length + 1; 
+	    
+	    let lectureNoInput = $('<input/>', {
+	        type: 'text',
+	        class: 'form-control form-control-sm lectureNo',
+	        value: rowCount,
+	        readonly: true
+	    });
+
+	    tr.append($('<td/>').append(lectureNoInput));
+		tr.append($('<td/>').html('<input type="text" class="form-control form-control-sm lectureName" id="" name="" value="">'));
+		tr.append($('<td/>').html('<input type="text" class="form-control form-control-sm" id="" name="" value="">'));
+		tr.append($('<td/>').html('<div class="btn btn-sm btn-secondary btnDeleteLecture"> <i class="fa-solid fa-xmark" style="color: #ffffff;"></i></div>'));
+
+		$('table#table_lecture tbody').append(tr);
+		
+		tr.find('td').eq(1).find('input').focus(); // 새로 생성된 td의 첫번째 input에 focus
+		
+		reNumber();
+		$(window).scrollTop($(document).height()); // 스크롤을 가장 아래로
+	}); // end of .click()
+	
+	$('table#table_lecture').on("click", "div.btnDeleteLecture", function(){
+	    // 테이블에 tr이 1개일 때는 삭제 불가능
+	    if ($('table#table_lecture tbody tr').length <= 1) {
+	        return;  // click 이벤트 중단
+	    } // end of if
+	    
+		$(this).closest('tr').remove();
+		
+		reNumber();
+	}); // end of .on()
+	
+	function reNumber() {
+		// 회차 넘버링 다시
+		$('table#table_lecture tbody tr').each(function(index) {
+			 // lectureNo의 값을 설정
+		    var lectureNoInput = $(this).find('.lectureNo');
+		    var newValue = index + 1;
+		    
+		    // 값 설정
+		    lectureNoInput.val(newValue);
+		    
+		    // HTML 속성 값도 동기화
+		    lectureNoInput.attr('value', newValue); // HTML에서 value 속성 업데이트
+		}); 
+	} // end of reNumber()
 	
 	
 	

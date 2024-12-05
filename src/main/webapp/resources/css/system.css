@@ -1,5 +1,15 @@
 @charset "UTF-8";
 
+.lectureNo {
+	text-align: center;
+}
+
+#jstreeCourseCate {
+	height : 400px;
+	width : 250px;
+	overflow: scroll;
+}
+
 #setDateOfWeekAndTime{
 	border : 0;
 }

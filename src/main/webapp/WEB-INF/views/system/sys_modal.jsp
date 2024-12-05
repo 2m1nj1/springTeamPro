@@ -3,8 +3,7 @@
 
 
 <!-- Modal : 분류 목록 (JTree) -->
-<div class="modal fade" id="modal_course_cate" tabindex="-1"
-	aria-hidden="true">
+<div class="modal fade" id="modal_course_cate" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -18,9 +17,15 @@
 
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				<button type="button" class="btn btn-primary btnSysModalAdd">선택</button>
+			<div class="modal-body row">
+				<div class="col">
+					<button type="button" class="btn btn-secondary btn-block"
+						data-dismiss="modal">닫기</button>
+				</div>
+				<div class="col">
+					<button type="button" id="btnCourseCateAdd"
+						class="btn btn-primary btn-block">선택</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -95,8 +100,7 @@
 
 
 <!-- Modal : 강좌 목록 -->
-<div class="modal fade" id="modal_course_name" tabindex="-1"
-	aria-hidden="true">
+<div class="modal fade" id="modal_course_name" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -147,8 +151,7 @@
 <!-- end of Modal : 강좌 목록 -->
 
 <!-- Modal : 강의실 목록 -->
-<div class="modal fade" id="modal_course_classroom" tabindex="-1"
-	aria-hidden="true">
+<div class="modal fade" id="modal_course_classroom" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">

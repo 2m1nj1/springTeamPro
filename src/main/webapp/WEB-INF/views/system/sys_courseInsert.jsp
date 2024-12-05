@@ -98,8 +98,10 @@
 												<label class="col-sm-4 col-form-label">강사명</label>
 												<div class="col-sm-8">
 													<div class="input-group">
+														<input type="hidden" class="form-control form-control-sm"
+															id="course_instructor_pk" name="course_instructor" value="">
 														<input type="text" class="form-control form-control-sm"
-															id="course_instructor" name="" value="" readonly>
+															id="course_instructor" value="" placeholder="" readonly>
 														<button class="btnModal btn btn-sm btn-outline-primary"
 															type="button" id="btnModal_course_instructor">
 															<i class="fa-solid fa-magnifying-glass"></i>
@@ -111,8 +113,10 @@
 												<label class="col-sm-4 col-form-label">강의실</label>
 												<div class="col-sm-8">
 													<div class="input-group">
+														<input type="hidden" class="form-control form-control-sm"
+															id="course_classroom_pk" name="course_classroom" value="">
 														<input type="text" class="form-control form-control-sm"
-															id="course_classroom" name="" value="" readonly>
+															id="course_classroom" value="" readonly>
 														<button class="btnModal btn btn-sm btn-outline-primary"
 															type="button" id="btnModal_course_classroom">
 															<i class="fa-solid fa-magnifying-glass"></i>
@@ -127,7 +131,7 @@
 												<label class="col-sm-2 col-form-label">강좌명</label>
 												<div class="col-sm-10">
 													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
+														id="" name="" value="" placeholder="강좌명을 입력하세요.">
 												</div>
 											</div>
 											<div class="row">
@@ -154,16 +158,16 @@
 												<label class="col-sm-3 col-form-label">정원</label>
 												<div class="col-sm-9">
 													<input type="number" class="form-control form-control-sm"
-														min="1" id="" name="" value="">
+														min="1" id="" name="" value="1">
 												</div>
 											</div>
 											<div class="row">
 												<label class="col-sm-3 col-form-label">분류</label>
 												<div class="col-sm-9">
 													<div class="input-group">
-														<input type="hidden" name="" id="" value="">
+														<input type="hidden" id="courseCatePk" name="course_cate" value="">
 														<input type="text" class="form-control form-control-sm"
-															id="course_cate" name="" value="" readonly>
+															id="courseCateText" name="" value="" readonly>
 														<button class="btnModal btn btn-sm btn-outline-primary"
 															type="button" id="btnModal_course_cate">
 															<i class="fa-solid fa-magnifying-glass"></i>
@@ -217,7 +221,7 @@
 																	<div class="row">
 																		<input id="setStartTime"
 																			class="form-control form-control-sm timepicker"
-																			placeholder="시간을 선택해주세요" required readonly>
+																			placeholder="시간을 선택하세요." required readonly>
 																	</div>
 																</div>
 																<!-- 강의 종료 시간 -->
@@ -228,7 +232,7 @@
 																	<div class="row">
 																		<input id="setEndTime"
 																			class="form-control form-control-sm timepicker"
-																			placeholder="시간을 선택해주세요" required readonly>
+																			placeholder="시간을 선택하세요." required readonly>
 																	</div>
 																</div>
 															</div>
@@ -267,9 +271,9 @@
 									<h6 class="m-0 font-weight-bold text-primary"
 										style="display: inline; padding-right: 10px">교육과정 등록</h6>
 
-									<a href="#" class="btn-sm btn-secondary"> <span
+									<div class="btn btn-sm btn-secondary"> <span
 										class="text">일괄등록</span>
-									</a>
+									</div>
 								</div>
 								<!-- end of card-header -->
 
@@ -290,25 +294,29 @@
 
 												<tbody>
 													<tr>
-														<td><input type="text" id="" name="" for="" value=""></td>
-														<td><input type="text" id="" name="" for="" value=""></td>
-														<td><input type="text" id="" name="" for="" value=""></td>
-														<td><a href="#"
-															class="btn-sm btn-secondary btn_delete_lecture"> <i
+														<td><input type="text" class="form-control form-control-sm lectureNo" id="" name="" value="1" readonly></td>
+														<td><input type="text" class="form-control form-control-sm lectureName" id="" name="" value=""></td>
+														<td><input type="text" class="form-control form-control-sm" id="" name="" for="" value=""></td>
+														<td><div
+															class="btn btn-sm btn-secondary btnDeleteLecture"> <i
 																class="fa-solid fa-xmark" style="color: #ffffff;"></i>
-														</a></td>
+														</div></td>
 													</tr>
-													<tr>
-														<td colspan='4'><a href="#"
-															class="btn-sm btn-primary btn-block btn_add_lecture">
-																<i class="fa-solid fa-plus" style="color: #ffffff;"></i>
-														</a></td>
-													</tr>
-
 												</tbody>
 											</table>
 										</form>
 									</div>
+									<!-- end of table-responsive -->
+									
+									<div class="row">
+										<div class="col">
+											<div id="btnAddLecture"
+												class="btn btn-sm border-primary btn-block">
+													<i class="fa-solid fa-plus" style="color: #4e73df;"></i>
+											</div>
+										</div>
+									</div>
+									
 								</div>
 								<!-- end of card-body -->
 							</div>
@@ -317,7 +325,7 @@
 					<!-- end of 교육과정 등록 -->
 
 					<!-- 하단 버튼 -->
-					<div class="row">
+					<div class="row mb-5">
 						<div class="col-2">
 							<a href="#" class="btn btn-secondary btn-block"><span
 								class="text">취소</span></a>

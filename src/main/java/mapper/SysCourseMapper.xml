@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SysCourseDAO">
+	<select id="selectCourseCateList" resultType="com.javaclass.teamAcademy.vo.CourseCateVO">
+		SELECT
+			COURSE_CATE_NO
+			, COURSE_CATE_UPNO 
+			, COURSE_CATE_NAME
+		FROM COURSE_CATE
+		WHERE COURSE_CATE_NO > 0
+	</select>
+	
+</mapper>
