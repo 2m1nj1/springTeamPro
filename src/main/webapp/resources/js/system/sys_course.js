@@ -216,7 +216,24 @@ $(function(){
 	
 	
 	// ---------------------------------
-	// 		모달 - 요일/시간 선택
+	// 		 	모달 - 분류 선택
 	// ---------------------------------
+	// jstree
+	$('button#btnModal_course_cate').click(function(){
+		
+		$.ajax({
+			type: 'post'
+			, url: 'courseCateList'
+			, success: function(){
+				
+			} , error: function() {
+				alert('모달 - 강좌 분류 목록 로딩 실패');
+			}
+		}); // end of .ajax()
+		
+		
+	}); // end of .click()
+	
+	
 	
 }); // end of function()

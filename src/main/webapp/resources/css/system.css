@@ -30,6 +30,28 @@
 }
 
 
+
+#table_lecture th, td {
+	text-align: center;
+}
+
+#table_lecture th:first-child {
+	width: 10%;
+}
+
+#table_lecture th:nth-child(2) {
+	width: 30%;
+}
+
+#table_lecture th:last-child {
+	width: 5%;
+}
+
+#table_lecture input {
+	width: 100%;
+}
+
+
 /* 수강생 관리 - table */
 #stuList th, td {
     text-align: center;

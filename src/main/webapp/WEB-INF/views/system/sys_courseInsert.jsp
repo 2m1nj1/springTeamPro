@@ -31,36 +31,21 @@
 
 <!-- Tagify -->
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<script
+	src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css"
+	rel="stylesheet" type="text/css" />
 
 <!-- TimePicker -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<!-- Jstree -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+
 
 <style type="text/css">
 * {
 	font-family: 'Noto Sans KR', sans-serif;
-}
-
-/* 개인 css */
-#table_lecture th, td {
-	text-align: center;
-}
-
-#table_lecture th:first-child {
-	width: 10%;
-}
-
-#table_lecture th:nth-child(2) {
-	width: 30%;
-}
-
-#table_lecture th:last-child {
-	width: 5%;
-}
-
-#table_lecture input {
-	width: 100%;
 }
 </style>
 
@@ -173,10 +158,17 @@
 												</div>
 											</div>
 											<div class="row">
-												<label class="col-sm-3 col-form-label">상태</label>
+												<label class="col-sm-3 col-form-label">분류</label>
 												<div class="col-sm-9">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
+													<div class="input-group">
+														<input type="hidden" name="" id="" value="">
+														<input type="text" class="form-control form-control-sm"
+															id="course_cate" name="" value="" readonly>
+														<button class="btnModal btn btn-sm btn-outline-primary"
+															type="button" id="btnModal_course_cate">
+															<i class="fa-solid fa-magnifying-glass"></i>
+														</button>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -185,63 +177,77 @@
 									<div class="row">
 										<label class="col-sm-1 col-form-label">요일/시간</label>
 										<div class="col-sm-11">
-											
+
 											<div class="row mb-2">
 												<div class="col">
-														<input type="text" class="tagify--outside"
-													id="setDateOfWeekAndTime" name="" value="">
+													<input type="text" class="tagify--outside"
+														id="setDateOfWeekAndTime" name="" value="">
 												</div>
 											</div>
-										
+
 
 											<div class="mb-2" id="">
 												<div class="card card-body">
 													<div class="row">
 														<div class="col">
-															<div class="row mb-3">
-																<div class="col btn btnSetDayOfWeek">월</div>
-																<div class="col btn btnSetDayOfWeek">화</div>
-																<div class="col btn btnSetDayOfWeek">수</div>
-																<div class="col btn btnSetDayOfWeek">목</div>
-																<div class="col btn btnSetDayOfWeek">금</div>
-																<div class="col btn btnSetDayOfWeek">토</div>
-																<div class="col btn btnSetDayOfWeek">일</div>
+															<div class="row mb-3" style="text-align:center;">
+																<div 
+																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">월</div>
+																<div
+																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">화</div>
+																<div
+																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">수</div>
+																<div
+																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">목</div>
+																<div
+																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">금</div>
+																<div
+																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">토</div>
+																<div
+																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">일</div>
 															</div>
 
-															<form action="" onsubmit="return false;">
-																<div class="row mb-3">
-																	<!-- 강의 시작 시간 -->
-																	<div class="col">
+
+															<div class="row mb-3">
+																<!-- 강의 시작 시간 -->
+																<div class="col-2" style="text-align: center;">
+																	<label class="col-form-label-sm">강의 시작 시간</label>
+																</div>
+																<div class="col-4">
+																	<div class="row">
 																		<input id="setStartTime"
 																			class="form-control form-control-sm timepicker"
-																			placeholder="시간을 선택해주세요" required>
+																			placeholder="시간을 선택해주세요" required readonly>
 																	</div>
-																	<!-- 강의 종료 시간 -->
-																	<div class="col">
+																</div>
+																<!-- 강의 종료 시간 -->
+																<div class="col-2" style="text-align: center;">
+																	<label class="col-form-label-sm">강의 종료 시간</label>
+																</div>
+																<div class="col-4">
+																	<div class="row">
 																		<input id="setEndTime"
 																			class="form-control form-control-sm timepicker"
-																			placeholder="시간을 선택해주세요" required>
+																			placeholder="시간을 선택해주세요" required readonly>
 																	</div>
 																</div>
-																<div class="row mb-3">
-																	<div class="col">
-																		<button type="submit" class="btn btn-primary btn-block btnAddSch">추가</button>
-																	</div>
+															</div>
+															<div class="row mb-3">
+																<button
+																	class="btn btn-sm border border-primary text-primary btn-block btnAddSch">요일/시간
+																	추가</button>
+															</div>
+
+															<div class="row mb-3">
+																<div class="col">
+																	<div id="chkAddResult"></div>
 																</div>
-															</form>
+															</div>
 
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-
-									<div class="row">
-										<label class="col-sm-1 col-form-label">태그</label>
-										<div class="col-sm-11">
-											<input type="text" class="form-control form-control-sm" id=""
-												name="" value="">
 										</div>
 									</div>
 
@@ -356,7 +362,13 @@
 	<!-- 개인 추가 .js : 이민지 -->
 	<script type="text/javascript" src="/resources/js/system/sys_main.js"></script>
 	<script type="text/javascript" src="/resources/js/system/sys_course.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+	
+	<!-- timepicker -->
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+		
+	<!-- Jstree -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
 </body>
 </html>

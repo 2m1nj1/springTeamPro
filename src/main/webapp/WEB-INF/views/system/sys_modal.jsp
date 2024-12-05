@@ -1,6 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
+<!-- Modal : 분류 목록 (JTree) -->
+<div class="modal fade" id="modal_course_cate" tabindex="-1"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="">분류 선택</h5>
+				<button type="button" class="btn btn-close" data-dismiss="modal">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="jstreeCourseCate">
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-primary btnSysModalAdd">선택</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of Modal : 분류 목록 (JTree) -->
+
+
 <!-- Modal : 강사 목록 -->
 <div class="modal fade" id="modal_course_instructor" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered">
