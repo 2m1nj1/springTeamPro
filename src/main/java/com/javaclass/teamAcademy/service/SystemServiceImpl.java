@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaclass.teamAcademy.dao.SystemDAO;
 import com.javaclass.teamAcademy.vo.ClassroomVO;
+import com.javaclass.teamAcademy.vo.CourseStaVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
 
 @Service
@@ -24,7 +25,12 @@ public class SystemServiceImpl implements SystemService {
 	public List<ClassroomVO> selectClassroomList(ClassroomVO vo) {
 		return systemDao.selectClassroomList(vo);
 	} // end of selectClassroomList()
-
+	
+	@Override
+	public List<CourseStaVO> selectCourseStaList() {
+		return systemDao.selectCourseStaList();
+	} // end of selectCourseStaList()
+	
 	@Override
 	public ClassroomVO selectClassroomDetail(ClassroomVO vo) {
 		return systemDao.selectClassroomDetail(vo);

@@ -21,14 +21,7 @@ public class SysTchDAOImpl implements SysTchDAO {
 	
 	@Override
 	public List<UserVO> selectTchList(UserVO vo) {
-		
-		System.out.println(">> repo 에서 받은 인자 값 : " + vo.toString());
-		List<UserVO> result =  mybatis.selectList("SysTchDAO.selectTchList", vo);
-		
-		for(UserVO temp : result) {
-			System.out.println(">> " + temp.toString() );
-		}
-		return result;
+		return mybatis.selectList("SysTchDAO.selectTchList", vo);
 	} // end of selectTchList()
 
 

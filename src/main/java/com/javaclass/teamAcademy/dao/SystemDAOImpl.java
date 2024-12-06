@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaclass.teamAcademy.vo.ClassroomVO;
+import com.javaclass.teamAcademy.vo.CourseStaVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
 
 @Repository
@@ -20,6 +21,11 @@ public class SystemDAOImpl implements SystemDAO {
 	public List<EmailDomainVO> selectEmailDomainList() {
 		return mybatis.selectList("SystemDAO.selectEmailDomainList");
 	} // end of selectEmailDomainList()
+	
+	@Override
+	public List<CourseStaVO> selectCourseStaList() {
+		return mybatis.selectList("SystemDAO.selectCourseStaList");
+	} // end of selectCourseStaList()
 	
 	@Override
 	public List<ClassroomVO> selectClassroomList(ClassroomVO vo) {
@@ -45,6 +51,7 @@ public class SystemDAOImpl implements SystemDAO {
 	public void insertClassroom(ClassroomVO vo) {
 		mybatis.insert("SystemDAO.insertClassroom", vo);
 	} // end of insertClassroom()
+
 
 	
 	

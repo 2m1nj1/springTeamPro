@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,8 @@
 <link rel="stylesheet"
 	href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <!-- Jstree -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 
 
 <style type="text/css">
@@ -92,91 +94,135 @@
 									<h6 class="m-0 font-weight-bold text-primary">강좌 정보</h6>
 								</div>
 								<div class="card-body">
-									<div class="row">
-										<div class="col-3">
-											<div class="row">
-												<label class="col-sm-4 col-form-label">강사명</label>
-												<div class="col-sm-8">
-													<div class="input-group">
-														<input type="hidden" class="form-control form-control-sm"
-															id="course_instructor_pk" name="course_instructor" value="">
-														<input type="text" class="form-control form-control-sm"
-															id="course_instructor" value="" placeholder="" readonly>
-														<button class="btnModal btn btn-sm btn-outline-primary"
-															type="button" id="btnModal_course_instructor">
-															<i class="fa-solid fa-magnifying-glass"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">강의실</label>
-												<div class="col-sm-8">
-													<div class="input-group">
-														<input type="hidden" class="form-control form-control-sm"
-															id="course_classroom_pk" name="course_classroom" value="">
-														<input type="text" class="form-control form-control-sm"
-															id="course_classroom" value="" readonly>
-														<button class="btnModal btn btn-sm btn-outline-primary"
-															type="button" id="btnModal_course_classroom">
-															<i class="fa-solid fa-magnifying-glass"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-										</div>
+									<!-- 강좌 form -->
+									<form action="insertCourse" id="insertCourseForm" method="POST">
+										<div class="row">
+											<div class="col-6">
 
-										<div class="col-6">
-											<div class="row">
-												<label class="col-sm-2 col-form-label">강좌명</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="" placeholder="강좌명을 입력하세요.">
+												<div class="row">
+													<label class="col-sm-2 col-form-label">강좌명</label>
+													<div class="col-sm-10">
+														<input type="text" class="form-control form-control-sm"
+															id="course_name" name="course_name" value=""
+															placeholder="강좌명을 입력하세요.">
+													</div>
 												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-2 col-form-label">강좌기간</label>
-												<div class="col-sm-10">
-													<div class="row">
-														<div class="col">
-															<input type="date" class="form-control form-control-sm"
-																id="" name="" value="">
-														</div>
-														~
-														<div class="col">
-															<input type="date" class="form-control form-control-sm"
-																id="" name="" value="">
+												<!-- end of 강좌명 -->
+
+												<div class="row">
+													<label class="col-sm-2 col-form-label">강좌기간</label>
+													<div class="col-sm-10">
+														<div class="row">
+															<div class="col">
+																<input type="date" class="form-control form-control-sm"
+																	id="course_startDate" name="course_startDate" value="">
+															</div>
+															~
+															<div class="col">
+																<input type="date" class="form-control form-control-sm"
+																	id="course_endDate" name="course_endDate" value="">
+															</div>
 														</div>
 													</div>
 												</div>
+												<!-- end of 강좌기간 -->
+												
 											</div>
-
-										</div>
-
-										<div class="col-3">
-											<div class="row">
-												<label class="col-sm-3 col-form-label">정원</label>
-												<div class="col-sm-9">
-													<input type="number" class="form-control form-control-sm"
-														min="1" id="" name="" value="1">
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-3 col-form-label">분류</label>
-												<div class="col-sm-9">
-													<div class="input-group">
-														<input type="hidden" id="courseCatePk" name="course_cate" value="">
-														<input type="text" class="form-control form-control-sm"
-															id="courseCateText" name="" value="" readonly>
-														<button class="btnModal btn btn-sm btn-outline-primary"
-															type="button" id="btnModal_course_cate">
-															<i class="fa-solid fa-magnifying-glass"></i>
-														</button>
+											<!-- end of col-6 -->
+										
+										
+											<div class="col-3">
+												<div class="row">
+													<label class="col-sm-4 col-form-label">강사명</label>
+													<div class="col-sm-8">
+														<div class="input-group">
+															<input type="hidden" class="form-control form-control-sm"
+																id="course_instructor_pk" name="course_instructor"
+																value="">
+															<input type="text"
+																class="form-control form-control-sm"
+																id="course_instructor" value="" placeholder="" readonly>
+															<button class="btnModal btn btn-sm btn-outline-primary"
+																type="button" id="btnModal_course_instructor">
+																<i class="fa-solid fa-magnifying-glass"></i>
+															</button>
+														</div>
 													</div>
 												</div>
+												<!-- end of 강사명 -->
+												<div class="row">
+													<label class="col-sm-4 col-form-label">수강료</label>
+													<div class="col-sm-8">
+														<input type="number" class="form-control form-control-sm"
+															min="0" id="course_fee" name="course_fee">
+													</div>
+												</div>
+												<!-- end of 수강료 -->
+												<div class="row">
+													<label class="col-sm-4 col-form-label">강좌상태</label>
+													<div class="col-sm-8">
+														<select class="custom-select custom-select-sm" name="course_status">
+															<c:forEach var="item" items="${courseStaList}">
+																	<option value="${item.course_status_name}">${item.course_status_name}</option>
+															</c:forEach>
+														</select>
+													</div>
+												</div>
+												<!-- end of 강좌상태 -->
 											</div>
+											<!-- end of col-3 -->
+
+											<div class="col-3">
+											
+												<div class="row">
+													<label class="col-sm-4 col-form-label">강의실</label>
+													<div class="col-sm-8">
+														<div class="input-group">
+															<input type="hidden" class="form-control form-control-sm"
+																id="course_classroom_pk" name="course_classroom"
+																value=""> <input type="text"
+																class="form-control form-control-sm"
+																id="course_classroom" value="" readonly>
+															<button class="btnModal btn btn-sm btn-outline-primary"
+																type="button" id="btnModal_course_classroom">
+																<i class="fa-solid fa-magnifying-glass"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+												<!-- end of 강의실 -->
+												<div class="row">
+													<label class="col-sm-4 col-form-label">정원</label>
+													<div class="col-sm-8">
+														<input type="number" class="form-control form-control-sm"
+															min="1" id="course_maxPerson" name="course_maxPerson"
+															value="1">
+													</div>
+												</div>
+												<!-- end of 정원 -->
+												<div class="row">
+													<label class="col-sm-4 col-form-label">분류</label>
+													<div class="col-sm-8">
+														<div class="input-group">
+															<input type="hidden" id="courseCatePk" name="course_cate_no"
+																value="">
+															<input type="text"
+																class="form-control form-control-sm" id="courseCateText"
+																name="" value="" readonly>
+															<button class="btnModal btn btn-sm btn-outline-primary"
+																type="button" id="btnModal_course_cate">
+																<i class="fa-solid fa-magnifying-glass"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+												<!-- end of 분류 -->
+											</div>
+											<!-- end of col-3 -->
 										</div>
-									</div>
+										<!-- end of row -->
+									</form>
+									<!-- end of 강좌 form -->
 
 									<div class="row">
 										<label class="col-sm-1 col-form-label">요일/시간</label>
@@ -194,8 +240,8 @@
 												<div class="card card-body">
 													<div class="row">
 														<div class="col">
-															<div class="row mb-3" style="text-align:center;">
-																<div 
+															<div class="row mb-3" style="text-align: center;">
+																<div
 																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">월</div>
 																<div
 																	class="col btn-sm border border-primary text-primary btnSetDayOfWeek">화</div>
@@ -271,16 +317,18 @@
 									<h6 class="m-0 font-weight-bold text-primary"
 										style="display: inline; padding-right: 10px">교육과정 등록</h6>
 
-									<div class="btn btn-sm btn-secondary"> <span
-										class="text">일괄등록</span>
+									<div class="btn btn-sm btn-secondary">
+										<span class="text">일괄등록</span>
 									</div>
 								</div>
 								<!-- end of card-header -->
 
 								<!-- card-body -->
 								<div class="card-body">
-									<div class="table-responsive">
-										<form action="">
+
+									<form action="insertLectureList" id="insertLectureForm"
+										method="post">
+										<div class="table-responsive">
 											<table class="table table-borderless" id="table_lecture"
 												width="100%" cellspacing="0">
 												<thead>
@@ -294,29 +342,37 @@
 
 												<tbody>
 													<tr>
-														<td><input type="text" class="form-control form-control-sm lectureNo" id="" name="" value="1" readonly></td>
-														<td><input type="text" class="form-control form-control-sm lectureName" id="" name="" value=""></td>
-														<td><input type="text" class="form-control form-control-sm" id="" name="" for="" value=""></td>
+														<td><input type="text"
+															class="form-control form-control-sm lectureNo" id=""
+															name="list[0].lecture_rownum" value="1" readonly></td>
+														<td><input type="text"
+															class="form-control form-control-sm lectureName" id=""
+															name="list[0].lecture_name" value=""></td>
+														<td><input type="text"
+															class="form-control form-control-sm lectureDetail" id=""
+															name="list[0].lecture_detail"
+															value=""></td>
 														<td><div
-															class="btn btn-sm btn-secondary btnDeleteLecture"> <i
-																class="fa-solid fa-xmark" style="color: #ffffff;"></i>
-														</div></td>
+																class="btn btn-sm btn-secondary btnDeleteLecture">
+																<i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+															</div></td>
 													</tr>
 												</tbody>
 											</table>
-										</form>
-									</div>
-									<!-- end of table-responsive -->
-									
+										</div>
+										<!-- end of table-responsive -->
+									</form>
+									<!-- end of form -->
+
 									<div class="row">
 										<div class="col">
 											<div id="btnAddLecture"
 												class="btn btn-sm border-primary btn-block">
-													<i class="fa-solid fa-plus" style="color: #4e73df;"></i>
+												<i class="fa-solid fa-plus" style="color: #4e73df;"></i>
 											</div>
 										</div>
 									</div>
-									
+
 								</div>
 								<!-- end of card-body -->
 							</div>
@@ -334,8 +390,9 @@
 						<div class="col-8"></div>
 
 						<div class="col-2">
-							<a href="#" id="btnInsert" class="btn btn-primary btn-block"><span
-								class="text">등록</span></a>
+							<div id="btnCourseInsert" class="btn btn-primary btn-block">
+								<span class="text">등록</span>
+							</div>
 						</div>
 					</div>
 					<!-- end of 하단 버튼 -->
@@ -370,13 +427,14 @@
 	<!-- 개인 추가 .js : 이민지 -->
 	<script type="text/javascript" src="/resources/js/system/sys_main.js"></script>
 	<script type="text/javascript" src="/resources/js/system/sys_course.js"></script>
-	
+
 	<!-- timepicker -->
 	<script
 		src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-		
+
 	<!-- Jstree -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
 </body>
 </html>

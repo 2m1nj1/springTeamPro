@@ -10,6 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM EMAIL_DOMAIN
 	</select>
 	
+	<select id="selectCourseStaList" resultType="com.javaclass.teamAcademy.vo.CourseStaVO">
+		SELECT COURSE_STATUS_NAME 
+		FROM COURSE_STATUS
+		ORDER BY COURSE_STATUS_NO
+	</select>
+	
 	<select id="selectClassroomList" parameterType="com.javaclass.teamAcademy.vo.ClassroomVO" resultType="com.javaclass.teamAcademy.vo.ClassroomVO">
 		SELECT CLASSROOM_NO, CLASSROOM_NAME, CLASSROOM_LOCATION 
 		FROM CLASSROOM 

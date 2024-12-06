@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaclass.teamAcademy.service.SystemService;
 import com.javaclass.teamAcademy.vo.ClassroomVO;
+import com.javaclass.teamAcademy.vo.CourseStaVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
 
 @Controller
@@ -31,6 +32,14 @@ public class SystemController {
 		if(emailDomainListView.contains(view)) {
 			List<EmailDomainVO> emailDomainList = systemService.selectEmailDomainList(); 
 			m.addAttribute("emailDomainList", emailDomainList);
+		} // end of if
+		
+		// 강좌 상태를 불러올 view
+		Set<String> courseStaListView = Set.of("courseInsert");
+		
+		if(courseStaListView.contains(view)) {
+			List<CourseStaVO> courseStaList = systemService.selectCourseStaList(); 
+			m.addAttribute("courseStaList", courseStaList);
 		} // end of if
 		
 		return "system/sys_" + view;
@@ -85,7 +94,6 @@ public class SystemController {
 	@PostMapping("insertClassroom")
 	@ResponseBody
 	public String insertClassroom(ClassroomVO vo) {
-		System.out.println(">> " + vo.toString());
 		systemService.insertClassroom(vo);
 		return null;
 	} // end of insertClassroom()

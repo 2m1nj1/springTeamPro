@@ -4,6 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="SysCourseDAO">
+	
 	<select id="selectCourseCateList" resultType="com.javaclass.teamAcademy.vo.CourseCateVO">
 		SELECT
 			COURSE_CATE_NO
@@ -12,5 +13,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM COURSE_CATE
 		WHERE COURSE_CATE_NO > 0
 	</select>
+	
+	<insert id="insertCourse" parameterType="com.javaclass.teamAcademy.vo.CourseVO">
+		INSERT INTO COURSE (
+				COURSE_NO 
+				, COURSE_NAME 
+				, COURSE_INSTRUCTOR 
+				, COURSE_STARTDATE 
+				, COURSE_ENDDATE 
+				, COURSE_CLASSROOM 
+				, COURSE_MAXPERSON 
+				, COURSE_FEE 
+				, COURSE_CATE_NO 
+				, COURSE_STATUS 
+				)
+			VALUES (
+				seq_course_no.nextval
+				, #{course_name}
+				, #{course_instructor}
+				, #{course_startDate}
+				, #{course_endDate}
+				, #{course_classroom}
+				, #{course_maxPerson}
+				, #{course_fee}
+				, #{course_cate_no}
+				, #{course_status}
+			)
+	</insert>
+	
+	<insert id="insertLectureList" parameterType="com.javaclass.teamAcademy.vo.LectureVO">
+		INSERT INTO LECTURE
+			(
+			LECTURE_NO
+			, COURSE_NO 
+			, LECTURE_ROWNUM
+			, LECTURE_NAME
+			, LECTURE_DETAIL
+			)
+		VALUES
+			(
+			seq_lecture_no.nextval
+			, #{course_no}
+			, #{lecture_rownum}
+			, #{lecture_name}
+			, #{lecture_detail}
+			)
+	</insert>
 	
 </mapper>

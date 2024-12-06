@@ -268,7 +268,7 @@ $(function(){
 	
 	
 	// ---------------------------------
-	// 		 		교육과정 등록
+	// 		 	  교육과정 Front
 	// ---------------------------------
 	$('div#btnAddLecture').click(function(){
 		
@@ -277,17 +277,36 @@ $(function(){
 		 // 새로운 tr에 번호 추가
 	    let rowCount = $('table#table_lecture tbody tr').length + 1; 
 	    
+	    
+	    // 강의 회차 번호 input
 	    let lectureNoInput = $('<input/>', {
-	        type: 'text',
-	        class: 'form-control form-control-sm lectureNo',
-	        value: rowCount,
-	        readonly: true
-	    });
+	        type: 'text'
+	        , class: 'form-control form-control-sm lectureNo'
+	        , name: 'list[' + (rowCount-1) + '].lecture_rownum'
+	        , value: rowCount
+	        , readonly: true
+	    }); // end of let
+	    
+	    // 강의명 input
+	    let lectureNameInput = $('<input/>', {
+	        type: 'text'
+	        , class: 'form-control form-control-sm lectureName'
+	        , name: 'list[' + (rowCount-1) + '].lecture_name'
+	    }); // end of let
+	    
+	    // 강의내용 input
+	    let lectureDetailInput = $('<input/>', {
+	        type: 'text'
+	        , class: 'form-control form-control-sm lectureDetail'
+	        , name: 'list[' + (rowCount-1) + '].lecture_detail'
+	    }); // end of let
 
 	    tr.append($('<td/>').append(lectureNoInput));
-		tr.append($('<td/>').html('<input type="text" class="form-control form-control-sm lectureName" id="" name="" value="">'));
-		tr.append($('<td/>').html('<input type="text" class="form-control form-control-sm" id="" name="" value="">'));
-		tr.append($('<td/>').html('<div class="btn btn-sm btn-secondary btnDeleteLecture"> <i class="fa-solid fa-xmark" style="color: #ffffff;"></i></div>'));
+		//tr.append($('<td/>').html('<input type="text" class="form-control form-control-sm lectureName" id="" name="" value="">'));
+		//tr.append($('<td/>').html('<input type="text" class="form-control form-control-sm" id="" name="" value="">'));
+	    tr.append($('<td/>').append(lectureNameInput));
+	    tr.append($('<td/>').append(lectureDetailInput));
+	    tr.append($('<td/>').html('<div class="btn btn-sm btn-secondary btnDeleteLecture"> <i class="fa-solid fa-xmark" style="color: #ffffff;"></i></div>'));
 
 		$('table#table_lecture tbody').append(tr);
 		
@@ -311,18 +330,54 @@ $(function(){
 	function reNumber() {
 		// 회차 넘버링 다시
 		$('table#table_lecture tbody tr').each(function(index) {
-			 // lectureNo의 값을 설정
-		    var lectureNoInput = $(this).find('.lectureNo');
-		    var newValue = index + 1;
+			// lectureNo의 값을 설정
+		    let lectureNoInput 		= $(this).find('.lectureNo');
+		    let lectureNameInput 	= $(this).find('.lectureName');
+		    let lectureDetailInput 	= $(this).find('.lectureDetail');
+		    let newValue = index + 1;
 		    
 		    // 값 설정
 		    lectureNoInput.val(newValue);
 		    
-		    // HTML 속성 값도 동기화
+		    // name 태그 재설정
+		    lectureNoInput.attr('name', 'list[' + (newValue-1) + '].lecture_rownum');
+		    lectureNameInput.attr('name', 'list[' + (newValue-1) + '].lecture_name');
+		    lectureDetailInput.attr('name', 'list[' + (newValue-1) + '].lecture_detail');
+		    
+		    // HTML 속성 값 재설정
 		    lectureNoInput.attr('value', newValue); // HTML에서 value 속성 업데이트
 		}); 
 	} // end of reNumber()
 	
 	
+	// ---------------------------------
+	// 			 강좌 [등록] 버튼
+	// ---------------------------------
+	$('div#btnCourseInsert').click(function(){
+		
+		// 강좌 정보
+		//$('form#insertCourseForm').submit();
+		$.ajax({
+			type: 'post'
+			, url: 'insertCourse'
+			, data: $('form#insertCourseForm').serialize()
+			, success: insertLectureList
+			, error: function() {
+			
+			}
+		});
+		
+		// 교육 과정
+		function insertLectureList() {
+			$('form#insertLectureForm').submit();	
+		} // end of insertLectureList()
+		
+		
+		// 강좌 일정
+		
+		
+		
+		
+	}); // end of .click()
 	
 }); // end of function()

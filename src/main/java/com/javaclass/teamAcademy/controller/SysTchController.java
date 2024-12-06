@@ -36,7 +36,6 @@ public class SysTchController {
 	@GetMapping("tchList")
 	@ResponseBody
 	public List<UserVO> selectTchList(UserVO vo){
-		System.out.println(">> Controller에서 받은 인자 값 : " + vo.toString());
 		return sysTchService.selectTchList(vo);
 	} // end of selectTchList()
 	
