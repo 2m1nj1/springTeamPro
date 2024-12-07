@@ -148,7 +148,7 @@
 				
             <!-- Nav Item - 로그인 -->
             <li class="nav-item">
-                <a class="nav-link" href="comm_login.do">
+                <a class="nav-link" href="comm_loginform.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>로그인</span></a>
             </li>
