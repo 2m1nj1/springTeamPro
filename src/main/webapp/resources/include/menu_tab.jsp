@@ -76,7 +76,7 @@
             
             <!-- Nav Item - 쪽지 -->
             <li class="nav-item">
-                <a class="nav-link" href="comm_message.do">
+                <a class="nav-link" href="comm_getMessageList.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>쪽지</span></a>
             </li>

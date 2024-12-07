@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MessageDAO">
+
+		
+		<!-- 메세지 작성 -->
+		<insert id="insertMessage" parameterType="com.javaclass.teamAcademy.vo.MessageVO"> 
+<!-- 		INSERT INTO message (msg_no, msg_sender, msg_reciver, msg_title, msg_context, msg_date)  -->
+<!-- 		SELECT message.msg_no -->
+<!-- 		, user_account.user_name 	AS sender_name -->
+<!-- 		, reciver.user_name 		AS reciver_name -->
+<!-- 		, message.msg_title -->
+<!-- 		, message.msg_context -->
+<!-- 		, message.msg_date  -->
+<!-- 		FROM message  -->
+<!-- 		INNER JOIN USER_ACCOUNT  -->
+<!-- 		ON message.msg_sender = USER_ACCOUNT.USER_NO -->
+<!-- 		INNER JOIN USER_ACCOUNT reciver  -->
+<!-- 		ON message.msg_reciver = USER_ACCOUNT.USER_NO  -->
+<!-- 		WHERE msg_sender = #{msg_sender} -->
+
+			INSERT INTO message (
+				MSG_NO
+				, MSG_SENDER
+				, MSG_RECIVER
+				, MSG_TITLE
+				, MSG_CONTEXT
+				, MSG_DATE
+				)
+			VALUES (
+				seq_msg_no.nextval
+				, #{msg_sender}
+				, #{msg_reciver}
+				, #{msg_title}
+				, #{msg_context}
+				, sysdate
+				)
+		</insert>   
+				
+		<!-- 상세 메세지 보기 -->
+		<select id="getMessage" parameterType="com.javaclass.teamAcademy.vo.MessageVO" resultType="com.javaclass.teamAcademy.vo.MessageVO">
+		SELECT
+			m.msg_no,
+			rec.user_name AS reciver_name,
+			ua.user_name AS sender_name,
+			m.msg_title,
+			m.msg_context,
+			m.msg_date
+		FROM message m
+		JOIN USER_ACCOUNT ua
+		ON m.MSG_SENDER = ua.user_no
+		JOIN USER_ACCOUNT rec
+		ON m.MSG_RECIVER = rec.user_no
+		WHERE m.MSG_NO = #{msg_no}
+		ORDER BY m.msg_no DESC 
+		</select> 
+
+	<!-- 받는 메시지 목록 -->
+	<select id="reciveMessageList" resultType="com.javaclass.teamAcademy.vo.MessageVO">
+		SELECT
+			m.msg_no,
+			ua.user_name AS sender_name,
+			m.msg_sender,
+			m.msg_reciver,
+			m.msg_title,
+			m.msg_context,
+			m.msg_date
+		FROM message m
+		JOIN USER_ACCOUNT ua
+		ON m.MSG_SENDER = ua.user_no
+		JOIN USER_ACCOUNT rec
+		ON m.MSG_RECIVER = rec.user_no
+		WHERE m.MSG_RECIVER = 28													
+		ORDER BY m.msg_date DESC
+	</select>
+
+	<!-- 보내는 메시지 목록 -->
+	<select id="sendMessageList" resultType="com.javaclass.teamAcademy.vo.MessageVO">
+	SELECT
+		m.msg_no,
+		rec.user_name AS reciver_name,
+		m.msg_sender,
+		m.msg_reciver,
+		m.msg_title,
+		m.msg_context,
+		m.msg_date
+	FROM message m
+	JOIN USER_ACCOUNT ua
+	ON m.msg_sender = ua.user_no
+	JOIN USER_ACCOUNT rec
+	ON m.msg_reciver = rec.user_no
+	WHERE m.msg_sender = 5
+	ORDER BY m.msg_date DESC
+	</select>
+	
+	<!-- 메세지 삭제 -->
+	<delete id="deleteMessage" parameterType="com.javaclass.teamAcademy.vo.MessageVO" >
+	DELETE FROM message
+	WHERE msg_no = #{msg_no}
+	</delete>
+	
+<!-- 	<delete id="deleteForm" parameterType="java.util.List"> 박수지의 공유 체크박스에서 전체 선택으로 삭제 -->
+<!-- DELETE FROM DOCUMENT_FORM -->
+<!-- WHERE ID IN -->
+<!-- <foreach collection="list" item="formId" open="(" separator="," close=")"> -->
+<!-- #{formId} -->
+<!-- </foreach> -->
+
+<!-- </delete> -->
+</mapper>

@@ -268,6 +268,136 @@ $(function(){
 	
 	
 	// ---------------------------------
+	// 			  요일/시간 선택
+	// ---------------------------------
+	$('.btnSetDayOfWeek').click(function(){
+		// class에 'btn-primary' 가 있는지 확인 (해당 class를 선택 여부로 판단)
+		if($(this).hasClass('btn-primary')) {
+			$(this).removeClass('btn-primary');
+			$(this).removeClass('text-light');
+		} else {
+			$(this).addClass('btn-primary');
+			$(this).addClass('text-light');
+		} // end of if
+	}); // end of .click()
+	
+	// tag를 추가할 input
+	let inputTagify = document.querySelector('input#setDateOfWeekAndTime');
+	// tagify 객체 생성
+	let tagify = new Tagify(inputTagify);
+	
+	let arrayListSch = []; // 선택한 요일/시간을 저장해둘 공간 
+	resetArrayListSch();
+	
+	// arrayList 초기화
+	function resetArrayListSch() {
+		arrayListSch = [];
+	} // end of resetArrayListSch()
+	
+	// [추가] 버튼 클릭 시, tagfiy를 통해 태그 생성
+	$('.btnAddSch').click(function() {
+		$('div#chkAddResult').html("");
+		//console.log(arrayList); // 확인용
+		
+		// btn-primary class를 가지고 있는 요소들(요일) List에 담기
+		let getSeletedDateOfWeekList = $('div.btnSetDayOfWeek.btn-primary').toArray();
+		let setStartTime = $('#setStartTime').val();
+		let setEndTime = $('#setEndTime').val();
+		
+		// 요일/시작시간/종료시간을 모두 선택 했는지 확인
+		if(getSeletedDateOfWeekList.length !== 0 && setStartTime !== "" && setEndTime !== "") {
+			// tagify 객체 생성 
+			//let input = document.querySelector('input#setDateOfWeekAndTime'),tagify = new Tagify(input);
+			 
+			
+			// 새로 넣을 값들이 기존 값List와 비교했을 때, 요일/시간이 겹치는지 확인
+			getSeletedDateOfWeekList.forEach(function(element) {
+				let setDateOfWeek = $(element).html(); // 선택 요일
+			    const startHour = parseInt(setStartTime.split(":")[0], 10); 	// 선택 시작 시간
+		        const endHour 	= parseInt(setEndTime.split(":")[0], 10); 		// 선택 종료 시간
+		        
+		        let chkAdd = true; // 추가 여부 
+			    
+		        let currArray = [];
+			    currArray.push(setDateOfWeek); // currArray에 요일 push
+			    
+			    for (let i = startHour; i <= endHour; i++) {
+			    	currArray.push(i); // 시작 시간, 종료 시간을 포함하여 그 사이의 숫자를 모두 push
+			    } // end of for
+			    
+			    // arrayList.length 만큼 반복해서 요일/시간을 비교
+			    for (let i = 0; i < arrayListSch.length; i++) {
+			    	
+			    	// 첫번째 비교대상인 요일이 false면,
+			    	// 시간대를 비교하지 않고 무조건 false를 return 해야되기 때문에 &&를 사용
+			    	if(arrayListSch[i][0]===currArray[0] 
+			    			&& arrayListSch[i].slice(1, -1).some(value => currArray.slice(1, -1).includes(value))) {
+		    			// arrayList의 array에 대해서 첫번째(요일), 마지막(종료시간)을 제외한 나머지 값을
+			    		// currArray의 첫번째(요일)을 제외한 값과 비교
+			    		// .slice() : 배열해서 원하는 구간의 요소만을 잘라서 씀 (변경 값 반영X)
+			    		// .some()  : 1개라도 겹친다면 ture
+			    		
+			    		//console.log("요일과 시간 겹침!!!"); // 확인용
+			    		chkAdd = false;
+			    	} // end of if
+		    	} // end of for
+			    
+			    
+			    if(chkAdd) { // 조건 만족
+				    let result = setDateOfWeek + " / " + setStartTime + " ~ " + setEndTime;
+				    tagify.addTags([result]); // 태그로 추가
+				    arrayListSch.push(currArray); // arrayList에 push
+				    console.log(arrayListSch); // 확인용
+			    } else { // 조건 만족 X
+			    	$('div#chkAddResult').html("중복되는 요일/시간이 존재합니다.").addClass("text-danger");
+			    } // end of if 
+			    
+			}); // end of forEach()
+			
+		} else {
+			// 요일/시작시간/종료시간 중 하나라도 선택하지 않았다면
+			$('div#chkAddResult').html("요일/시간을 선택해주세요.").addClass("text-danger").css("text-align", "center");
+		} // end of if - check input
+	}); // end of .click()
+	
+	// tagify 삭제 시
+	tagify.on('remove', function(e) {
+		
+		let removeTag = e.detail.data.value; // 삭제 태그
+		let removeDateOfWeek;
+		let removeStartHour;
+		let removeEndHour;
+		
+		// 정규식 이용
+		const match = removeTag.match(/(\S+) \/ (\d{2}):\d{2} ~ (\d{2}):\d{2}/);
+		
+		if (match) {
+			removeDateOfWeek = match[1];
+		    removeStartHour = parseInt(match[2], 10);
+		    removeEndHour = parseInt(match[3], 10);
+		} // end of if
+		
+        let removeArray = [];
+        removeArray.push(removeDateOfWeek); // removeArray에 요일 push
+	    
+	    for (let i = removeStartHour; i <= removeEndHour; i++) {
+	    	removeArray.push(i); // 시작 시간, 종료 시간을 포함하여 그 사이의 숫자를 모두 push
+	    } // end of for
+	    
+	    // 기존 arrayListSch에서 removeArray와 동일하지 않은 array들만 다시 arrayList에 저장
+	    arrayListSch = arrayListSch.filter(array => !arraysAreEqual(array, removeArray));
+	    // alert(`태그가 삭제되었습니다: ${e.detail.data.value}`);
+		
+		console.log(arrayListSch); // 확인용
+	}); // end of .on()
+	
+	// 동일한 배열인지 비교하는 함수
+	function arraysAreEqual(arr1, arr2) {
+	    return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+	} // end of arrayAreEqul()
+		
+	
+	// ---------------------------------
 	// 		 	  교육과정 Front
 	// ---------------------------------
 	$('div#btnAddLecture').click(function(){
@@ -355,29 +485,68 @@ $(function(){
 	// ---------------------------------
 	$('div#btnCourseInsert').click(function(){
 		
+		// 강좌 정보의 pk 를 강좌일정/교육과정 table에서 fk로 쓰고 있기 때문에 동시에 submit 할 수 없다.
 		// 강좌 정보
-		//$('form#insertCourseForm').submit();
 		$.ajax({
 			type: 'post'
 			, url: 'insertCourse'
 			, data: $('form#insertCourseForm').serialize()
-			, success: insertLectureList
-			, error: function() {
-			
+			, success: function(result) {
+				
+				insertSchList(result);		// 강좌일정 
+				insertLectureList(result); 	// 교육과정
+				
+			}, error: function() {
+				alert("강좌 등록 실패");
 			}
-		});
-		
-		// 교육 과정
-		function insertLectureList() {
-			$('form#insertLectureForm').submit();	
-		} // end of insertLectureList()
-		
-		
-		// 강좌 일정
-		
-		
-		
-		
+		}); // end of .ajax
 	}); // end of .click()
+	
+	// 강좌일정
+	function insertSchList(result) {
+		
+		//let insertArrayListSch = arrayListSch.map(arr => [arr[0], arr[1], arr[arr.length - 1]]);
+		
+		
+		let insertArrayListSch = arrayListSch.map(function(item) {
+	        return {
+	            course_schedule_no: 0,
+	            course_no: result,
+	            course_startTime: item[1],
+	            course_endTime: item[2],
+	            course_dayOfWeek: item[0]
+	        };
+	    }); // end of .map()
+		
+		console.log(insertArrayListSch); //이건 잘 나와!!! 
+		
+		$.ajax({
+			type: 'post'
+			, url: 'insertSchList'
+			// , data: JSON.stringify({list:insertArrayListSch})
+			, contentType: 'application/json'
+			, data: JSON.stringify(insertArrayListSch)
+			, success: function(){
+				alert("강좌일정 ajax 제대로 실행됨!!!"); // 이것도 잘 실행돼!!
+			}, error: function(){
+				alert('강좌일정 등록 실패');
+			}
+		}); // end of .ajax()
+	} // end of insertSchList()
+	
+	// 교육과정
+	function insertLectureList(result) {
+		$('<input>').attr({
+			  type: 'hidden',
+			  name: 'list[0].course_no',
+			  value: result
+		}).appendTo('form#insertLectureForm');
+		
+	    $('form#insertLectureForm').submit();
+	} // end of insertLectureList()		
+	
+	
+	
+	
 	
 }); // end of function()

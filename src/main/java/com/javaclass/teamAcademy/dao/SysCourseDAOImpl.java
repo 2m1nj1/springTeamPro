@@ -21,6 +21,7 @@ public class SysCourseDAOImpl implements SysCourseDAO {
 	public List<CourseCateVO> selectCourseCateList() {
 		return mybatis.selectList("SysCourseDAO.selectCourseCateList");
 	} // end of selectCourseCateList()
+	
 
 	@Override
 	public void insertCourse(CourseVO vo) {

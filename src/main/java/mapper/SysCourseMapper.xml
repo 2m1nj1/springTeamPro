@@ -39,7 +39,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				, #{course_cate_no}
 				, #{course_status}
 			)
+			
+			<selectKey keyProperty="course_no" resultType="int" order="AFTER">
+				SELECT seq_course_no.CURRVAL FROM DUAL
+			</selectKey>
+			
 	</insert>
+	
+	
 	
 	<insert id="insertLectureList" parameterType="com.javaclass.teamAcademy.vo.LectureVO">
 		INSERT INTO LECTURE
