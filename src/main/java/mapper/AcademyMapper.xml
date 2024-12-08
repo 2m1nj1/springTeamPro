@@ -43,9 +43,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="loginCheck" parameterType="com.javaclass.teamAcademy.vo.LogVO" resultType="com.javaclass.teamAcademy.vo.LogVO">
 		SELECT *
 	    FROM USER_ACCOUNT
-	    WHERE user_Id = #{user_Id, jdbcType=VARCHAR}
+	    WHERE user_Id = #{user_Id}
 	    <if test="user_Pass != null">
-	    AND user_Pass = #{user_Pass, jdbcType=VARCHAR}
+	    AND user_Pass = #{user_Pass}
 		</if>
 	</select>
 	

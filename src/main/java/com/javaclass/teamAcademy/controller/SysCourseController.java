@@ -33,7 +33,9 @@ public class SysCourseController {
 	@PostMapping("insertCourse")
 	@ResponseBody
 	public int insertCourse(CourseVO vo) {
+		System.out.println(">> 강좌정보 등록 컨트롤러 도착!");
 		sysCourseService.insertCourse(vo);
+		System.out.println(">> 강좌정보 등록 완료! " +  vo.getCourse_cate_no());
 		return vo.getCourse_no();
 	} // end of insertCourse()
 	
@@ -56,6 +58,7 @@ public class SysCourseController {
 		
 		for(LectureVO lectureVO : lectureVOList.getList()) {
 			lectureVO.setCourse_no(course_no);
+			System.out.println(">> ");
 			sysCourseService.insertLectureList(lectureVO);
 		} // end of for
 		return null;
