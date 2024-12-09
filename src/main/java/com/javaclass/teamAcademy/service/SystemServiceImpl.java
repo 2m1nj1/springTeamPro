@@ -51,5 +51,10 @@ public class SystemServiceImpl implements SystemService {
 		systemDao.insertClassroom(vo);
 	} // end of insertClassroom()
 
+	@Override
+	public int countCourse(String courseStaName) {
+		return systemDao.countCourse(courseStaName);
+	} // end of countCourse()
+
 	
 } // end of SystemServiceImpl

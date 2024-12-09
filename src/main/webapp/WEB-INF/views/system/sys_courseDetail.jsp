@@ -78,7 +78,7 @@
 				<div class="container container-fluid">
 
 					<!-- 페이지 명 -->
-					<h1 class="h3 mb-4 text-gray-800">강좌 등록</h1>
+					<h1 class="h3 mb-4 text-gray-800">강좌 상세</h1>
 
 					<!-- 모달 -->
 					<jsp:include page="sys_modal.jsp">
@@ -192,8 +192,14 @@
 												</div>
 												<!-- end of 강의실 -->
 												<div class="row">
-													<label class="col-sm-4 col-form-label">정원</label>
-													<div class="col-sm-8">
+													<label class="col-sm-4 col-form-label">인원</label>
+													<div class="col-sm-3">
+														<input type="number" class="form-control form-control-sm"
+															min="1" id="course_maxPerson" name="course_maxPerson"
+															value="" readonly>
+													</div>
+													<span class="text">/</span>
+													<div class="col-sm-4">
 														<input type="number" class="form-control form-control-sm"
 															min="1" id="course_maxPerson" name="course_maxPerson"
 															value="1">
@@ -383,7 +389,7 @@
 					<!-- 하단 버튼 -->
 					<div class="row mb-5">
 						<div class="col-2">
-							<a href="#" class="btn btn-secondary btn-block"><span
+							<a href="sys_course.do" class="btn btn-secondary btn-block"><span
 								class="text">취소</span></a>
 						</div>
 
@@ -391,7 +397,7 @@
 
 						<div class="col-2">
 							<div id="btnCourseInsert" class="btn btn-primary btn-block">
-								<span class="text">등록</span>
+								<span class="text">수정</span>
 							</div>
 						</div>
 					</div>

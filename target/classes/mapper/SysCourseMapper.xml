@@ -46,19 +46,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 	</insert>
 	
-	
-	
 	<insert id="insertLectureList" parameterType="com.javaclass.teamAcademy.vo.LectureVO">
-		INSERT INTO LECTURE
-			(
+		INSERT INTO LECTURE (
 			LECTURE_NO
 			, COURSE_NO 
 			, LECTURE_ROWNUM
 			, LECTURE_NAME
 			, LECTURE_DETAIL
-			)
-		VALUES
-			(
+		)
+		VALUES (
 			seq_lecture_no.nextval
 			, #{course_no}
 			, #{lecture_rownum}
@@ -66,5 +62,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, #{lecture_detail}
 			)
 	</insert>
+	
+	<insert id="insertSchList" parameterType="com.javaclass.teamAcademy.vo.CourseSchVO">
+		INSERT INTO COURSE_SCHEDULE (
+			COURSE_SCHEDULE_NO
+			, COURSE_NO 
+			, COURSE_STARTTIME 
+			, COURSE_ENDTIME 
+			, COURSE_DAYOFWEEK 
+		)
+		VALUES (
+			seq_course_sch_no.nextval
+			, #{course_no}
+			, #{course_startTime}
+			, #{course_endTime}
+			, #{course_dayOfWeek}
+		)
+	</insert>
+	
+	<select id="selectCourseList" resultType="com.javaclass.teamAcademy.vo.CourseVO">
+		SELECT
+		    c.COURSE_NO COURSE_NO
+		    , c.COURSE_NAME COURSE_NAME
+		    , NVL(ua.USER_NAME, '-') COURSE_INSTRUCTOR
+		    , NVL(c2.classroom_name, '-') CLASSROOM_NAME
+		    , NVL(coursedays.COURSE_DAYOFWEEK, '-') COURSE_DAYS
+		    , cntstu.cntstu || '/' || c.COURSE_MAXPERSON COURSE_PERSON
+		    , c.COURSE_STATUS COURSE_STATUS
+		    , NVL(c.COURSE_FEE, 0) COURSE_FEE
+		FROM COURSE c
+		LEFT OUTER JOIN USER_ACCOUNT ua 
+		    ON c.COURSE_INSTRUCTOR = ua.USER_NO
+		LEFT OUTER JOIN (
+		    SELECT c1.COURSE_NO, COUNT(cr1.COURSE_NO) AS cntstu
+		    FROM COURSE c1
+		    LEFT OUTER JOIN COURSE_REGISTRATION cr1 
+		        ON c1.COURSE_NO = cr1.COURSE_NO
+		    GROUP BY c1.COURSE_NO
+		) cntstu 
+		    ON cntstu.COURSE_NO = c.COURSE_NO
+		LEFT OUTER JOIN (
+		    SELECT
+		        course_no,
+		        LISTAGG(COURSE_DAYOFWEEK, ', ')
+		            WITHIN GROUP (
+		                ORDER BY
+		                    CASE
+		                        WHEN COURSE_DAYOFWEEK = '월' THEN 1
+		                        WHEN COURSE_DAYOFWEEK = '화' THEN 2
+		                        WHEN COURSE_DAYOFWEEK = '수' THEN 3
+		                        WHEN COURSE_DAYOFWEEK = '목' THEN 4
+		                        WHEN COURSE_DAYOFWEEK = '금' THEN 5
+		                        WHEN COURSE_DAYOFWEEK = '토' THEN 6
+		                        WHEN COURSE_DAYOFWEEK = '일' THEN 7
+		                    END
+		            ) AS COURSE_DAYOFWEEK
+		    FROM COURSE_SCHEDULE
+		    GROUP BY COURSE_NO
+		) coursedays 
+		    ON coursedays.COURSE_NO = c.COURSE_NO
+		LEFT OUTER JOIN CLASSROOM c2 
+			ON c2.classroom_no = c.COURSE_CLASSROOM 
+		ORDER BY c.COURSE_NO
+	</select>
+	
+	<select id="selectCourseInfo" parameterType="com.javaclass.teamAcademy.vo.CourseVO">
+	
+	</select>
 	
 </mapper>

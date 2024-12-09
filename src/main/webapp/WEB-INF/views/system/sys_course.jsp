@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +72,7 @@
 											<div
 												class="text font-weight-bold text-warning text-uppercase mb-1">
 												모집 중인 강좌</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">${count_recruit}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-book-open-reader fa-2x text-gray-300"></i>
@@ -90,7 +91,7 @@
 											<div
 												class="text font-weight-bold text-success text-uppercase mb-1">
 												진행 중인 강좌</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">${count_progress}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-play fa-2x text-gray-300"></i>
@@ -111,7 +112,7 @@
 											</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">5</div>
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${count_rest}</div>
 												</div>
 											</div>
 										</div>
@@ -131,8 +132,8 @@
 										<div class="col mr-2">
 											<div
 												class="text font-weight-bold text-secondary text-uppercase mb-1">
-												종강/폐강한 강좌</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+												종강한 강좌</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">${count_end}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-stop fa-2x text-gray-300"></i>
@@ -295,12 +296,45 @@
 						<div class="col">
 							<div class="card shadow mb-4">
 								<div class="card-body">
-									
-									<!-- table 불러오기 -->
-									<jsp:include page="../table/com_course_table.jsp">
-										<jsp:param name="pageName" value="tch_lectures" />
-									</jsp:include>
-									
+									<div class="table-responsive">
+										<table class="table table-border table-hover table-head-fix" id="courseList"
+											width="100%" cellspacing="0">
+											<thead>
+												<tr>
+													<th><input type="checkbox"
+														id="allCourseChk" class="checkbox_all"></th>
+													<th>강좌번호</th>
+													<th>강좌명</th>
+													<th>강사명</th>
+													<th>강의실</th>
+													<th>인원</th>
+													<th>상태</th>
+													<th>수강료</th>
+													<th></th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<c:forEach var="item" items="${courseList}">
+													<tr>
+														<td><input type="checkbox" class=""></td>
+														<td>${item.course_no}</td> 
+														<td>${item.course_name}</td>
+														<td>${item.course_instructor}</td>
+														<td>${item.classroom_name}</td>
+														<td>${item.course_person}</td>
+														<td>${item.course_status}</td>
+														<td>${item.course_fee}</td>
+														<td>
+															<div class="btn btn-sm btn-secondary btnCourseDetail">
+																<i class="fas fa-magnifying-glass fa-xs text-gray-300"></i>
+															</div>
+														</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -308,7 +342,7 @@
 					<!-- end of 강좌목록 -->
 					
 					<!-- 하단 버튼 -->
-					<div class="row">
+					<div class="row mb-5">
 						<div class="col-2">
 							<a href="#" class="btn btn-secondary btn-block"><span
 								class="text">선택 삭제</span></a>
@@ -359,5 +393,7 @@
 		
 	<!-- 개인 추가 .js : 이민지 -->
 	<script type="text/javascript" src="/resources/js/system/sys_main.js"></script>
+	<script type="text/javascript" src="/resources/js/system/sys_course.js"></script>
+	<script type="text/javascript" scr="/resources/js/system/sys_insert.js"></script>
 </body>
 </html>

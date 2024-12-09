@@ -21,4 +21,6 @@ public interface SystemDAO {
 	public void deleteClassroom(ClassroomVO vo);
 	
 	public void insertClassroom(ClassroomVO vo);
+	
+	public int countCourse(String courseStaName);
 } // end of SystemDAO

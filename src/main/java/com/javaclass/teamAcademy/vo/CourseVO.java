@@ -16,4 +16,10 @@ public class CourseVO {
 	private String	course_cate_no;		// 강좌 분류 (FK)
 	private String	course_status;		// 강좌 상태
 	
+	
+	// join getter
+	private String	classroom_name;		// 강의실 이름
+	private String	course_days;		// 강의 요일
+	private String	course_person;		// 수강 인원 / 정원
+	
 } // end of CourseVO

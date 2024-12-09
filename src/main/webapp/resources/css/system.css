@@ -1,5 +1,44 @@
 @charset "UTF-8";
 
+#courseList th:first-child, #courseList td:first-child{
+	width: 5%;	
+}
+
+#courseList th:nth-child(2), #courseList td:nth-child(2){
+	width: 10%;	
+}
+
+#courseList th:nth-child(3), #courseList td:nth-child(3){
+	width: 20%;	
+}
+
+#courseList th:nth-child(4), #courseList td:nth-child(4){
+	width: 15%;	
+}
+
+#courseList th:nth-child(5), #courseList td:nth-child(5){
+	width: 10%;	
+}
+
+#courseList th:nth-child(6), #courseList td:nth-child(6){
+	width: 10%;	
+}
+
+#courseList th:nth-child(7), #courseList td:nth-child(7){
+	width: 10%;	
+}
+
+#courseList th:nth-child(8), #courseList td:nth-child(8){
+	width: 15%;	
+}
+
+#courseList th:nth-child(9), #courseList td:nth-child(9){
+	width: 5%;	
+}
+
+#courseList th {
+	text-align: center;
+}
 
 
 .lectureNo {
