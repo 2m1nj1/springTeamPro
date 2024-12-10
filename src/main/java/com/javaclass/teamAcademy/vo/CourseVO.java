@@ -21,5 +21,6 @@ public class CourseVO {
 	private String	classroom_name;		// 강의실 이름
 	private String	course_days;		// 강의 요일
 	private String	course_person;		// 수강 인원 / 정원
+	private String	course_sch;			// 강좌 일정 (1개)
 	
 } // end of CourseVO

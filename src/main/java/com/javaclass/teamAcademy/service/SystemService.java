@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.javaclass.teamAcademy.vo.ClassroomVO;
 import com.javaclass.teamAcademy.vo.CourseStaVO;
+import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
 
 public interface SystemService {
@@ -23,5 +24,6 @@ public interface SystemService {
 	public void insertClassroom(ClassroomVO vo);
 	
 	public int countCourse(String courseStaName);
+	
 	
 } // end of SystemService

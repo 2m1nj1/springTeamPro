@@ -48,7 +48,6 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="stu_course_regi.do">수강신청</a>
                         <a class="collapse-item" href="stu_lecture_select.do">강좌조회</a>
                         <a class="collapse-item" href="stu_attendance.do">출결조회</a>
                         <a class="collapse-item" href="stu_homework.do">과제제출</a>
@@ -94,6 +93,12 @@
             
             <!-- 로그인 하지 않은 user도 접근 가능 -->
             <c:if test="${sessionScope.loginUserCate ne 3}">
+            	<li class="nav-item">
+	                <a class="nav-link" href="courseRegi">
+	                    <i class="fas fa-fw fa-chart-area"></i>
+	                    <span>수강신청</span></a>
+	            </li>
+            
             	<li class="nav-item">
 	                <a class="nav-link" href="comm_community.do">
 	                    <i class="fas fa-fw fa-chart-area"></i>
