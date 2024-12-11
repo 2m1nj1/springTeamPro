@@ -22,10 +22,14 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	// [학생] nav bar 에 표시될 수강중인 강좌들 불러오기
 	@Override
 	public List<CourseVO> fetchOngoingCourses(int userNo) {
+		try {
 		System.out.println("Dao Layer fetchOngoingCourses() 호출" + userNo);
 		List<CourseVO> courses = sqlsession.selectList( "AttendanceDao.fetchOngoingCourses", userNo );
 		System.out.println("Courses fetched: " + courses);
-		return courses;
+		}catch(Exception e){
+			System.out.println("오류!! " + e.getMessage());
+		}
+		return sqlsession.selectList( "AttendanceDao.fetchOngoingCourses", userNo );
 	}
 
 	// 출결 목록 조회
@@ -59,6 +63,10 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	// 강좌 시간 기록 물어옴.
 	@Override
 	public Map<String, String> fetchCourseTimings(int courseNo) {
-	    return sqlsession.selectOne("AttendanceDao.fetchCourseTimings", courseNo);
+	     Map<String, String> timings = sqlsession.selectOne("AttendanceDao.fetchCourseTimings", courseNo);
+	     if(timings == null) {
+	    	 throw new RuntimeException("No timings found for courseNo: " + courseNo);
+	     }
+	     return timings;
 	}
 }

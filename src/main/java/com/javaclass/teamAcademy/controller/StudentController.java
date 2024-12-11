@@ -1,19 +1,24 @@
 package com.javaclass.teamAcademy.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.javaclass.teamAcademy.service.AttendanceService;
@@ -43,9 +48,10 @@ public class StudentController {
 	//================================================
 	// 데이터 물어오는 라우팅(루팅, routing) - [학생] 과제제출 페이지랑 연결.
 	// Render the homework page
-    @RequestMapping("stu_homework.do")
-    public String getHomeworkPage(@RequestParam(value="userNo", required=false, defaultValue="28") int userNo, Model m) {
-    	
+    @RequestMapping("stu_homework")
+    public String getHomeworkPage(@RequestParam(value="userNo", required=false, defaultValue="2") int userNo, Model m) {
+    	System.out.println("Accessing stu_homework.do with userNo: " + userNo);
+    	try {
     	if (userNo == 0) {
             System.out.println("userNo 파라미터 안 들어옴!");
             return "error/missingUserNo"; // userNo 없는 경우;
@@ -55,7 +61,10 @@ public class StudentController {
 
         m.addAttribute("courses", courses);
         m.addAttribute("userNo", userNo); // userNo 를 JSP 에 전달.
-        return "student/stu_homework"; // stu_homework.jsp 로 이동.
+    	}catch(Exception e) {
+    		System.out.println("stu_homework 안나옴..." + e.getMessage());
+    	}
+    	return "student/stu_homework"; // stu_homework.jsp 로 이동.
     }// end of stu_homework.do
     
     
@@ -88,25 +97,62 @@ public class StudentController {
     }// end of stuGradeDetails
     
     
-	/*
-	 * @RequestMapping("submit_homework") public String
-	 * submitHomework(@RequestParam("hw_no") int hwNo, Model model) {
-	 *    System.out.println("Submitting homework with ID: " + hwNo); // 디버깅 //
-	 *    Add submission logic here return "redirect:/student/stu_homework.do"; 
-	 *    // Redirect after submission 
-	 * }
-	 */
-     
-    
-    //================================================
+    @PostMapping("/submitHomework.do")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> submitHomework(
+            @RequestParam(value = "hw_no", required = false) Integer hwNo,
+            @RequestParam(value = "user_no", required = false) Integer userNo,
+            @RequestParam("file") MultipartFile file) {
+        System.out.println("Received hw_no: " + hwNo);
+        System.out.println("Received user_no: " + userNo);
+        System.out.println("Received file: " + file.getOriginalFilename());
+
+        Map<String, Object> response = new HashMap<>();
+        try {
+            if (hwNo == null || userNo == null || file.isEmpty()) {
+                throw new IllegalArgumentException("Missing parameters or file is empty!");
+            }
+            
+            // Define the upload path
+            String uploadDir = "/team2pro/src/main/webapp/resources/static/uploads/homework/";
+            File uploadFolder = new File(uploadDir);
+
+            // Create the directory if it doesn't exist
+            if (!uploadFolder.exists()) {
+                uploadFolder.mkdirs();
+            }
+
+            // Create the file path with a unique name
+            String uniqueFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            String fullPath = uploadDir + uniqueFileName;
+
+            // Save the file to the server
+            file.transferTo(new File(fullPath));
+
+            // Save the file path into the database
+            homeworkService.saveUpload(hwNo, fullPath);
+
+            response.put("success", true);
+            response.put("message", "Homework submitted successfully.");
+            response.put("filePath", fullPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", "Error: " + e.getMessage());
+        }
+        return ResponseEntity.ok(response);
+    }// end of submitHomework
+
+
+	//================================================
   	//				Attendance part
   	//================================================
     // 특정 강좌에 대한 출석부 목록 출력...
  	/*
  	 * [학생]이 현재 수강중인 강좌들에 대한 리스트 출력. 
  	 */
- 	@GetMapping("stu_attendance")
-     public String viewAttendancePage(@RequestParam(value="userNo", required=false, defaultValue = "28") int userNo, Model m) {
+ 	@RequestMapping("stu_attendance.do")
+     public String viewAttendancePage(@RequestParam(value="userNo", required=false, defaultValue = "2") int userNo, Model m) {
  		System.out.println("Reached viewAttendancePage for userNo: " + userNo);
  		
          // 수강중인 강좌 가져옴.
@@ -123,11 +169,13 @@ public class StudentController {
  	
  	
  	// 출결 validation
- 	@GetMapping("validateAttendance")
- 	@ResponseBody
- 	public Map<String, Object> validateAttendance(
+ 	@RequestMapping(value = "/validateAttendance", method = RequestMethod.GET)
+ 	public @ResponseBody Map<String, Object> validateAttendance(
  	    @RequestParam int userNo, 
  	    @RequestParam int courseNo) {
+ 		
+ 		System.out.println("Parameters received: userNo=" + userNo + ", courseNo=" + courseNo);
+ 		
  	    Map<String, Object> response = new HashMap<>();
  	    try {
  	        // Check if the user has already attended or left early today
@@ -141,6 +189,7 @@ public class StudentController {
 
  	        response.put("alreadyAttended", alreadyAttended);
  	        response.put("alreadyLeftEarly", alreadyLeftEarly);
+ 	        
  	        response.put("courseStartTime", courseTimings.get("courseStartTime"));
  	        response.put("courseEndTime", courseTimings.get("courseEndTime"));
  	        response.put("status", "success");
@@ -155,10 +204,13 @@ public class StudentController {
  	// 출석 버튼 누르면 실행되는거
  	@PostMapping("markAttendance")
  	@ResponseBody
- 	public String markAttendance(@RequestParam int userNo, @RequestParam int courseNo) {
- 		System.out.println("userNo : " + userNo + " courseNo : " + courseNo);
+ 	public String markAttendance(
+ 			@RequestParam int userNo
+ 			, @RequestParam int courseNo
+ 			, @RequestParam int attendanceStatus) {
+ 		System.out.println("userNo : " + userNo + " courseNo : " + courseNo + "attendanceStatus: " + attendanceStatus);
  	    try {
- 	        attendanceService.markAttendance(userNo, courseNo, 1); // 1 for 출석
+ 	        attendanceService.markAttendance(userNo, courseNo, attendanceStatus); // 1 for 출석
  	        return "successMarkAttendance";
  	    } catch (Exception e) {
  	        e.printStackTrace();
@@ -226,8 +278,12 @@ public class StudentController {
 	    System.out.println("endDate: " + endDate);
 	    System.out.println("page: " + page);
 	    System.out.println("size: " + size);
-    	
-    	int offset = page * size;
+	    
+	    int offset = page * size;
+	    
+	    System.out.println("Service Layer - getAttendanceList for params : " +
+	            "{offset=" + offset + ", userNo=" + userNo + ", courseNo=" + courseNo +
+	            ", startDate=" + startDate + ", endDate=" + endDate + ", limit=" + size + "}");
  		
     	Map<String, Object> params = new HashMap<>();
         params.put("userNo", userNo);
@@ -247,99 +303,126 @@ public class StudentController {
    	//			Grade + Exam score  part
    	//================================================
     // 화면 출력
-     @GetMapping("fetchExamYears")
-     @ResponseBody
-     public List<Integer> fetchExamYears(@RequestParam(value="userNo", required=false, defaultValue="28")
-    		 int userNo){
-    	 List<Integer> examYears = serviceTx.fetchExamYears(userNo); // 서비스단으로부터 가져옴
-    	 System.out.println("Exam years fetched: " + examYears);
-    	 return examYears;
-     } // end of fetchExamYears
+    @GetMapping("fetchExamYears")
+    @ResponseBody
+    public List<Integer> fetchExamYears(@RequestParam(value = "userNo", required = false, defaultValue = "2") int userNo) {
+        List<Integer> examYears = serviceTx.fetchExamYears(userNo); // Fetch from the service layer
+        System.out.println("Exam years fetched: " + examYears);
+        return examYears;
+    } // end of fetchExamYears
 	
+    
+    // Fetch test titles for the selected year
+    @GetMapping("fetchExamTitles")
+    @ResponseBody
+    public List<ExamVO> fetchExamTitles(@RequestParam(value = "year") int year) {
+        return serviceTx.fetchExamTitles(year);
+    }// end of feetchExamTitles
+    
+
+    // Fetch exam context for the selected test title
+    @GetMapping(value="fetchExamContext", produces="application/text; charset=UTF-8")
+    @ResponseBody
+    public String fetchExamContext(@RequestParam(value = "examNo") int examNo) {
+        String result = serviceTx.fetchExamContext(examNo);
+        System.out.println("[ 컨트롤러: fetchExamContext/ ] ;result = " + result);
+        
+        return result;
+    }// end of fetchExamContext
+    
      
-     // 시험정보 목록 물어옴.
-     @GetMapping("fetchExamList")
-     @ResponseBody
-     public List<ExamVO> fetchExamList() {
-         // Fetch the list of exams from the database
-         List<ExamVO> examList = serviceTx.getAllExams();
-         return examList; // Return as JSON
-     }// end of fetchExamList
+    // 시험정보 목록 물어옴.
+    @GetMapping("fetchExamList")
+    @ResponseBody
+    public List<ExamVO> fetchExamList() {
+        // Fetch the list of exams from the database
+        List<ExamVO> examList = serviceTx.getAllExams();
+        return examList; // Return as JSON
+    }// end of fetchExamList
      
      
-     // 시험 정보와 그에 상응하는 점수 값들을 불러옴.
-	  @GetMapping("stu_grade")
-	  public String listGradeAndExams(@RequestParam(value="userNo", required=false, defaultValue="28")
-		  int userNo, Model m) {
-		  System.out.println("received userNo: " + userNo);
+    // 시험 정보와 그에 상응하는 점수 값들을 불러옴.
+	@GetMapping("stu_grade")
+	public String listGradeAndExams(@RequestParam(value="userNo", required=false, defaultValue="2")
+		int userNo, Model m) {
+		System.out.println("received userNo: " + userNo);
 		  
-		  List<GradeVO> gradeList = serviceTx.fetchGradeList(userNo);
-		  System.out.println("gradeList size: " + gradeList.size());
+		List<GradeVO> gradeList = serviceTx.fetchGradeList(userNo);
+		System.out.println("gradeList size: " + gradeList.size());
 		  
-		  List<ExamVO> examList = serviceTx.fetchExamList(userNo);
-		  System.out.println("examList size: " + examList.size());
+		List<ExamVO> examList = serviceTx.fetchExamList(userNo);
+		System.out.println("examList size: " + examList.size());
 		  
-		  for( GradeVO gvo : gradeList ) { System.out.println(gvo); }
+		for( GradeVO gvo : gradeList ) { System.out.println(gvo); }
+		 
+		for( ExamVO evo : examList ) { System.out.println(evo); }
 		  
-		  for( ExamVO evo : examList ) { System.out.println(evo); }
+		m.addAttribute("gradeList", gradeList); m.addAttribute("examList", examList);
+		m.addAttribute("userNo", userNo);
 		  
-		  m.addAttribute("gradeList", gradeList); m.addAttribute("examList", examList);
-		  m.addAttribute("userNo", userNo);
-		  
-		  return "student/stu_grade"; 
-	  } // end of listGradeAndExams
+		return "student/stu_grade"; 
+	} // end of listGradeAndExams
 	 
-
-	  @RequestMapping("stu_grade_details")
-	  public String stuGradeDetails(@RequestParam("exam_no") int examNo, Model model) {
-	      // Add logic to retrieve grade details
-	      model.addAttribute("examNo", examNo);
-	      return "student/stu_grade_details";
-	  }// end of stuGradeDetails
+	  
+	// 성적 상세보기 페이지
+	@RequestMapping("stu_grade_details")
+	public String stuGradeDetails(@RequestParam("exam_no") int examNo, Model model) {
+	    // Add logic to retrieve grade details
+	    model.addAttribute("examNo", examNo);
+	    return "student/stu_grade_details";
+	}// end of stuGradeDetails
 	  
 	  
-     // JSON 반환 -> 차트 그리는 데에 넣어줄거. 자료 던져주는 역할만 한다.
-     @GetMapping("fetchGradeAndExams")
-     @ResponseBody
-     public Map<String, Object> fetchGradeAndExams( 
-    		 @RequestParam(value = "userNo", required = false, defaultValue = "28") int userNo,
-    	     @RequestParam(value = "year", required = false) Integer year,
-     		 @RequestParam(value = "exam_no", required = false) Integer examNo){
+	// 성적 등록 페이지
+	@RequestMapping("stu_gradeInsert")
+	public String showGradeInsertPage(@RequestParam(value = "userNo", required = false, defaultValue = "2") int userNo, Model model) {
+	    model.addAttribute("userNo", userNo);
+	    return "student/stu_gradeInsert";
+	}// end of showGradeInsertPage
+	  
+	  
+    // JSON 반환 -> 차트 그리는 데에 넣어줄거. 자료 던져주는 역할만 한다.
+    @GetMapping("fetchGradeAndExams")
+    @ResponseBody
+    public Map<String, Object> fetchGradeAndExams( 
+    	@RequestParam(value = "userNo", required = false, defaultValue = "2") int userNo,
+    	@RequestParam(value = "year", required = false) Integer year,
+     	@RequestParam(value = "exam_no", required = false) Integer examNo){
     	 
-    	 System.out.println("Received userNo : " + userNo);
-    	 System.out.println("Received examNo : " + examNo);
+    	System.out.println("Received userNo : " + userNo);
+    	System.out.println("Received examNo : " + examNo);
     	 
-    	 // gradeList 에 연도에 해당하는 DB 값들을 가져옴
-    	 List<GradeVO> gradeList = year != null
-    			 ? serviceTx.fetchGradeListByYear(userNo, year) :
-    				 serviceTx.fetchGradeList(userNo);
+    	// gradeList 에 연도에 해당하는 DB 값들을 가져옴
+    	List<GradeVO> gradeList = year != null
+    			? serviceTx.fetchGradeListByYear(userNo, year) :
+    			 serviceTx.fetchGradeList(userNo);
     	 
-    	 List<ExamVO> examList = serviceTx.fetchExamList(userNo);
+    	List<ExamVO> examList = serviceTx.fetchExamList(userNo);
     	 
-    	 Map<String, Object> response = new HashMap<>();
+    	Map<String, Object> response = new HashMap<>();
     	 
-    	 response.put("gradeList", gradeList);
-    	 response.put("examList", examList);
+    	response.put("gradeList", gradeList);
+    	response.put("examList", examList);
+    	
+    	System.out.println("Grade list size: " + (gradeList != null ? gradeList.size() : "null"));
+    	System.out.println("Exam list size: " + (examList != null ? examList.size() : "null"));
     	 
-    	 System.out.println("Grade list size: " + (gradeList != null ? gradeList.size() : "null"));
-    	 System.out.println("Exam list size: " + (examList != null ? examList.size() : "null"));
-    	 
-    	 return response;
-     } // end of fetchGradeAndExams
+    	return response;
+    } // end of fetchGradeAndExams
 
      
-     // 시험 정보와 성적 정보들 삽입
-     @PostMapping("insertGradesAndExams")
-     @ResponseBody
-     public String insertGradesAndExams(@RequestBody Map<String, Object> data) {
-	     try {
-	    	 serviceTx.insertGradesAndExams(data);
-	         return "successInsertGradesAndExams";
-	     }catch(Exception e){
-	    	 e.printStackTrace();
-	         return "failure";
-	     }
-     }// end of insertGradesAndExams
-
+    // 시험 정보와 성적 정보들 삽입
+    @PostMapping("insertGrade")
+    @ResponseBody
+    public String insertGrade(@RequestBody GradeVO gradeVO) {
+        try {
+            serviceTx.insertGrade(gradeVO);
+            return "successInsertGrade";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "failure";
+        }
+    }// end of insertGrade
+    
      
 } // 컨트롤러 마감.

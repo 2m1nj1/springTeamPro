@@ -13,6 +13,10 @@ public interface ExamDao {
 
 	List<Integer> fetchExamYears(int userNo);
 
+	public List<ExamVO> fetchExamTitles(int year);
+	
+	public String fetchExamContext(int examNo);
+	
 	void insertExam(ExamVO evo);
 	
 }

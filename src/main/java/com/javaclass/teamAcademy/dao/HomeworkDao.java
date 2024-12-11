@@ -2,7 +2,10 @@ package com.javaclass.teamAcademy.dao;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.javaclass.teamAcademy.vo.CourseVO;
+import com.javaclass.teamAcademy.vo.HomeworkDoneVO;
 import com.javaclass.teamAcademy.vo.HomeworkVO;
 
 public interface HomeworkDao {
@@ -13,4 +16,10 @@ public interface HomeworkDao {
     List<HomeworkVO> getHomeworkByCourse(int courseNo);
 
     HomeworkVO getHomeworkDetails(int hwNo);
+    
+    public void saveHomeworkSubmission(HomeworkDoneVO homeworkDone);
+    
+    public String saveFile(MultipartFile file);
+
+	int saveUpload(int hwNo, String filePath);
 }

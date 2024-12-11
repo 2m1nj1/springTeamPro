@@ -1,118 +1,126 @@
-$(function() {
-	// infobtn1, infobtn2 버튼 옆에 문구 없으면 보이도록, 없으면 안 보이도록 토글.
-	let txt1 = " * 표시는 필수기재항목. ";
-	let txt2 = " * 응시 여부: 응시=1, 미응시=0. ";
+$(function () {
+    // 숨겨진 사용자 정보.
+    const userNo = $("#userNo").val();
 
-	$('#infobtn1').click(function() {
-		// 버튼 옆에 문구가 없으면 추가하고, 있으면 토글
-		let infoText = $(this).next('.info-text');
-		if (infoText.length == 0) {
-			//문구 없으면 추가
-			$(this).after('<span class="info-text">' + txt1 + '</span>')
-		} else {
-			// 문구 있으면 토글(보이거나 숨김)
-			infoText.toggle();
-		}
-	});// end of #infobtn1 click
+    // 로그인한 학생이 치룬 시험 연도 자료 물어옴.
+    function fetchExamYears() {
+        $.ajax({
+            type: "GET",
+            url: "/fetchExamYears",
+            data: { userNo },
+            success: function (years) {
+                const yearDropdown = $("#year");
+                yearDropdown.empty();
+                yearDropdown.append('<option value="">조회할 연도를 선택하세요</option>');
+                years.forEach(year => {
+                    yearDropdown.append(`<option value="${year}">${year}</option>`);
+                });
+            },
+            error: function () {
+                alert("시험 연도를 불러오기 실패했습니다.");
+            }
+        });
+    }
 
-	$('#infobtn1').click(function() {
-		let infoText = $(this).next('.info-text');
-		if (infoText.length == 0) {
-			$(this).after('<span class="info-text">' + txt2 + '</span>')
-		} else {
-			infoText.toggle();
-		}
-	});// end of #infobtn2 click
+    // 선택된 연도에 대한 시험 제목들 물어오기.
+    $("#year").on("change", function () {
+        const year = $(this).val();
+        const examDropdown = $("#exam_name");
+        const contextInput = $("#exam_context");
 
-	
-	$(document).ready(function () {
-		
-		// DB 서버로부터 시험들 리스트 가져와서 드랍다운 만듦;
-	    function fetchExamList() {
-	        $.ajax({
-	            url: "fetchExamList", // endpoint 맞춰주기...
-	            method: "GET",
-	            dataType: "json",
-	            success: function (response) {
-	                const examDropdown = $("#exam_name");
-	                examDropdown.empty(); // 드랍다운 목록 초기화
-	                examDropdown.append('<option value="">시험 이름을 선택해주세요.</option>'); // 기본 옵션
+        examDropdown.empty().append('<option value="">시험명을 선택하세요</option>');
+        contextInput.val("");
+        if (!year) {
+            examDropdown.prop("disabled", true);
+            return;
+        }
 
-	                // exam 데이터로 드랍다운 생성;
-	                response.forEach(exam => {
-	                    examDropdown.append(
-	                        `<option value="${exam.exam_no}" data-context="${exam.exam_context}">${exam.exam_name}</option>`
-	                    );
-	                });
-	            },
-	            error: function (error) {
-	                console.error("Failed to fetch exam list:", error);
-	            }
-	        });
-	    }
+        $.ajax({
+            type: "GET",
+            url: "/fetchExamTitles",
+            data: { year },
+            success: function (titles) {
+                titles.forEach(title => {
+                    examDropdown.append(`<option value="${title.exam_no}">${title.exam_name}</option>`);
+                });
+                examDropdown.prop("disabled", false);
+            },
+            error: function () {
+                alert("시험 제목들을 불러오기 실패했습니다.");
+            }
+        });// ajax
+    });
 
-	    // 시험 선택되었을 적에 exam context 불러옴
-	    $("#exam_name").change(function () {
-	        const selectedOption = $(this).find("option:selected");
-	        const examContext = selectedOption.data("context") || ""; // 선택한 옵션으로부터 exam_context 물어옴
-	        $("#exam_context").val(examContext); // exam_context field 생성;
-	    });
+    // 선택된 시험의 상세 정보 물어오기.
+    $("#exam_name").on("change", function () {
+        const examNo = $(this).val();
+        const contextInput = $("#exam_context");
 
-	    // 드랍다운 초기 생성;
-	    fetchExamList();
-		
-	    $("#stu_gradeInsertButton").on("click", function () {
-	        // 폼으로부터 입력값 받아오는데... 유효성 검사 요함.
-	        const data = {
-	            exam_name: $("#exam_name").val()
-	            ,exam_context: $("#exam_context").val()
-	            ,user_no: $("#userNo").val()
-	            ,user_name: $("#user_name").val()
-	            ,original_score: $("#original_score").val()
-	            ,percentile_score: $("#percentile_score").val()
-	            ,kor: $("#kor").val()
-	            ,kor_took: $("#kor_took").is(":checked") ? 1 : 0 
-	            ,math: $("#math").val()
-	            ,math_took: $("#math_took").is(":checked") ? 1 : 0 
-	            ,eng: $("#eng").val()
-	            ,eng_took: $("#eng_took").is(":checked") ? 1 : 0 
-	        };
+        contextInput.val("");
+        if (!examNo) return;
 
-	        // 백단에 AJAX.
-	        $.ajax({
-	            type: "POST",
-	            url: "insertGradesAndExams",
-	            contentType: "application/json",
-	            data: JSON.stringify(data),
-	            success: function (response) {
-	                if (response === "successInsertGradesAndExams") {
-	                    alert("성적 정보 입력 성공! [학생]성적조회 화면으로 돌아갑니다.");
-	                    
-	                    // stu_grade.jsp 로 돌아감.
-	                    window.location.href="stu_grade.do" //currently showing 404...ㅠㅠ
-	                } else {
-	                    alert("Grade + Exam 데이터 DB 삽입 실패! 재시도 요망.");
-	                }
-	            },
-	            error: function () {
-	                alert("An error occurred while inserting data via ajax.");
-	            }
-	        });
-	    });
+        $.ajax({
+            type: "GET",
+            url: "/fetchExamContext",
+            data: { examNo },
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            //contentType: "application/json; charset=UTF-8", // 명시적으로 UTF-8 설정
+            success: function (context) {
+            	console.log("Fetched context:", context);
+                $("#exam_context").val(context || "No context available.");
+            },
+            error: function () {
+                alert("시험 정보를 불러오기 실패했습니다.");
+            }
+        });
+    }); // end of exam_name onchange
 
-	    // 추가 기능 예시;
-	    function refreshGradeList() {
-	        $.ajax({
-	            type: "GET",
-	            url: "stu_grade", 
-	            success: function (data) {
-	                $("#gradeTable").html(data); // tbl id="gradeTable"
-	            },
-	            error: function () {
-	                alert("Failed to refresh grade list.");
-	            }
-	        });
-	    }
-	});
-		
-});// end of function
+    // 성적 입력단.
+    $("#stu_gradeInsertButton").on("click", function () {
+        const data = {
+            user_no: userNo,
+            exam_no: $("#exam_name").val(),
+            exam_context: $("#exam_context").val(),
+            user_name: $("#user_name").val(),
+            original_score: $("#original_score").val(),
+            percentile_score: $("#percentile_score").val(),
+            kor: $("#kor").val(),
+            kor_took: $("#kor_took").is(":checked") ? 1 : 0,
+            math: $("#math").val(),
+            math_took: $("#math_took").is(":checked") ? 1 : 0,
+            eng: $("#eng").val(),
+            eng_took: $("#eng_took").is(":checked") ? 1 : 0
+        };
+
+        // 필요 항목들 유효성 검사...
+        consloe.log( "data.exam_no : " + data.exam_no + "data.user_name" + data.user_name +
+        		"data.original_score" + dtat.original_score + "data.percentile_score" + data.percentile_score );
+        if ( !data.exam_no || !data.user_name || !data.original_score || !data.percentile_score ) {
+            alert("모든 필수 항목을 입력하세요!");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/insertGrade",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(data),
+            success: function (response) {
+                if (response === "successInsertGrade") {
+                    alert("성적 정보가 성공적으로 저장되었습니다!");
+                    window.location.href = "stu_grade.do"; // 입력 페이지 -> 성적 메인으로 라우팅.
+                } else {
+                    alert("성적 저장 실패! 다시 시도하세요.");
+                }
+            },
+            error: function () {
+                alert("서버 오류로 인해 성적 저장에 실패했습니다.");
+            }
+        }); // ajax
+    });
+
+    // 초기 로딩
+    $(document).ready(function () {
+        fetchExamYears(); // 페이지 로딩시 연도 드랍다운 생성
+    });
+});

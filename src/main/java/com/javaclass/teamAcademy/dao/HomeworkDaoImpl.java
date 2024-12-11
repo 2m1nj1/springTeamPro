@@ -1,12 +1,19 @@
 package com.javaclass.teamAcademy.dao;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaclass.teamAcademy.vo.CourseVO;
+import com.javaclass.teamAcademy.vo.HomeworkDoneVO;
 import com.javaclass.teamAcademy.vo.HomeworkVO;
 
 @Repository
@@ -41,5 +48,57 @@ public class HomeworkDaoImpl implements HomeworkDao {
 		System.out.println("Dao(레포지토리) hwInfo 물어옴: " + hwInfo);
 		return hwInfo;
 	}// end of getHomeworkDetails
+
+	@Override
+	public void saveHomeworkSubmission(HomeworkDoneVO homeworkDone) {
+		sqlSession.insert("HomeworkDao.saveHomeworkSubmission", homeworkDone);		
+	}// end of saveHomeworkSubmission
+
+	
+	// 업로딩 저장하기
+	@Override
+	public int saveUpload(int hwNo, String filePath) {
+		if (filePath == null || filePath.isEmpty()) {
+	        throw new IllegalArgumentException("Invalid file path for upload!");
+	    }// end of if
+		Map<String, Object> params = new HashMap<>();
+		
+		System.out.println("DAO) Saving upload with - hwNo : " + hwNo + " filePath : " + filePath + " params : " + params);
+		
+	    params.put("hwNo", hwNo);
+	    params.put("filePath", filePath);
+	    params.put("serviceNo", 3);
+	    
+	    int a = sqlSession.insert("HomeworkDao.saveUpload", params);
+	    System.out.println("saveUpload : " + a);
+	    return a;
+	}// end of saveUpload
+
+	
+	// 파일 저장
+	@Override
+	public String saveFile(MultipartFile file) {
+		String uuid = UUID.randomUUID().toString();
+	    String originalFilename = file.getOriginalFilename();
+	    String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+	    String uniqueFilename = uuid + fileExtension;
+
+	    // Use a dynamic, server-safe upload directory
+	    String uploadDir = "/server/uploads/homework/";
+	    File destination = new File(uploadDir, uniqueFilename);
+	    if (!destination.getParentFile().exists()) {
+	        destination.getParentFile().mkdirs();
+	    }
+	    try {
+			file.transferTo(destination);
+		} catch (IllegalStateException e) {
+			System.out.println("saveFile IllegalStateException error");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("saveFile IOException error");
+			e.printStackTrace();
+		}
+	    return destination.getAbsolutePath();
+	}// end of saveFile
        
 }// end of HomeworkDaoImpl

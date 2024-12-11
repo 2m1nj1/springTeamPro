@@ -58,7 +58,7 @@
 			<input type="hidden" id="userNo" name="userNo" value="${userNo}">
 			
             <!-- 페이지 명 -->
-            <h5 class="h3 mb-4 text-gray-800">세부 성적 조회</h5>
+            <h5 class="h3 mb-4 text-gray-800">[학생]세부 성적 조회</h5>
 
             <!-- 시험 정보 출력 박스 -->
             <div class="row">

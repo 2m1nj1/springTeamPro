@@ -1,8 +1,13 @@
 package com.javaclass.teamAcademy.service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaclass.teamAcademy.vo.CourseVO;
+import com.javaclass.teamAcademy.vo.HomeworkDoneVO;
 import com.javaclass.teamAcademy.vo.HomeworkVO;
 
 public interface HomeworkService {
@@ -13,5 +18,11 @@ public interface HomeworkService {
     List<HomeworkVO> getHomeworkByCourse(int courseNo);
     
     HomeworkVO getHomeworkDetails(int hwNo);
+
+	String saveFile(MultipartFile file) throws IOException;
+
+	void saveHomeworkSubmission(HomeworkDoneVO homeworkDone);
+
+	int saveUpload(int hwNo, String filePath);
 
 }

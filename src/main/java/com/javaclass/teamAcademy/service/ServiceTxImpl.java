@@ -56,14 +56,28 @@ public class ServiceTxImpl implements ServiceTx {
 	}// end of fetchGradeListByYear
 	
 
-	// 사용자가 기입한 grade 와 exam 정보 삽입
+	// 사용자가 기입한 grade - exam 정보에 따라 삽입;
 	@Transactional
 	@Override
-	public void insertGradesAndExams(Map<String, Object> data) throws Exception { //화살표 생김; AOP! root-context 확인해봐요
-		// grade / exam 나뉘지 않고, Transaction 안 주고.
-		// ALL or NOTHING 트랜젝션 단위로 잡아줌.
-		gradeDao.insertGradesAndExams(data);
-		System.out.println("Grade + Exam OK : " + data);	
+	public void insertGrade(GradeVO gradeVO) throws Exception {
+	    gradeDao.insertGrade(gradeVO);
+	    System.out.println("Grade Inserted: " + gradeVO);
 	}// insertGradesAndExams
+
+
+	@Override
+	public List<ExamVO> fetchExamTitles(int year) {
+		List<ExamVO> list = examDao.fetchExamTitles(year);
+		System.out.println("Exam 제목들 물어옴 : " + list);
+		return list;
+	}// end of fetchExamTitlesByYear
+
+
+	@Override
+	public String fetchExamContext(int examNo) {
+		String str = examDao.fetchExamContext(examNo);
+		System.out.println("Exam 정보 물어옴 : " + str);
+		return str;
+	}// end of fetchExamContext
 	 
 }

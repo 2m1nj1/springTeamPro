@@ -24,7 +24,8 @@ public class AttendanceServiceImpl implements AttendanceService{
 	public List<CourseVO> getOngoingCourses(int userNo) {
 		System.out.println("Service Layer - OngoingCourses for userNo " + userNo );
         return adao.fetchOngoingCourses(userNo);
-    }
+    }// end of getOngoingCourses
+	
 
 	// 출결 목록 가져오기
 	@Override
@@ -34,8 +35,9 @@ public class AttendanceServiceImpl implements AttendanceService{
 		
 		System.out.println("Service Layer - getAttendanceList for params :" + params);
 		return adao.fetchAttendanceRecords(params);
-	}
+	}// end of getAttendanceRecords
 
+	
 	// 출석 (1)
 	@Override
 	public void markAttendance(int userNo, int courseNo, int attendanceStatus) {
@@ -44,8 +46,9 @@ public class AttendanceServiceImpl implements AttendanceService{
 	    params.put("courseNo", courseNo);
 	    params.put("attendanceStatus", attendanceStatus);
 	    adao.insertAttendance(params);
-	}
+	}// end of markAttendance
 
+	
 	// 조퇴 (3) 로 수정
 	@Override
 	public void markEarlyLeave(int userNo, int courseNo, int attendanceStatus) {
@@ -54,24 +57,34 @@ public class AttendanceServiceImpl implements AttendanceService{
 	    params.put("courseNo", courseNo);
 	    params.put("attendanceStatus", attendanceStatus);
 	    adao.updateAttendance(params);
-	}
+	}// end of markEarlyLeave
 
+	
 	// 오늘 출석기록 확인
 	@Override
 	public boolean checkAttendanceToday(int userNo, int courseNo) {
 		return adao.checkAttendanceToday(userNo, courseNo) > 0;
-	}
+	}// end of checkAttendanceToday
 
+	
 	// 오늘 결석기록 확인
 	@Override
 	public boolean checkPrematureLeaveToday(int userNo, int courseNo) {
 		return adao.checkPrematureLeaveToday(userNo, courseNo) > 0;
-	}
+	}// end of checkPrematureLeaveToday
 
+	
 	// 강좌 시간 정보 물어옴
 	@Override
 	public Map<String, String> getCourseTimings(int courseNo) {
-		return adao.fetchCourseTimings(courseNo);
-	}
+	    try {
+	        return adao.fetchCourseTimings(courseNo);
+	    } catch (RuntimeException e) {
+	        // 에러 로그로 만들고 다시 던짐;
+	        System.err.println(e.getMessage());
+	        throw e;
+	    }
+	}// end of getCourseTimings
+
 	
 }

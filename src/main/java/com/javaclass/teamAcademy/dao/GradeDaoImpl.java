@@ -19,7 +19,7 @@ public class GradeDaoImpl implements GradeDao{
 	@Override
 	public List<GradeVO> fetchGradeList(int userNo) {
 		return mybatis.selectList("GradeDao.fetchGradeList", userNo);
-	}
+	}// end of fetchGradeList
 
 	@Override
 	public List<GradeVO> fetchGradeListByYear(int userNo, int year) {
@@ -28,12 +28,12 @@ public class GradeDaoImpl implements GradeDao{
 	    params.put("year", year);
 
 	    return mybatis.selectList("GradeDao.fetchGradeListByYear", params);
-	}
+	}// end of fetchGradeListByYear
 
 	@Override
-	public void insertGradesAndExams(Map<String, Object> data) {
-		System.out.println("Dao print insertGradesAndExams data: " + data);
-		mybatis.insert("GradeDao.insertGradesAndExams", data);	
-	}
+	public void insertGrade(GradeVO gradeVO) {
+		System.out.println("Dao print insertGradesAndExams data: " + gradeVO);
+		mybatis.insert("GradeDao.insertGrade", gradeVO);
+	}// end of insertGrade
 	
 }

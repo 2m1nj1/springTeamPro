@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -60,7 +60,7 @@
 					<input type="hidden" id="userNo" name="userNo" value="${param.userNo}">
 
 					<!-- 페이지 명 -->
-					<h5 class="h3 mb-4 text-gray-800">성적 입력</h5>
+					<h5 class="h3 mb-4 text-gray-800">[학생]성적 입력</h5>
 
 					<!-- 시험 정보 입력 박스 -->
 					<div class="row ">
@@ -79,6 +79,16 @@
 									<div class="row">
 									<!-- left -->
 										<div class="col-6">
+											<div class="row">
+												<label class="col-sm-4 col-form-label">*수험 연도 : </label>
+												<div class="col-sm-8">
+												<!-- 시험명 Dropdown -->
+													<select class="form-control form-control-sm" required name="year" id="year">
+											            <option value="">조회할 연도를 선택하세요</option>
+											            <!-- Dropdown options will be dynamically loaded via JavaScript -->
+											        </select>
+												</div>
+											</div>
 											<div class="row">
 												<label class="col-sm-4 col-form-label">*시험명 : </label>
 												<div class="col-sm-8">
@@ -218,7 +228,7 @@
 				</div> <!-- end of container-fluid-->
 			</div> <!-- end of content -->
 		</div> <!-- end of content-Wrapper -->
-
+		</div>
 
 		<!-- Bootstrap core JavaScript-->
 		<script src="resources/static/vendor/jquery/jquery.min.js"></script>

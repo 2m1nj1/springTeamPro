@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE c.course_no IN (
 		    SELECT course_no
 		    FROM course_registration
-		    WHERE course_student = #{userNo})
+		    WHERE COURSE_REGI_STUDENT = #{userNo})
 	</select>
 
 	<!-- 강좌에 따른 과제 목록 불러오기 -->
@@ -42,47 +42,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- hwNo에 따른 과제 세부사항 가져옴. -->
 	<select id="getHomeworkDetails" parameterType="int" resultType="com.javaclass.teamAcademy.vo.HomeworkVO">
 	    SELECT 
-	        hw.hw_no 
-	        , hw.hw_title
-	        , hw.hw_context
-	        , TO_CHAR(hw.hw_startdate, 'YYYY-MM-DD') AS hw_startdate 
-	        , TO_CHAR(hw.hw_enddate, 'YYYY-MM-DD') AS hw_enddate
-	        , TO_CHAR(hw.hw_enddate, 'HH24:MI') AS hw_endtime
-	        , hw.hw_course
-	        , c.course_instructor
-	        , u.user_name
-	        , c.course_name
-	    FROM homework hw
-	    JOIN course c ON hw.hw_course = c.course_no
-	    JOIN user_account u ON c.course_instructor = u.user_no
-	    WHERE hw.hw_no = #{hwNo}
+		    hw.hw_no, 
+		    hw.hw_title, 
+		    NVL(hw.hw_context, 'No description available') AS hw_context,
+		    TO_CHAR(hw.hw_startdate, 'YYYY-MM-DD') AS hw_startdate,
+		    TO_CHAR(hw.hw_enddate, 'YYYY-MM-DD') AS hw_enddate,
+		    TO_CHAR(hw.hw_enddate, 'HH24:MI') AS hw_endtime,
+		    hw.hw_course,
+		    c.course_instructor,
+		    NVL(c.course_name, 'Unknown Course') AS course_name, 
+		    NVL(u.user_name, 'Unknown Instructor') AS user_name
+		FROM homework hw
+		LEFT JOIN course c ON hw.hw_course = c.course_no
+		LEFT JOIN user_account u ON c.course_instructor = u.user_no
+		WHERE hw.hw_course = #{hwNo}
+		ORDER BY hw.hw_no DESC
 	</select>
 
-<!-- 	<select id="checkSubmissionStatus" parameterType="int" resultType="com.javaclass.teamAcademy.vo.HomeworkVO">
-		SELECT 
-		    TO_CHAR( h.hw_enddate, 'YYYY-MM-DD' ) AS endDate,
-		    TO_CHAR( h.hw_enddate, 'HH24:MI' ) AS endTime,
-		    u.upload_location AS uploadLocation
-		FROM 
-		    homework h
-		LEFT JOIN 
-		    homework_done hd ON h.hw_no = hd.hw_no
-		LEFT JOIN 
-		    upload u ON hd.upload_no = u.upload_no
-		WHERE 
-		    h.hw_no = #{hwNo}
-	</select> -->
+	<insert id="saveHomeworkSubmission" parameterType="com.javaclass.teamAcademy.vo.HomeworkDoneVO">
+	    INSERT INTO homework_done( hw_done_no,  hw_done_student, hw_done_title, hw_done_date, upload_no )
+	    VALUES ( TEAM2PRO.SEQ_HW_DONE_NO.NEXTVAL,  #{userNo}, #{doneTitle}, #{doneDate}, #{uploadNo} )
+	</insert>
+	
+	<insert id="saveUpload" parameterType="map">
+	    INSERT INTO upload ( upload_no,  service_no, upload_location )
+	    VALUES ( TEAM2PRO.SEQ_UPLOAD_NO.NEXTVAL,  3, #{filePath} )
+	</insert>
+	
+	<select id="getLastUploadId" resultType="int">
+	    SELECT MAX(upload_no) FROM upload
+	</select>
 
-<!-- 	<select id="getHomeworkDetails" parameterType="int" resultType="com.javaclass.teamAcademy.vo.HomeworkVO">
-        SELECT hw_no, hw_enddate, hw_endtime
-        FROM homework
-        WHERE hw_no = #{hwNo}
-    </select>
-
-    <select id="isFileUploaded" parameterType="int" resultType="int">
-        SELECT COUNT(*)
-        FROM upload
-        WHERE hw_no = #{hwNo}
-    </select> -->
 	 
 </mapper>

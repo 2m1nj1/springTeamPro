@@ -25,10 +25,10 @@
 
     <style type="text/css">
         * {
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-        
-        .overlay {
+		    font-family: 'Noto Sans KR', sans-serif;
+		}
+		
+		.overlay {
 		    position: fixed;
 		    top: 0;
 		    left: 0;
@@ -90,6 +90,50 @@
 		    font-weight: bold;
 		    text-align: center;
 		}
+		
+		/* Card styles */
+		.card {
+		    border: 1px solid #dee2e6;
+		    border-radius: 8px;
+		    margin-bottom: 1.5rem;
+		    padding: 1rem;
+		    background-color: #ffffff; /* Updated to white for consistency */
+		}
+		
+		.card-header {
+		    background-color: #f8f9fa;
+		    padding: 0.75rem 1rem;
+		    border-bottom: 1px solid #dee2e6;
+		}
+		
+		.card-body {
+		    padding: 1rem; /* Added padding for better spacing */
+		}
+		
+		/* Button group styles */
+		.btn-group {
+		    display: flex;
+		    justify-content: flex-end;
+		    gap: 0.5rem;
+		}
+		
+		button.btn {
+		    min-width: 110px; /* Ensures consistent button width */
+		}
+		
+		#submit-btn {
+		    width: 100%; /* Makes the button span the entire width */
+		}
+		
+		/* Specific input styles */
+		input[readonly] {
+		    background-color: #e9ecef;
+		    cursor: not-allowed;
+		}
+		
+		.form-control-sm {
+		    height: calc(1.5em + 0.75rem + 2px); /* 높이조정 */
+		}
     </style>
 
 </head>
@@ -121,7 +165,7 @@
             <div class="container container-fluid">
                 
                 <!-- 페이지 명 -->
-                <h5 class="h3 mb-4 text-gray-800">과제 제출 페이지</h5>
+                <h5 class="h3 mb-4 text-gray-800">[학생]과제 제출 페이지</h5>
                 
                 	<!-- 출결 조회하려는 수강 중 강좌 선택 nav 바 -->
                     <div class="row">
