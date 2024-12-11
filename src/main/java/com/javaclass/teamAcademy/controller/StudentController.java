@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +24,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.javaclass.teamAcademy.service.AttendanceService;
+import com.javaclass.teamAcademy.service.BoardService;
 import com.javaclass.teamAcademy.service.HomeworkService;
+import com.javaclass.teamAcademy.service.LogService;
+import com.javaclass.teamAcademy.service.ProfileService;
 import com.javaclass.teamAcademy.service.ServiceTx;
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+import com.javaclass.teamAcademy.vo.BoardVO;
 import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.ExamVO;
 import com.javaclass.teamAcademy.vo.GradeVO;
 import com.javaclass.teamAcademy.vo.HomeworkVO;
+import com.javaclass.teamAcademy.vo.LogVO;
 
 @Controller
 public class StudentController {
@@ -42,6 +52,14 @@ public class StudentController {
 	@Autowired
 	private ServiceTx serviceTx;
 	
+	@Autowired
+	private ProfileService profileService;
+	
+	@Autowired
+	private LogService logService;
+	
+	@Autowired
+	private BoardService boardService;
 	
     //================================================
 	//				Homework part
@@ -424,5 +442,55 @@ public class StudentController {
         }
     }// end of insertGrade
     
+    @RequestMapping("sstu_{view}.do")
+	public String returnView(@PathVariable String view,
+					        Model m,
+					        HttpSession session,
+					        @ModelAttribute("log") LogVO logvo) {
+		
+    	if (view.equals("profileSetting")) {
+            Integer user_No = (Integer) session.getAttribute("loginUserPK");
+            System.out.println(user_No);
+            
+            if (user_No == null) {
+                return "redirect:comm_loginform.do";
+            }
+
+            LogVO log = profileService.getUserProfile(user_No);
+            m.addAttribute("log", log);
+
+            return "student/sstu_" + view;
+
+        } else if (view.equals("profile")) {
+            m.addAttribute("log", logvo);
+
+            List<BoardVO> list = boardService.getBoardList();
+            m.addAttribute("boardList", list);
+
+            return "student/sstu_" + view;
+
+        } else {
+            return "student/sstu_" + view;
+        }
+    
+	} // end of returnView	
+
+	@RequestMapping("updateProfile.do")
+	public String updateProfile(LogVO logvo, RedirectAttributes redirectAttributes) {
+		System.out.println("저장!!!!!!!!!!!!!!!");
+		System.out.println("입력값: " + logvo.toString());
+		
+		try {
+			profileService.updateProfile(logvo);	// 프로필 업데이트
+			redirectAttributes.addFlashAttribute("msg", "프로필 업데이트에 성공했습니다.");
+		} catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "프로필 업데이트에 실패했습니다.");
+        }
+		
+		redirectAttributes.addFlashAttribute("log", logvo);
+		
+		return "redirect:sstu_profile.do?user_No=" + logvo.getUser_No();
+		//return "redirect:stu_profile.do";
+	}
      
 } // 컨트롤러 마감.

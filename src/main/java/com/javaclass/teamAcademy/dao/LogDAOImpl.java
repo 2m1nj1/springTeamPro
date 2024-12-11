@@ -1,5 +1,8 @@
 package com.javaclass.teamAcademy.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,6 +63,37 @@ public class LogDAOImpl implements LogDAO{
 		LogVO result = mybatis.selectOne("academyMapper.getLog", user_No);
 		System.out.println("Mybatis getLog() 호출 - 2>" + result.toString());
 		return result;
+	}
+
+	@Override
+	public void updateLog(LogVO logvo) {
+		
+		mybatis.update("academyMapper.updateLog", logvo);
+		
+	}
+
+	@Override
+	public int changePass(LogVO vo) {
+		
+		return mybatis.update("academyMapper.changePass", vo);
+	}
+
+	@Override
+	public LogVO getUserByEmail(String user_Email) {
+		
+		LogVO result = mybatis.selectOne("academyMapper.getUserByEmail", user_Email);
+		
+		return result;
+	}
+
+	@Override
+	public int changePass(String user_Email, String user_Pass) {
+		
+		Map<String, String> params = new HashMap<>();
+	    params.put("user_Email", user_Email);
+	    params.put("user_Pass", user_Pass);
+
+	    return mybatis.update("academyMapper.changePass", params);
 	}
 
 

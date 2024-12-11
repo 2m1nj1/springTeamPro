@@ -29,68 +29,53 @@
             justify-content: center; /* 가운데 정렬 */
             width: 100%; /* 전체 너비를 사용하도록 설정 */
         }
+        
+        .transparent-alert {
+	    background-color: transparent; /* 배경을 투명하게 설정 */
+	    border: 1px solid rgba(0, 123, 255, 0); /* 테두리 색상 */
+	    color: #007bff; /* 텍스트 색상 */
+		}
     </style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-    $(function() {
-        // 이메일 전송 버튼 클릭
-        $('#mail-Check-Btn').click(function() {
-            let user_Email1 = $('#user_Email1').val();
-            let user_Email2 = $('#user_Email2').val();
-            let user_Email = user_Email1 + user_Email2; // 전체 이메일
-            
-            if (user_Email1 && user_Email2) {
-                // 이메일 전송 요청
-                $.ajax({
-                    url: '/mail/mailCheck?email=' + encodeURIComponent(user_Email),
-                    method: 'GET',
-                    success: function(response) {
-                        alert(response); // 이메일 전송 성공 메시지
-                        // 인증번호 확인 버튼 활성화
-                        $('#verifyCodeBtn').prop('disabled', false);
-                    },
-                    error: function() {
-                        alert('이메일 전송에 실패했습니다.');
-                    }
-                });
-            } else {
-                alert('이메일을 입력해주세요.');
-            }
-        });
+$(function(){	
+    $("#mail-Check-Btn").click(function(){
+        $('form[name="form"]').submit();
+    });
 
-        // 인증번호 확인 버튼 클릭
-        $('#verifyCodeBtn').click(function() {
-            let enteredCode = $('#InputPassCode').val();
-            if (enteredCode) {
-                // 인증번호 확인 요청
-                $.ajax({
-                    url: '/mail/verifyCode?code=' + enteredCode,
-                    method: 'GET',
-                    success: function(response) {
-                        alert(response); // 인증번호 확인 메시지
-                        // 인증번호가 맞으면 비밀번호 변경 버튼 활성화
-                        if (response === "인증번호가 확인되었습니다.") {
-                            $('#findPassResult').prop('disabled', false);
-                        }
-                    },
-                    error: function() {
-                        alert('인증번호가 틀렸습니다.');
-                    }
-                });
-            } else {
-                alert('인증번호를 입력해주세요.');
-            }
-        });
+    $("#verifyCodeBtn").click(function(){
+        var inputPassCode = $("#InputPassCode").val();  // 인증번호 입력값만 가져옴
 
-        // 비밀번호 변경 버튼 클릭
-        $('#findPassResult').click(function() {
-            $('#passwordForm').submit(); // 비밀번호 변경 화면으로 이동
+        // 인증번호가 입력되지 않으면 alert
+        if (inputPassCode === "") {
+            alert("인증번호를 입력해주세요.");
+            return;
+        }
+
+        // AJAX 요청
+        $.ajax({
+            url: "verifyCode.do",  // 인증번호 확인을 위한 URL
+            type: "POST",
+            data: {
+                inputPassCode: inputPassCode  // 인증번호만 서버로 전송
+            },
+            success: function(response) {
+                if (response === "success") {
+                	var user_Email = $("#user_Email").val();
+                    window.location.href = "comm_findPassResult.do?user_Email=" + user_Email;
+                } else {
+                    alert("인증번호가 일치하지 않습니다.");
+                }
+            },
+            error: function() {
+                alert("서버와의 통신에 문제가 발생했습니다.");
+            }
         });
     });
+});
+
 </script>
-
-
-
 </head>
 
 <body class="bg-gradient-primary">
@@ -124,77 +109,49 @@
                                             </ul>
 
                                             <!-- 탭 내용 -->
-                                            <div class="tab-content">
-                                                <div class="tab-pane" id="tab_find_id">
-                                                    <form class="user">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control form-control-user" id="InputPhone" placeholder="휴대전화 번호를 입력하세요.">
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-primary" type="button">인증번호 전송</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control form-control-user" id="InputCode" placeholder="인증번호를 입력하세요.">
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-primary" type="button">인증번호 확인</button>
-                                                                </div>
-                                                                <div>
-                                                                    <span id="mail-check-warn"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                                            아이디 찾기
-                                                        </a>
-                                                    </form>
-                                                </div>
+                                            <div class="tab-content">                                                
                                                 <div class="tab-pane active" id="tab_find_pass">
-                                                    <form id="passwordForm" class="user" action="comm_findPassResult.jsp" method="POST">
+                                                    <form name="form" class="user" method="POST" action="sendPassword.do">
+                                                        
                                                         <div class="form-group">
+                                                        
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control form-control-user" name="user_Id" id="user_Id" placeholder="아이디를 입력하세요.">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control form-control-user" id="user_Email1" name="user_Email1" placeholder="이메일을 입력하세요.">
-                                                                <select class="input-group-append" name="user_Email2" id="user_Email2">
+                                                                <input type="email" class="form-control form-control-user" id="user_Email" name="user_Email" placeholder="이메일을 입력하세요." required>
+                                                                <!-- <select class="input-group-append" name="user_Email2" id="user_Email2">
                                                                     <option>@naver.com</option>
                                                                     <option>@hanmail.net</option>
                                                                     <option>@gmail.com</option>
-                                                                </select>
+                                                                </select> -->
                                                                 <div class="input-group-append">
-                                                                    <button class="btn btn-primary" id="mail-Check-Btn" type="button">전송</button>
+                                                                    <button class="btn btn-primary" id="mail-Check-Btn" type="submit">인증번호 전송</button>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                      </form>
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control form-control-user" id="InputPassCode" placeholder="인증번호를 입력하세요." maxlength="6">
+                                                                <input type="text" class="form-control form-control-user" id="InputPassCode" placeholder="인증번호를 입력하세요." maxlength="8">
                                                                 <div class="input-group-append">
                                                                     <button class="btn btn-primary" type="button" id="verifyCodeBtn">인증번호 확인</button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" id="findPassResult" class="btn btn-primary btn-user btn-block" disabled>
-                                                            비밀번호 변경
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                                                        <!-- 서버에서 받은 메시지 출력 -->
+					                                    <c:if test="${not empty msg}">
+					                                        <div class="alert alert-info transparent-alert">${msg}</div>
+					                                    </c:if>                                                                                                       
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="resources/static/vendor/jquery/jquery.min.js"></script>

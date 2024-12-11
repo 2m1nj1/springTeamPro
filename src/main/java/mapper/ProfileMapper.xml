@@ -13,5 +13,32 @@
 				            , #{user_No}
 				            
 			        )
-    </insert>
+    </insert>   
+	
+	<select id="getUserProfile" parameterType="int" resultType="com.javaclass.teamAcademy.vo.LogVO">
+        SELECT *
+        FROM user_Account
+        WHERE user_No = #{user_No}
+    </select>
+	
+	<update id="updateProfile" parameterType="com.javaclass.teamAcademy.vo.LogVO">
+		UPDATE user_Account
+        SET user_Name = #{user_Name}
+        	, user_School = #{user_School}
+            , user_Grade = #{user_Grade}
+            , user_Parent_tel = #{user_Parent_tel}
+            , user_Email = #{user_Email}
+        WHERE
+            user_No = #{user_No}
+	</update>
+	
+	<!-- 로그 정보 업데이트 -->
+    <update id="updateLogInfo" parameterType="com.javaclass.teamAcademy.vo.LogVO">
+        UPDATE user_Account
+        SET user_Parent_tel = #{user_Parent_tel}
+        	, user_School = #{user_School}
+        	, user_Grade = #{user_Grade}
+        	, user_Email = #{user_Email}
+        WHERE user_No = #{user_No}
+    </update>
 </mapper>

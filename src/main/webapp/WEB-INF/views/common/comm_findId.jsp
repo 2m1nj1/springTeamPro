@@ -34,17 +34,9 @@
         
         
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-	$(function() {
-		//'로그인' 버튼이 눌렸을 떄
-		$('#Login').click(function() {
-			//alert("로그인 버튼 눌림!");
-
-			//window.location = "userLogin.do"
-			$('form[name="form"]').submit();
-		});
-
-	}); // end of function
+	
 </script>
 </head>
 
