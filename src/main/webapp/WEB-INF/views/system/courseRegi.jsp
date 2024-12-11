@@ -57,9 +57,17 @@
 				<jsp:include page="/resources/include/top_bar.jsp">
 					<jsp:param name="pageName" value="topBar" />
 				</jsp:include>
-
+				
+				<div class="  coruseRegiFooter">
+					<div class="courseRegiPay">
+						adf
+					</div>
+				</div>
+					
 				<!-- Begin Page Content -->
 				<div class="container container-fluid">
+				
+					
 					
 					<div class="row">
 						<div class="col">
@@ -68,6 +76,12 @@
 									<h6 class="m-0 font-weight-bold text-primary ">학년</h6>
 								</div>
 								<div class="card-body">
+									<div class="row courseConItem courseConGrade">
+										<div class="col">
+											<input type="hidden" value="0"/>
+											<span class="text">전체</span>
+										</div>
+									</div>
 									<c:forEach var="item" items="${courseConGrade}">
 										<div class="row courseConItem courseConGrade">
 											<div class="col">
@@ -104,7 +118,80 @@
 							</div>
 						</div>
 					</div>
-				
+					<!-- end of row -->
+					
+					
+					<div class="row">
+						<div class="col">
+							<div class="card shadow mb-3">
+								<div class="card-body">
+									<div class="row">
+										<div class="col">
+											<span class="text text-primary">(선택수)</span>
+											<span class="text">강좌선택 / </span>
+											<span class="text">총 </span>
+											<span id="cntConCourseList" class="text text-primary">(검색결과수) </span>
+											<span class="text">강좌</span>
+										</div>
+									</div>
+									<hr/>
+									
+									<div id="conCourseList">
+										<!-- 강좌 1개 틀 -->
+										<c:forEach var="item" items="${courseInfoList}">
+										<div class="row">
+											<div class="col-1 d-flex justify-content-center">
+												<input type="checkbox">
+												<input type="hidden" value="${item.course_no}">
+											</div>
+											<div class="col-1 d-flex justify-content-center align-items-center">
+													<span class="text">${item.course_cate_name}</span>
+											</div>
+											<div class="col-1 d-flex justify-content-center align-items-center">
+												<span class="text">${item.course_instructor}</span>
+											</div>
+											<div class="col-5">
+												<div class="row">
+													<div class="col">
+														<h6 class="font-weight-bold text-primary" style="display: inline;">${item.course_name}</h6>
+													</div>
+												</div>
+												<hr/>
+												<div class="row">
+													<div class="col">
+														<span class="text">강좌 기간 : ${item.course_startDate}</span>
+														<span class="text"> ~ ${item.course_endDate} | </span>
+														<span class="text">${item.course_fee} 원</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-1 d-flex justify-content-center align-items-center">
+												<span class="text">${item.course_person}</span>
+											</div>
+											<div class="col-2 d-flex justify-content-center align-items-center flex-column">
+												<c:forEach var="schList" items="${item.course_sch_list}">
+													<div class="row">
+														<div class="col text-center">
+															<span class="text">${schList}</span>
+														</div>
+													</div>
+												</c:forEach>
+											</div>
+											<div class="col-1 d-flex justify-content-center align-items-center">
+												<div class="btn btn-primary">담기</div>
+											</div>
+										</div>
+										<hr/>
+										</c:forEach>
+										<!-- end of 강좌 1개 틀 -->
+									</div>
+									<!-- end of ConList -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end of row -->
+					
 				</div>
 				<!-- end of container-fluid -->
 			</div>

@@ -37,7 +37,7 @@ public class CourseRegiServiceImpl implements CourseRegiService {
 	}
 
 	@Override
-	public List<CourseVO> selectConCourseSch(int course_no) {
+	public List<String> selectConCourseSch(int course_no) {
 		return courseRegiDao.selectConCourseSch(course_no);
 	} // end of selectConCourseSch()
 

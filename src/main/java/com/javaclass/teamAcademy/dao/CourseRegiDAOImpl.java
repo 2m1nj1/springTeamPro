@@ -1,5 +1,6 @@
 package com.javaclass.teamAcademy.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,20 +40,26 @@ public class CourseRegiDAOImpl implements CourseRegiDAO {
 		params.put("selected", selected);
 		params.put("checked", checked);
 		
-		List<CourseVO> result = mybatis.selectList("CourseRegiDAO.selectConCourseList", params);		
+		List<CourseVO> result = mybatis.selectList("CourseRegiDAO.selectConCourseList", params);	
+//		for(CourseVO vo : result) {
+//			System.out.println(">> CourseInfo repo 도착! : " + vo.toString());
+//		}
+		
 		return result;
 	} // end of selectConCourseList()
 
 	@Override
-	public List<CourseVO> selectConCourseSch(int course_no) {
+	public List<String> selectConCourseSch(int course_no) {
 		
-		List<CourseVO> result = mybatis.selectList("CourseRegiDAO.selectConCourseSch", course_no);
+		List<CourseVO> courseVO = mybatis.selectList("CourseRegiDAO.selectConCourseSch", course_no);
 		
-		for(CourseVO vo : result) {
-			System.out.println(">> repo 도착! : " + course_no + " / " + vo.getCourse_sch());
+		List<String> resultList = new ArrayList<>();
+		for(CourseVO vo : courseVO) {
+			//System.out.println(">> repo 도착! : " + course_no + " / " + vo.getCourse_sch());
+			resultList.add(vo.getCourse_sch());
 		}
 		
-		return result;
+		return resultList;
 	} // end of selectConCourseSch()
 	
 } // end of CourseRegiDAOImpl

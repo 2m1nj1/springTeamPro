@@ -31,6 +31,24 @@ public class CourseRegiController {
 		// 학년 리스트 불러오기
 		m.addAttribute("courseConGrade", courseRegiService.selectCourseCateGrade());
 		
+		List<CourseVO> courseInfoList = courseRegiService.selectConCourseList("0", null);
+		
+		//List<CourseVO> allCourseSch = new ArrayList<>();
+		for(CourseVO courseVO : courseInfoList) {
+			List<String> courseSch = courseRegiService.selectConCourseSch(courseVO.getCourse_no());
+			
+//			for(String str : courseSch) {
+//				System.out.println(">> 컨트롤러 결과 : " + str);
+//			}
+			
+			courseVO.setCourse_sch_list(courseSch);
+		} // end of for
+		
+		//System.out.println(courseInfoList);
+		//System.out.println(allCourseSch);
+	
+		m.addAttribute("courseInfoList", courseInfoList);
+		
 		return "system/courseRegi";
 	} // end of courseRegi()
 	
@@ -50,7 +68,13 @@ public class CourseRegiController {
 	@PostMapping("selectConTch")
 	@ResponseBody
 	public List<UserVO> selectConTchList(String selected){
-		return courseRegiService.selectConTchList(selected);
+		List<UserVO> result = courseRegiService.selectConTchList(selected);
+		
+//		for(UserVO vo : result) {
+//			System.out.println(">> " + vo.toString());
+//		}
+		
+		return result;
 	} // end of selectConTchList()
 	
 	
@@ -63,19 +87,17 @@ public class CourseRegiController {
 	public List<CourseVO> selectConCourseList(@RequestParam(required = false) String selected
 			, @RequestParam(required = false, value="checked[]") List<String> checked){
 		
-		System.out.println(">> 컨트롤러 도달!! : " + selected);
-		System.out.println(">> " + checked);
+		//System.out.println(">> 컨트롤러 도달!! : " + selected);
+		//System.out.println(">> " + checked);
 		List<CourseVO> courseInfoList = courseRegiService.selectConCourseList(selected, checked);
 		
 		// 강좌 일정
-		List<CourseVO> allCourseSch = new ArrayList<>();
-		
 		for(CourseVO courseVO : courseInfoList) {
-			List<CourseVO> courseSch = courseRegiService.selectConCourseSch(courseVO.getCourse_no());
-			allCourseSch.addAll(courseSch);
+			List<String> courseSch = courseRegiService.selectConCourseSch(courseVO.getCourse_no());
+			courseVO.setCourse_sch_list(courseSch);
 		} // end of for
 		
-		return null;
+		return courseInfoList;
 	} // end of selectConCourseList()
 	
 	

@@ -37,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectConCourseList" resultType="com.javaclass.teamAcademy.vo.CourseVO">
 		SELECT
 			c.COURSE_NO COURSE_NO
+			, cc2.COURSE_CATE_NO COURSE_CATE_NO
 			, cc2.COURSE_CATE_NAME COURSE_CATE_NAME
 			, ua.USER_NAME COURSE_INSTRUCTOR
 			, c.COURSE_NAME COURSE_NAME
@@ -79,8 +80,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectConCourseSch" parameterType="int" resultType="com.javaclass.teamAcademy.vo.CourseVO">
 		SELECT
-			c.course_no
-			, c.COURSE_NAME
+			c.course_no COURSE_NO
+			, c.COURSE_NAME COURSE_NAME
 			, cs.COURSE_DAYOFWEEK || ' / ' || cs.COURSE_STARTTIME ||':00 ~ ' || cs.COURSE_ENDTIME || ':00' course_sch
 		FROM COURSE c 
 		LEFT OUTER JOIN COURSE_SCHEDULE cs ON c.COURSE_NO = cs.COURSE_NO 

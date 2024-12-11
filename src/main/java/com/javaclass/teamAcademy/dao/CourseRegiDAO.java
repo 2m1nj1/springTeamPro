@@ -16,6 +16,6 @@ public interface CourseRegiDAO {
 	
 	public List<CourseVO> selectConCourseList(String selected, List<String> checked);
 	
-	public List<CourseVO> selectConCourseSch(int course_no);
+	public List<String> selectConCourseSch(int course_no);
 	
 } // end of CourseRegiDAO
