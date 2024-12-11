@@ -52,23 +52,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                <![CDATA[ AND a.attendance_date <= #{endDate} ]]>
             </if>
     </select>
-<!--     
-    총 데이터수 계산
-    <select id="getTotalAttendanceCount" parameterType="map" resultType="int">
-	    SELECT COUNT(*)
-	    FROM ATTENDANCE a
-	    INNER JOIN COURSE c ON a.course_no = c.course_no
-	    INNER JOIN USER_ACCOUNT ua ON c.course_instructor = ua.user_no
-	    WHERE a.user_no = #{userNo}
-	    <if test="courseNo != null and courseNo != ''">
-	        AND a.course_no = #{courseNo}
-	    </if>
-	    <if test="startDate != null and startDate != ''">
-	        AND a.attendance_date &gt;= #{startDate}
-	    </if>
-	    <if test="endDate != null and endDate != ''">
-	        AND a.attendance_date &lt;= #{endDate}
-	    </if>
-	</select> -->
+
+
+	<!-- 출석기록 삽입 -->
+	<insert id="insertAttendance" parameterType="map">
+	    INSERT INTO ATTENDANCE ( attendance_no, user_no, course_no, attendance_status_no, attendance_date)
+	    VALUES ( TEAM2.seq_attendance_no.nextval, #{userNo}, #{courseNo}, #{attendanceStatus}, SYSDATE )
+	</insert>
+    
+    
+    <!-- 출결 업뎃 - 조퇴로 변경하거나... 하는 경우. -->
+    <update id="updateAttendance" parameterType="map">
+	    UPDATE ATTENDANCE
+	    SET attendance_status_no = #{attendanceStatus}
+	    WHERE user_no = #{userNo}
+	      AND course_no = #{courseNo}
+	      AND TO_CHAR(attendance_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</update>
+    
+    
+    <!-- 오늘의 출석기록 확인 -->
+    <select id="checkAttendanceToday" parameterType="map" resultType="int">
+    SELECT COUNT(*) 
+	FROM ATTENDANCE
+	WHERE user_no = #{userNo}
+	  AND course_no = #{courseNo}
+	  AND TO_CHAR(attendance_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	  AND attendance_status_no = 1	
+    </select>
+    
+    
+    <!-- 오늘의 조퇴기록 확인 -->
+    <select id="checkPrematureLeaveToday" parameterType="map" resultType="int">
+    SELECT COUNT(*) 
+	FROM ATTENDANCE
+	WHERE user_no = #{userNo}
+	  AND course_no = #{courseNo}
+	  AND TO_CHAR(attendance_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	  AND attendance_status_no = 3
+    </select>
+    
+    
+    <!-- 강좌 시간 기록 물어옴. -->
+    <select id="fetchCourseTimings" parameterType="int" resultType="map">
+	    SELECT
+			TO_CHAR(course_startdate, 'HH24:MI') AS courseStartTime
+			, TO_CHAR(course_enddate, 'HH24:MI') AS courseEndTime
+		FROM course c
+		WHERE course_no = #{ courseNo }
+    </select>
     
 </mapper>

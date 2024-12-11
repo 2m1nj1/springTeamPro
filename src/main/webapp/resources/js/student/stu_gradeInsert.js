@@ -13,7 +13,6 @@ $(function() {
 			// 문구 있으면 토글(보이거나 숨김)
 			infoText.toggle();
 		}
-
 	});// end of #infobtn1 click
 
 	$('#infobtn1').click(function() {
@@ -28,12 +27,45 @@ $(function() {
 	
 	$(document).ready(function () {
 		
+		// DB 서버로부터 시험들 리스트 가져와서 드랍다운 만듦;
+	    function fetchExamList() {
+	        $.ajax({
+	            url: "fetchExamList", // endpoint 맞춰주기...
+	            method: "GET",
+	            dataType: "json",
+	            success: function (response) {
+	                const examDropdown = $("#exam_name");
+	                examDropdown.empty(); // 드랍다운 목록 초기화
+	                examDropdown.append('<option value="">시험 이름을 선택해주세요.</option>'); // 기본 옵션
+
+	                // exam 데이터로 드랍다운 생성;
+	                response.forEach(exam => {
+	                    examDropdown.append(
+	                        `<option value="${exam.exam_no}" data-context="${exam.exam_context}">${exam.exam_name}</option>`
+	                    );
+	                });
+	            },
+	            error: function (error) {
+	                console.error("Failed to fetch exam list:", error);
+	            }
+	        });
+	    }
+
+	    // 시험 선택되었을 적에 exam context 불러옴
+	    $("#exam_name").change(function () {
+	        const selectedOption = $(this).find("option:selected");
+	        const examContext = selectedOption.data("context") || ""; // 선택한 옵션으로부터 exam_context 물어옴
+	        $("#exam_context").val(examContext); // exam_context field 생성;
+	    });
+
+	    // 드랍다운 초기 생성;
+	    fetchExamList();
+		
 	    $("#stu_gradeInsertButton").on("click", function () {
 	        // 폼으로부터 입력값 받아오는데... 유효성 검사 요함.
 	        const data = {
 	            exam_name: $("#exam_name").val()
 	            ,exam_context: $("#exam_context").val()
-	            ,exam_date: $("#exam_date").val()
 	            ,user_no: $("#userNo").val()
 	            ,user_name: $("#user_name").val()
 	            ,original_score: $("#original_score").val()
@@ -74,7 +106,7 @@ $(function() {
 	            type: "GET",
 	            url: "stu_grade", 
 	            success: function (data) {
-	                $("#gradeTable").html(data); // Assuming your table has id="gradeTable"
+	                $("#gradeTable").html(data); // tbl id="gradeTable"
 	            },
 	            error: function () {
 	                alert("Failed to refresh grade list.");

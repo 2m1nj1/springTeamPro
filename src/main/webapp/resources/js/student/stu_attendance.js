@@ -3,18 +3,23 @@ $(function () {
     let currentPage = 0;
     const itemsPerPage = 10;
 
-    // Fetch ongoing courses for the dropdown
+    // 드랍다운을 위한 수강중인 강좌목록 불러옴
     function fetchOngoingCourses(userNo) {
         $.ajax({
             type: "GET",
             url: "/student/fetchOngoingCourses",
             data: { userNo },
             success: function (response) {
-                const dropdown = $("#courseDropdown");
-                dropdown.empty();
-                dropdown.append('<option value="">강좌 선택</option>');
+            	console.log("/fetchOngoingCOurses response: "+response);
+                const tblDropdown = $("#tblCourseDropdown");
+                const attDropdown = $("#attCourseDropdown");
+                tblDropdown.empty();
+                attDropdown.empty();
+                tblDropdown.append('<option value="">강좌 선택</option>');
+                attDropdown.append('<option value="">강좌 선택</option>');
                 response.forEach(course => {
-                    dropdown.append(`<option value="${course.course_no}">${course.course_name}</option>`);
+                   tblDropdown.append(`<option value="${course.course_no}">${course.course_name}</option>`);
+                   attDropdown.append(`<option value="${course.course_no}">${course.course_name}</option>`);
                 });
             },
             error: function (error) {
@@ -24,7 +29,7 @@ $(function () {
         });
     }
 
-    // Load attendance records and render the first page
+    // 출결기록 불러와서 첫 페이지 로딩.
     function loadAttendances(userNo, courseNo = null, startDate = null, endDate = null) {
         const requestData = {
             userNo,
@@ -39,9 +44,9 @@ $(function () {
             data: requestData,
             success: function (response) {
                 console.log("Attendance Records:", response);
-                attendanceRecords = response; // Update the attendance records
-                renderFilteredAttendances(0); // Render the first page
-                renderPagination(attendanceRecords.length); // Render pagination buttons
+                attendanceRecords = response; // 출결기록 업뎃.
+                renderFilteredAttendances(0); // 첫 화면 렌더링.
+                renderPagination(attendanceRecords.length); // pagination 버튼 렌더링.
             },
             error: function (error) {
                 console.error("Error fetching attendance records:", error);
@@ -96,7 +101,7 @@ $(function () {
         });
     }
 
-    // Render attendance records for the current page
+    // 현재 페이지를 위한 출결기록 렌더링.
     function renderFilteredAttendances(page) {
         const start = page * itemsPerPage;
         const end = start + itemsPerPage;
@@ -150,18 +155,20 @@ $(function () {
         attendanceList.html(tableHeader + tableRows + tableFooter);
     }
 
-    // Event listeners for filtering and pagination
-    $("#courseDropdown").on("change", function () {
+    // 필터링이랑 pagination을 위한 버튼.
+    $("#tblCourseDropdown").on("change", function () {
         const courseNo = $(this).val();
         const userNo = $("#userNo").val();
-        loadAttendances(userNo, courseNo, $("#startDate").val(), $("#endDate").val());
+        const startDate = $("#startDate").val();
+        const endDate = $("#endDate").val();
+        loadAttendances(userNo, courseNo, startDate, endDate);
     });
 
     $("#startDate").on("change", function () {
         const startDate = $(this).val();
         const endDate = $("#endDate").val();
         const userNo = $("#userNo").val();
-        const courseNo = $("#courseDropdown").val();
+        const courseNo = $("#tblCourseDropdown").val();
         loadAttendances(userNo, courseNo, startDate, endDate);
     });
 
@@ -169,19 +176,149 @@ $(function () {
         const endDate = $(this).val();
         const startDate = $("#startDate").val();
         const userNo = $("#userNo").val();
-        const courseNo = $("#courseDropdown").val();
+        const courseNo = $("#tblCourseDropdown").val();
         loadAttendances(userNo, courseNo, startDate, endDate);
     });
 
-    $("#filterButton").on("click", function () {
-        const startDate = $("#startDate").val();
-        const endDate = $("#endDate").val();
+    
+    function validateAttendance(userNo, courseNo, callback) {
+        $.ajax({
+            type: "GET",
+            url: "/validateAttendance",
+            data: { userNo, courseNo },
+            success: function (response) {
+                if (response.status === "success") {
+                    callback(response);
+                } else {
+                    alert("[validateAttendance]출결기록 확인 실패. 재시도 요망.");
+                }
+            },
+            error: function (error) {
+                console.error("Error validating attendance:", error);
+                alert("Error validating attendance.");
+            }
+        });
+    }
+
+    // '출석' 버튼 누를 시에 출결기록 insert
+    $("#attendedButton").on("click", function () {
         const userNo = $("#userNo").val();
-        const courseNo = $("#courseDropdown").val();
-        loadAttendances(userNo, courseNo, startDate, endDate);
+        const courseNo = $("#attCourseDropdown").val();
+
+        if (!courseNo) {
+            alert("강좌를 선택해주세요.");
+            return;
+        }
+
+        validateAttendance(userNo, courseNo, function (validation) {
+            if (validation.alreadyAttended) {
+                alert("오늘은 이미 출석했습니다!");
+                return;
+            }
+
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const courseStartTime = parseTime(validation.courseStartTime);
+            if (currentTime < courseStartTime - 30) {
+                alert("강좌 시작 전 30분에만 출석할 수 있습니다!");
+                return;
+            }
+
+            // 출석기록 DB에 저장...
+            $.ajax({
+                type: "POST",
+                url: "/markAttendance",
+                data: { userNo, courseNo },
+                success: function (response) {
+                    if (response === "successMarkAttendance") {
+                        alert("출석 완료!");
+                    } else {
+                        alert("출석 실패! 다시 시도해주세요.");
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                    alert("!서버 에러!");
+                }
+            });
+        });
     });
 
-    // Initial page load
+    // '조퇴' 버튼 누를 시에 출결기록 update ( 1 -> 3 )
+    $("#prematureLeaveButton").on("click", function () {
+        const userNo = $("#userNo").val();
+        const courseNo = $("#attCourseDropdown").val();
+
+        if (!courseNo) {
+            alert("강좌를 선택해주세요.");
+            return;
+        }
+
+        validateAttendance(userNo, courseNo, function (validation) {
+            if (validation.alreadyLeftEarly) {
+                alert("오늘 이미 조퇴했습니다!");
+                return;
+            }
+
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const courseStartTime = parseTime(validation.courseStartTime);
+            const courseEndTime = parseTime(validation.courseEndTime);
+            if (currentTime < courseStartTime || currentTime > courseEndTime) {
+                alert("강의 시간과 달라 조퇴할 수 없습니다.");
+                return;
+            }
+
+            // 조퇴기록 DB 저장
+            $.ajax({
+                type: "POST",
+                url: "/markEarlyLeave",
+                data: { userNo, courseNo },
+                success: function (response) {
+                    if (response === "successMarkEarlyLeave") {
+                        alert("조퇴 성공!");
+                    } else {
+                        alert("조퇴 실패! 다시 시도해주세요.");
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                    alert("!조퇴 관련 서버 오류!.");
+                }
+            });
+        });
+    });
+    
+    function parseTime(timeStr) {
+        const [hours, minutes] = timeStr.split(":").map(Number);
+        return hours * 60 + minutes;
+    }
+
+    // 시간에 맞지 않는 경우 출석(강의 시작 30분 전), 조퇴(강의) 버튼 비활성화
+    $("#attCourseDropdown").on("change", function () {
+        const courseNo = $(this).val();
+        const userNo = $("#userNo").val();
+
+        if (!courseNo) {
+            $("#attendedButton").prop("disabled", true);
+            $("#prematureLeaveButton").prop("disabled", true);
+            return;
+        }
+
+        validateAttendance(userNo, courseNo, function (validation) {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const courseStartTime = parseTime(validation.courseStartTime);
+            const courseEndTime = parseTime(validation.courseEndTime);
+
+            // Enable/Disable buttons based on conditions
+            $("#attendedButton").prop("disabled", currentTime < courseStartTime - 30 || validation.alreadyAttended);
+            $("#prematureLeaveButton").prop("disabled", currentTime < courseStartTime || currentTime > courseEndTime || validation.alreadyLeftEarly);
+        });
+    }); // end of parseTime
+
+
+    // 초기 페이지 로딩
     $(document).ready(() => {
         const userNo = $("#userNo").val();
         if (userNo) {

@@ -50,6 +50,37 @@
                 <!-- Page Heading -->
                 <h5 class="h3 mb-4 text-gray-800">[학생] 출결 조회 페이지</h5>
 
+				<div class="row">
+					<div class="col">
+						<div class="card shadow mb-4">
+				            <div class="card-header py-3">
+				            	<!-- 카드 제목 위치 -->
+				                <h6 class="m-0 font-weight-bold text-primary">출석 / 조퇴 찍기</h6><br/>
+				                <!-- 현재 수강중인 강좌 목록 - 출석 / 조퇴 찍을 것. -->
+			                	<select id="attCourseDropdown" class="form-control">
+							        <option value="">수강중인 강좌 선택</option>
+							        <c:forEach var="course" items="${ongoingCourses}">
+							            <option value="${course.course_no}">${course.course_name}</option>
+							        </c:forEach>
+							    </select>
+				            </div>
+				            
+				            <div class="card-body">
+				            	<div class="d-flex justify-content-start mb-3">
+				            	<!-- 출석 + 조퇴 버튼. - 누르면 각각 btn action-->
+								    <button id="attendedButton" class="btn btn-success btn-icon-split col-4">
+	                                       <span class="text">출석</span>
+	                                </button>
+						            <div class="col-4"></div>
+						            <button id="prematureLeaveButton" class="btn btn-secondary btn-icon-split col-4">
+	                                       <span class="text">조퇴</span>
+	                                </button>
+                                </div>
+				            </div>
+				        </div>
+					</div>
+				</div>
+				
                 <!-- 출석기록 출력 단. -->
 				<div class="row">
 				    <div class="col">
@@ -68,11 +99,8 @@
 							            <label for="endDate">종료 날짜:</label>
 							            <input type="date" id="endDate" class="form-control">
 							        </div>
-							        <div class="ml-3 align-self-end col-2">
-							            <button id="filterButton" class="btn btn-primary">필터</button>
-							        </div>
-							        
-							        <select id="courseDropdown" class="form-control">
+									<div class="mr-3"></div>
+							        <select id="tblCourseDropdown" class="form-control">
 								        <option value="">수강중인 강좌 선택</option>
 								        <c:forEach var="course" items="${ongoingCourses}">
 								            <option value="${course.course_no}">${course.course_name}</option>

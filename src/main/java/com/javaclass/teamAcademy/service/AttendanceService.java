@@ -16,10 +16,19 @@ public interface AttendanceService {
 
 	// 출석 목록 조회
 	List<AttendanceVO> getAttendanceRecords(Map<String, Object> params);
-	
-	/*
-	 * // 출석 기록의 전체 갯수 불러옴
-	 * int getTotalAttendanceCount(Map<String, Object> params);
-	 */
-	
+
+	// 출석 정보 삽입
+	void markAttendance(int userNo, int courseNo, int attendanceStatus);
+
+	// 출석정보 수정(출석 -> 조퇴)
+	void markEarlyLeave(int userNo, int courseNo, int attendanceStatus);
+
+	// 오늘의 출결기록 확인
+	boolean checkAttendanceToday(int userNo, int courseNo);
+
+	// 오늘의 조퇴기록 확인
+	boolean checkPrematureLeaveToday(int userNo, int courseNo);
+
+	// 강좌 시간 물어오기
+	Map<String, String> getCourseTimings(int courseNo);
 }

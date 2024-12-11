@@ -1,5 +1,6 @@
 package com.javaclass.teamAcademy.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,11 +35,43 @@ public class AttendanceServiceImpl implements AttendanceService{
 		System.out.println("Service Layer - getAttendanceList for params :" + params);
 		return adao.fetchAttendanceRecords(params);
 	}
+
+	// 출석 (1)
+	@Override
+	public void markAttendance(int userNo, int courseNo, int attendanceStatus) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("userNo", userNo);
+	    params.put("courseNo", courseNo);
+	    params.put("attendanceStatus", attendanceStatus);
+	    adao.insertAttendance(params);
+	}
+
+	// 조퇴 (3) 로 수정
+	@Override
+	public void markEarlyLeave(int userNo, int courseNo, int attendanceStatus) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("userNo", userNo);
+	    params.put("courseNo", courseNo);
+	    params.put("attendanceStatus", attendanceStatus);
+	    adao.updateAttendance(params);
+	}
+
+	// 오늘 출석기록 확인
+	@Override
+	public boolean checkAttendanceToday(int userNo, int courseNo) {
+		return adao.checkAttendanceToday(userNo, courseNo) > 0;
+	}
+
+	// 오늘 결석기록 확인
+	@Override
+	public boolean checkPrematureLeaveToday(int userNo, int courseNo) {
+		return adao.checkPrematureLeaveToday(userNo, courseNo) > 0;
+	}
+
+	// 강좌 시간 정보 물어옴
+	@Override
+	public Map<String, String> getCourseTimings(int courseNo) {
+		return adao.fetchCourseTimings(courseNo);
+	}
 	
-	/*
-	 * // 출결 기록 전체 갯수 가져오기...
-	 * 
-	 * @Override public int getTotalAttendanceCount(Map<String, Object> params) {
-	 * return adao.getTotalAttendanceCount(params); }
-	 */
 }

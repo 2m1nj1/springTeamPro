@@ -80,24 +80,20 @@
 									<!-- left -->
 										<div class="col-6">
 											<div class="row">
-												<label class="col-sm-4 col-form-label">*시험 일자 : </label>
-												<div class="col-sm-8">
-													<input type="date" class="form-control form-control-sm" required
-														 name="exam_date" id="exam_date" placeholder="시험 일자 입력">
-												</div>
-											</div>
-											<div class="row">
 												<label class="col-sm-4 col-form-label">*시험명 : </label>
 												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm" required
-														name="exam_name" id="exam_name" placeholder="시험명 입력">
+												<!-- 시험명 Dropdown -->
+													<select class="form-control form-control-sm" required name="exam_name" id="exam_name">
+											            <option value="">시험명을 선택하세요</option>
+											            <!-- Dropdown options will be dynamically loaded via JavaScript -->
+											        </select>
 												</div>
 											</div>
 											<div class="row">
 												<label class="col-sm-4 col-form-label">*시험 정보 : </label>
 												<div class="col-sm-8">
 													<input type="text" class="form-control form-control-sm" required
-														name="exam_context" id="exam_context" placeholder="시험 상세설명 - 수능/모평/모의고사 등.">
+														name="exam_context" id="exam_context" placeholder="시험 상세설명 - 수능/모평/모의고사 등." readonly>
 												</div>
 											</div>
 											<div class="row">

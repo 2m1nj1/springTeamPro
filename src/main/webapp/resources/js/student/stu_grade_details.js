@@ -1,251 +1,283 @@
 $(function(){
-        // 시험 번호를 URL 파라미터에서 받아옵니다.
-        const examNo = new URLSearchParams(window.location.search).get('exam_no');  // exam_no 파라미터값 가져오기
+	const urlParams = new URLSearchParams(window.location.search);
+    const userNo = urlParams.get("userNo");  // 넘겨받은 파라미터값 - userNo;
+    const examNo = urlParams.get("exam_no"); // 넘겨받은 파라미터값 - exam_no;
+    
+    console.log("넘어온 userNo : ", userNo);
+    console.log("넘어온 exam_no : ", examNo);
 
-        // 하드코딩된 시험 성적 데이터
-        let scoreData = [
-            {exam_no: 1, exam_name: "5월 모의고사", user_name: "김철수", original_score: 262, percentile_score: 351, exam_date: "2024-05-15", kor: 86, math: 88, eng: 88},
-            {exam_no: 2, exam_name: "6월 평가원 모의고사", user_name: "김철수", original_score: 269, percentile_score: 360, exam_date: "2024-06-10", kor: 86, math: 92, eng: 91},
-            {exam_no: 3, exam_name: "7월 모의고사", user_name: "김철수", original_score: 238, percentile_score: 319, exam_date: "2024-07-01", kor: 79, math: 79, eng: 80},
-            {exam_no: 4, exam_name: "8월 모평", user_name: "김철수", original_score: 227, percentile_score: 304, exam_date: "2024-08-12", kor: 76, math: 76, eng: 75},
-            {exam_no: 5, exam_name: "9월 모의고사", user_name: "김철수", original_score: 289, percentile_score: 387, exam_date: "2024-09-05", kor: 96, math: 97, eng: 96}
-        ];
+	    // 백단에서 데이터 물어옴.
+	    $.ajax({
+	        url: "fetchGradeAndExams",
+	        method: "GET",
+	        data: { userNo, exam_no: examNo },
+	        dataType: "json",
+	        success: function (response) {
+	            const { gradeList } = response;
+	
+	            console.log("Grade List : ", gradeList);
+	            console.log("Filtering for exam_no : ", examNo);
+	            
+	            // 성적 테이블 렌더링.
+	            renderGradeTable(gradeList, examNo);
+	            
+	            renderFieldScoresChart(gradeList);
+	            
+	            // 특정 exam_no 에 대한 데이터값 저장.
+	            const selectedGrade = gradeList.find(grade => grade.exam_no == examNo);
 
-        // 해당 시험 데이터 찾기
-        const selectedGrade = scoreData.find(grade => grade.exam_no == examNo);
+	
+	            if (selectedGrade) {
+	                renderSubjectTable(selectedGrade); // Render table
+	                renderComparisonChart(selectedGrade); // Render first chart
+	            } else {
+	                console.error("No data found for examNo : ", examNo);
+	            }
+	            
+	            // 
+	        },
+	        error: function (err) {
+	            console.error("Failed to fetch data : ", err);
+	        },
+	    }); // end of ajax; 
 
-        if (selectedGrade) {
-            // 시험 정보 테이블
-            let tableBody = $("#gradeTable tbody");
-            tableBody.append(
-                "<tr>" +
-                    "<td>" + selectedGrade.exam_date + "</td>" +
-                    "<td>" + selectedGrade.exam_name + "</td>" +
-                    "<td>" + selectedGrade.exam_no + "</td>" +
-                    "<td>" + selectedGrade.user_name + "</td>" +
-                    "<td>" + selectedGrade.original_score + "</td>" +
-                    "<td>" + selectedGrade.percentile_score + "</td>" +
-                "</tr>"
-            );
+        
+		// 시험 상세 정보 테이블 생성
+		function renderGradeTable(gradeList, examNo) {
+			const tableBody = $("#gradeTable tbody");
+		    tableBody.empty(); // 기존에 존재하던 어느 행이든 초기화시킴.
 
-            // 성적 상세 테이블
-            const subjectData = [
-                {subject: '국어', score: selectedGrade.kor, avg_percentile: 90, top_30_percentile: 92},
-                {subject: '수학', score: selectedGrade.math, avg_percentile: 90, top_30_percentile: 92},
-                {subject: '영어', score: selectedGrade.eng, avg_percentile: 90, top_30_percentile: 92}
+		    // 파라미터로 넘어 온 exam_no 에 상응하는 값만 도출.
+		    const filteredGrades = gradeList.filter(grade => grade.exam_no == examNo);
+		    
+		    // 특정 exam_no 만 있는 성적 도출.
+		    filteredGrades.forEach(grade => {
+		    	console.log("renderGradeTable(gradeList, examNo)" + examNo);
+		        // 합산된 값들 계산.
+		    	const kor = grade.kor || 0;
+		        const math = grade.math || 0;
+		        const eng = grade.eng || 0;
+		        const percentileKor = grade.kor_percentile || 0;
+		        const percentileMath = grade.math_percentile || 0;
+		        const percentileEng = grade.eng_percentile || 0;
+
+		        // 점수 합산.
+		        const originalScore = kor + math + eng;
+		        const totalPercentileScore = (kor + math + eng)*1.2;
+		        
+		        tableBody.append(
+		            `<tr>
+		                <td>${grade.exam_date}</td>
+		                <td>${grade.exam_name}</td>
+		                <td>${grade.exam_no}</td>
+		                <td>${grade.user_name}</td>
+		                <td>${originalScore}</td>
+		                <td>${totalPercentileScore}</td>
+		            </tr>`
+		        );
+		    });
+		    // 행 없으면 메시지 출력.
+		    if (filteredGrades.length === 0) {
+		        tableBody.append(
+		            `<tr>
+		                <td colspan="6" class="text-center">선택한 시험에 대한 점수값이 없습니다.</td>
+		            </tr>`
+		        );
+		    }		    
+		}// end of renderGradeTable.
+
+		
+        // 성적 상세 정보 테이블 생성
+        function renderSubjectTable(grade) {
+            const tableBody = $("#subjectTable tbody");
+            tableBody.empty(); // Clear any existing rows
+
+            // 점수 기준으로 (등급) 산출
+            const calculateGrade = (score) => {
+            	switch (true) {
+            	case score >= 90 && score <= 100:
+            		return 1;
+            	case score >= 80 && score < 90:
+            		return 2;
+            	case score >= 70 && score < 80:
+            		return 3;
+            	case score >= 60 && score < 70:
+            		return 4;
+            	case score >= 50 && score < 60:
+            		return 5;
+            	case score >= 40 && score < 50:
+            		return 6;
+            	case score >= 30 && score < 40:
+            		return 7;
+            	case score >= 20 && score < 30:
+            		return 8;
+            	case score >= 10 && score < 20:
+            		return 9;
+            	default:
+            		return "N/A";
+            	}
+            }
+            
+            const subjects = [
+                { name: "국어", score: grade.kor },
+                { name: "수학", score: grade.math },
+                { name: "영어", score: grade.eng },
             ];
 
-            let subjectTableBody = $("#subjectTable tbody");
-            subjectData.forEach(function(subject) {
-                subjectTableBody.append(
-                    "<tr>" +
-                        "<td>" + subject.subject + "</td>" +
-                        "<td>응시</td>" +
-                        "<td>" + subject.avg_percentile + "</td>" +
-                        "<td>" + subject.top_30_percentile + "</td>" +
-                        "<td>" + subject.score + "</td>" +
-                        "<td>" + Math.round(subject.score * 1.2) + "</td>" +  <!-- 내점수 백분위 예시 -->
-                        "<td>2</td>" +  <!-- 등급 예시 -->
-                        "<td>1/1</td>" +  <!-- 석차 예시 -->
-                    "</tr>"
+            subjects.forEach(subject => {
+            	const gradeLevel = calculateGrade(subject.score);
+                tableBody.append(
+                    `<tr>
+                        <td>${subject.name}</td>
+                        <td>응시</td>
+                        <td>90</td> <!-- 전체 평균값 -->
+                        <td>92</td> <!-- 상위 30% 백분위값 -->
+                        <td>${subject.score}</td>
+                        <td>${Math.round( subject.score * 1.2 )}</td> <!-- 백분위 계산 예시... -->
+                        <td>${gradeLevel}</td> <!-- 등급 예시 -->
+                        <td>1/1</td> <!-- 석차 예시 -->
+                    </tr>`
                 );
             });
+            
+            // "종합" 행 추가.
+            const totalScore = (grade.kor || 0) + (grade.math || 0) + (grade.eng || 0); // 점수 합산;
+            const totalPercentile = Math.round(totalScore * 1.2); // "백분위 합계" 예시
+            tableBody.append(
+                `<tr>
+                    <td>종합</td>
+                    <td>-</td>
+                    <td>270</td> <!-- 전체 평균값 합계 -->
+                    <td>276</td> <!-- 상위 30% 백분위 합계 -->
+                    <td>${totalScore}</td> <!-- 원점수 합계 -->
+                    <td>${totalPercentile}</td> <!-- 백분위 합계 -->
+                    <td>-</td> <!-- No grade for 종합 -->
+                    <td>-</td> <!-- No rank for 종합 -->
+                </tr>`
+            );
+        } // end of renderSubjectTable
+    
+        
+        // 백분위 점수 성적 상위 30% 사람들이랑 비교하는 차트
+        function renderComparisonChart(grade) {
+        	const ctx = document.getElementById("comparisonChart").getContext("2d");
 
-            // 국영수 성적 바 그래프
-            const korScore = selectedGrade.kor;
-            const mathScore = selectedGrade.math;
-            const engScore = selectedGrade.eng;
-            const korTop30 = 92;  // 예시 값, 국어의 상위 30% 백분위 점수
-            const mathTop30 = 92; // 예시 값, 수학의 상위 30% 백분위 점수
-            const engTop30 = 92;  // 예시 값, 영어의 상위 30% 백분위 점수
+            // Extract scores for comparison
+            const studentScores = [grade.kor || 0, grade.math || 0, grade.eng || 0];
+            const upper30PercentileScores = [92, 92, 92]; // Example constant values for the upper 30% benchmark
 
-         // 바 그래프 생성
-            var ctx = document.getElementById("myBarChart").getContext('2d');
-            var myBarChart = new Chart(ctx, {
-                type: 'bar',
+            // Labels for the X-axis
+            const subjects = ["국어", "수학", "영어"];
+
+            new Chart(ctx, {
+                type: "bar",
                 data: {
-                    labels: ['국어', '수학', '영어'],  // 과목명
+                    labels: subjects, // X-axis labels
                     datasets: [
                         {
-                            label: '내 백분위',
-                            backgroundColor: '#4e73df',  // 'primary' 색상 (#4e73df)
-                            hoverBackgroundColor: '#2e59d9',  // 마우스 오버시 색상
-                            borderColor: '#4e73df',  // 테두리 색상
-                            data: [korScore, mathScore, engScore],  // 내 백분위 점수
+                            label: "내 점수",
+                            data: studentScores, // Student's scores
+                            backgroundColor: "rgba(54, 162, 235, 0.6)", // Light blue
+                            borderColor: "rgba(54, 162, 235, 1)",
+                            borderWidth: 1,
                         },
                         {
-                            label: '상위 30% 백분위',
-                            backgroundColor: '#28a745',  // 상위 30% 백분위 색상 - 'success' 색상 (#28a745)
-                            hoverBackgroundColor: '#218838',  // 상위 30% 백분위 색상 - 'success' 색상 (#218838)
-                            borderColor: '#28a745',
-                            data: [korTop30, mathTop30, engTop30],  // 상위 30% 백분위 점수
-                        }
-                    ]
+                            label: "상위 30% 기준",
+                            data: upper30PercentileScores, // Upper 30% benchmark scores
+                            backgroundColor: "rgba(34, 139, 37, 0.4)", // Light green
+                            borderColor: "rgba(34, 139, 37, 1)",
+                            borderWidth: 1,
+                        },
+                    ],
                 },
                 options: {
                     maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            left: 10,
-                            right: 25,
-                            top: 25,
-                            bottom: 0
-                        }
-                    },
                     scales: {
                         x: {
-                            grid: {
-                                display: false,
-                            },
-                            ticks: {
-                                maxTicksLimit: 5
-                            }
+                            stacked: false, // Separate bars for comparison
                         },
                         y: {
-                            // y축의 범위를 0~100으로 고정
-                            beginAtZero: true,  // y축이 0부터 시작하도록 설정
-                            min: 0,  // y축 최소값을 0으로 설정
-                            max: 100,  // y축 최대값을 100으로 설정
-                            stepSize: 10,  // y축을 10단위로 표시
+                            beginAtZero: true,
+                            min: 0, // Start Y-axis at 0
+                            max: 100, // Maximum score range
                             ticks: {
-                                padding: 10,
-                                callback: function(value) {
-                                    return value + '%';  // 백분위에 '%' 기호 추가
+                                stepSize: 10,
+                                callback: function (value) {
+                                    return value + "점"; // Append "점" to Y-axis labels
                                 },
                             },
-                            grid: {
-                                color: "rgb(234, 236, 244)",
-                                zeroLineColor: "rgb(234, 236, 244)",
-                                drawBorder: false,
-                            }
                         },
                     },
-                    legend: {
-                        display: true  // 범례 표시
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return context.dataset.label + ": " + context.raw + "점";
+                                },
+                            },
+                        },
                     },
-                    tooltips: {
-                        titleMarginBottom: 10,
-                        backgroundColor: "rgb(255,255,255)",
-                        bodyFontColor: "#858796",
-                        borderColor: '#dddfeb',
-                        borderWidth: 1,
-                        xPadding: 15,
-                        yPadding: 15,
-                        displayColors: false,
-                        caretPadding: 10,
-                        callbacks: {
-                            label: function(tooltipItem, chart) {
-                                return tooltipItem.yLabel + '%';  // 툴팁에 백분위 % 표시
-                            }
-                        }
-                    }
-                }
-            }); // end of 바 그래프
-        } else {
-            console.error("시험 데이터가 없습니다!");
+                },
+            });
         }
+    
+    // renderFieldScoresChart.
+    function renderFieldScoresChart(gradeList) {
+    	const examNames = gradeList.map(grade => grade.exam_name || "Unknown Exam"); // exam_date 에서 YYYY 추출.
+        const korScores = gradeList.map(grade => grade.kor || 0);
+        const mathScores = gradeList.map(grade => grade.math || 0);
+        const engScores = gradeList.map(grade => grade.eng || 0);
 
-
-        //새로운 월별 성적 그래프 추가
-        // 월별 국영수 성적 그래프
-        const monthlyScoreData = [
-            {month: '5월', kor: 86, math: 88, eng: 88},
-            {month: '6월', kor: 86, math: 92, eng: 91},
-            {month: '7월', kor: 79, math: 79, eng: 80},
-            {month: '8월', kor: 76, math: 76, eng: 75},
-            {month: '9월', kor: 96, math: 97, eng: 96}
-        ];
-
-        // 월별 성적 바 그래프 생성
-        var ctxMonthly = document.getElementById("myMonthlyChart").getContext('2d');
-        var myMonthlyChart = new Chart(ctxMonthly, {
-            type: 'bar',
+        const ctx = document.getElementById("fieldScoresChart").getContext("2d");
+        
+        new Chart(ctx, {
+            type: "bar",
             data: {
-                labels: monthlyScoreData.map(data => data.month),  // 월별
+                labels: examNames, // x축 라벨링
                 datasets: [
                     {
-                        label: '국어',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',  // 투명 초록
-                        hoverBackgroundColor: 'rgba(75, 192, 192, 0.7)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
-                        data: monthlyScoreData.map(data => data.kor),  // 월별 국어 성적
+                        label: "국어 원점수",
+                        data: korScores,
+                        backgroundColor: "rgba(75, 192, 192, 0.5)",
+                        borderColor: "rgba(75, 192, 192, 1)",
                     },
                     {
-                        label: '수학',
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',  // 투명 보라
-                        hoverBackgroundColor: 'rgba(153, 102, 255, 0.7)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
-                        borderWidth: 1,
-                        data: monthlyScoreData.map(data => data.math),  // 월별 수학 성적
+                        label: "수학 원점수",
+                        data: mathScores,
+                        backgroundColor: "rgba(153, 102, 255, 0.5)",
+                        borderColor: "rgba(153, 102, 255, 1)",
                     },
                     {
-                        label: '영어',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',  // 투명 주황
-                        hoverBackgroundColor: 'rgba(255, 159, 64, 0.7)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        borderWidth: 1,
-                        data: monthlyScoreData.map(data => data.eng),  // 월별 영어 성적
-                    }
-                ]
+                        label: "영어 원점수",
+                        data: engScores,
+                        backgroundColor: "rgba(255, 159, 64, 0.5)",
+                        borderColor: "rgba(255, 159, 64, 1)",
+                    },
+                ],
             },
             options: {
                 maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        left: 10,
-                        right: 25,
-                        top: 25,
-                        bottom: 0
-                    }
-                },
                 scales: {
                     x: {
-                        grid: {
-                            display: false,
-                        },
                         ticks: {
-                            maxTicksLimit: 5
-                        }
+                            autoSkip: false, // Prevent skipping of labels
+                            maxRotation: 45, // Rotate labels for better readability
+                            minRotation: 0,
+                        },
                     },
                     y: {
-                        beginAtZero: true,  // y축이 0부터 시작하도록 설정
-                        min: 0,  // y축 최소값을 0으로 설정
-                        max: 100,  // y축 최대값을 100으로 설정
-                        stepSize: 10,  // y축을 10단위로 표시
+                        beginAtZero: true,
+                        min: 0, // Start at 0
+                        max: 100, // Static range for scores
                         ticks: {
-                            padding: 10,
-                            callback: function(value) {
-                                return value + '%';  // 백분위에 '%' 기호 추가
+                            stepSize: 10, // Increment by 10
+                            callback: function (value) {
+                                return value + "점"; // Append "점" to Y-axis labels
                             },
                         },
-                        grid: {
-                            color: "rgb(234, 236, 244)",
-                            zeroLineColor: "rgb(234, 236, 244)",
-                            drawBorder: false,
-                        }
                     },
                 },
-                legend: {
-                    display: true  // 범례 표시
-                },
-                tooltips: {
-                    titleMarginBottom: 10,
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
-                    callbacks: {
-                        label: function(tooltipItem, chart) {
-                            return tooltipItem.yLabel + '%';  // 툴팁에 백분위 % 표시
-                        }
-                    }
-                }
-            }
+            },
         });
-        // 여기까지 새로운 월별 성적 그래프 추가.
-    }); // end of $(function(){})
+    }
+}); // end of $(function(){})

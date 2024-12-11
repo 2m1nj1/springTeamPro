@@ -47,4 +47,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			year DESC
 	</select>
 	
+	<!-- 시험명 드랍다운으로 만들어줄 sql. -->
+	<select id="selectAllExams" resultType="ExamVO">
+		SELECT
+			exam_no, exam_name, exam_context, exam_date
+		FROM
+			exam
+	</select>
+	
 </mapper>

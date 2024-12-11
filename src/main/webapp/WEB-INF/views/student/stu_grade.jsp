@@ -115,7 +115,7 @@
 										            <td>${grade.original_score}</td>
 										            <td>${grade.exam_date}</td>
 										            <td>
-										                <a href="stu_grade_details.do?exam_no=${grade.exam_no}?user_no=${grade.user_no}" class="btn btn-info btn-sm">상세 보기</a>
+										                <a href="stu_grade_details.do?exam_no=${grade.exam_no}&user_no=${userNo}" class="btn btn-info btn-sm">상세 보기</a>
 										            </td>
 										        </tr>
 										    </c:forEach>

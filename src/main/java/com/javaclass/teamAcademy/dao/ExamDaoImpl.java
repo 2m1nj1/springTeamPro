@@ -2,6 +2,7 @@ package com.javaclass.teamAcademy.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,11 @@ public class ExamDaoImpl implements ExamDao{
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
+	@Override
+	public List<ExamVO> findAllExams() {
+		return mybatis.selectList("ExamDao.selectAllExams");
+	}
+	
 	@Override
 	public List<ExamVO> fetchExamList(int userNo) {
 		return mybatis.selectList("ExamDao.fetchExamList", userNo);
@@ -30,5 +36,5 @@ public class ExamDaoImpl implements ExamDao{
 		System.out.println("Dao print evo: "+evo);
 		mybatis.insert("ExamDao.insertExam", evo);
 	}
-	
+
 }

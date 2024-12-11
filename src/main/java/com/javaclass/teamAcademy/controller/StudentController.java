@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.javaclass.teamAcademy.service.AttendanceService;
 import com.javaclass.teamAcademy.service.HomeworkService;
@@ -35,26 +36,67 @@ public class StudentController {
 	
 	@Autowired
 	private ServiceTx serviceTx;
-
 	
-	@RequestMapping("stu_{view}.do")
-	public String returnView(@PathVariable String view) {
-		return "student/stu_" + view;
-	} // end of returnView
-
 	
-	//================================================
+    //================================================
 	//				Homework part
 	//================================================
 	// 데이터 물어오는 라우팅(루팅, routing) - [학생] 과제제출 페이지랑 연결.
-    @RequestMapping("homeworkList")
-    public String getHomeworkList(Model m, HomeworkVO vo) {
-        // Fetch homework data using the service
-        List<HomeworkVO> homeworkList = homeworkService.getHomeworkList(vo);
-        m.addAttribute("homeworkList", homeworkList);
-        return "stu_homework.do"; // Renders student/stu_homework.jsp
-    } // end of getHomeworkList
+	// Render the homework page
+    @RequestMapping("stu_homework.do")
+    public String getHomeworkPage(@RequestParam(value="userNo", required=false, defaultValue="28") int userNo, Model m) {
+    	
+    	if (userNo == 0) {
+            System.out.println("userNo 파라미터 안 들어옴!");
+            return "error/missingUserNo"; // userNo 없는 경우;
+        }
+    	
+        List<CourseVO> courses = homeworkService.getLecturesByUser(userNo);
+
+        m.addAttribute("courses", courses);
+        m.addAttribute("userNo", userNo); // userNo 를 JSP 에 전달.
+        return "student/stu_homework"; // stu_homework.jsp 로 이동.
+    }// end of stu_homework.do
     
+    
+    // 선택한 강좌를 위한 과제 목록 가져옴.
+    @RequestMapping("fetchHomework")
+    @ResponseBody
+    public List<HomeworkVO> fetchHomeworkByCourse(@RequestParam("courseNo") int courseNo) {
+    	System.out.println("Fetching homework for courseNo: " + courseNo);
+        return homeworkService.getHomeworkByCourse(courseNo);
+    }// end of fetchHomeworkByCourse
+    
+    
+    // 선택한 번호의 과제 정보를 가져옴.
+    @RequestMapping("stu_homework_details")
+    @ResponseBody
+    public HomeworkVO stuHomeworkDetails(@RequestParam("hwNo") int hwNo) {
+        // request 콘솔에 찍어보기.
+        System.out.println("컨트롤러) Fetching homework details for hwNo: " + hwNo);
+
+        // 서비스 단으로부터 과제 세부 정보 물어옴.
+        HomeworkVO homeworkDetails = homeworkService.getHomeworkDetails(hwNo); // HomeworkService에 이 방식 저장.
+
+        if (homeworkDetails == null) {
+            // 세부정보 없으면 에러를 반환하거나 메세지 출력토록...
+            System.out.println("No homework details found for hwNo: " + hwNo);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Homework not found");
+        }
+        System.out.println("컨트롤러) Fetched HomeworkVO: " + homeworkDetails);
+        return homeworkDetails;
+    }// end of stuGradeDetails
+    
+    
+	/*
+	 * @RequestMapping("submit_homework") public String
+	 * submitHomework(@RequestParam("hw_no") int hwNo, Model model) {
+	 *    System.out.println("Submitting homework with ID: " + hwNo); // 디버깅 //
+	 *    Add submission logic here return "redirect:/student/stu_homework.do"; 
+	 *    // Redirect after submission 
+	 * }
+	 */
+     
     
     //================================================
   	//				Attendance part
@@ -78,7 +120,67 @@ public class StudentController {
          m.addAttribute("userNo", userNo); // view 단에 userNo 던져줌. - 리퀘스트 파라미터.
          return "student/stu_attendance"; // JSP page name
      } // end of viewAttendancePage
+ 	
+ 	
+ 	// 출결 validation
+ 	@GetMapping("validateAttendance")
+ 	@ResponseBody
+ 	public Map<String, Object> validateAttendance(
+ 	    @RequestParam int userNo, 
+ 	    @RequestParam int courseNo) {
+ 	    Map<String, Object> response = new HashMap<>();
+ 	    try {
+ 	        // Check if the user has already attended or left early today
+ 	        boolean alreadyAttended = attendanceService.checkAttendanceToday(userNo, courseNo);
+ 	        boolean alreadyLeftEarly = attendanceService.checkPrematureLeaveToday(userNo, courseNo);
+ 	        
+ 	        response.put("status", "success");
 
+ 	        // Fetch course start and end times
+ 	        Map<String, String> courseTimings = attendanceService.getCourseTimings(courseNo);
+
+ 	        response.put("alreadyAttended", alreadyAttended);
+ 	        response.put("alreadyLeftEarly", alreadyLeftEarly);
+ 	        response.put("courseStartTime", courseTimings.get("courseStartTime"));
+ 	        response.put("courseEndTime", courseTimings.get("courseEndTime"));
+ 	        response.put("status", "success");
+ 	    } catch (Exception e) {
+ 	        e.printStackTrace();
+ 	        response.put("status", "error");
+ 	    }
+ 	    return response;
+ 	} // end of validateAttendance
+
+ 	
+ 	// 출석 버튼 누르면 실행되는거
+ 	@PostMapping("markAttendance")
+ 	@ResponseBody
+ 	public String markAttendance(@RequestParam int userNo, @RequestParam int courseNo) {
+ 		System.out.println("userNo : " + userNo + " courseNo : " + courseNo);
+ 	    try {
+ 	        attendanceService.markAttendance(userNo, courseNo, 1); // 1 for 출석
+ 	        return "successMarkAttendance";
+ 	    } catch (Exception e) {
+ 	        e.printStackTrace();
+ 	        return "failure";
+ 	    }
+ 	} // end of markAttendance
+ 
+ 	
+ 	// 조퇴 버튼 누르면 실행되는거
+ 	@PostMapping("markEarlyLeave")
+ 	@ResponseBody
+ 	public String markEarlyLeave(@RequestParam int userNo, @RequestParam int courseNo) {
+ 		System.out.println("userNo : " + userNo + " courseNo : " + courseNo);
+ 		try {
+ 			attendanceService.markEarlyLeave(userNo, courseNo, 3);
+ 			return "successMarkEarlyLeave";
+ 		}catch(Exception e){
+ 			e.printStackTrace();
+ 			return "failure";
+ 		}
+ 	}// end of markEarlyLeave
+ 	
  	
  	// 학생이 수강중인 강좌 목록 불러옴
  	@GetMapping("fetchOngoingCourses")
@@ -155,8 +257,19 @@ public class StudentController {
      } // end of fetchExamYears
 	
      
+     // 시험정보 목록 물어옴.
+     @GetMapping("fetchExamList")
+     @ResponseBody
+     public List<ExamVO> fetchExamList() {
+         // Fetch the list of exams from the database
+         List<ExamVO> examList = serviceTx.getAllExams();
+         return examList; // Return as JSON
+     }// end of fetchExamList
+     
+     
      // 시험 정보와 그에 상응하는 점수 값들을 불러옴.
-	  @GetMapping("stu_grade") public String listGradeAndExams(@RequestParam(value="userNo", required=false, defaultValue="28")
+	  @GetMapping("stu_grade")
+	  public String listGradeAndExams(@RequestParam(value="userNo", required=false, defaultValue="28")
 		  int userNo, Model m) {
 		  System.out.println("received userNo: " + userNo);
 		  
@@ -176,13 +289,25 @@ public class StudentController {
 		  return "student/stu_grade"; 
 	  } // end of listGradeAndExams
 	 
-     
+
+	  @RequestMapping("stu_grade_details")
+	  public String stuGradeDetails(@RequestParam("exam_no") int examNo, Model model) {
+	      // Add logic to retrieve grade details
+	      model.addAttribute("examNo", examNo);
+	      return "student/stu_grade_details";
+	  }// end of stuGradeDetails
+	  
+	  
      // JSON 반환 -> 차트 그리는 데에 넣어줄거. 자료 던져주는 역할만 한다.
      @GetMapping("fetchGradeAndExams")
      @ResponseBody
      public Map<String, Object> fetchGradeAndExams( 
     		 @RequestParam(value = "userNo", required = false, defaultValue = "28") int userNo,
-    	     @RequestParam(value = "year", required = false) Integer year) {
+    	     @RequestParam(value = "year", required = false) Integer year,
+     		 @RequestParam(value = "exam_no", required = false) Integer examNo){
+    	 
+    	 System.out.println("Received userNo : " + userNo);
+    	 System.out.println("Received examNo : " + examNo);
     	 
     	 // gradeList 에 연도에 해당하는 DB 값들을 가져옴
     	 List<GradeVO> gradeList = year != null
@@ -202,6 +327,8 @@ public class StudentController {
     	 return response;
      } // end of fetchGradeAndExams
 
+     
+     // 시험 정보와 성적 정보들 삽입
      @PostMapping("insertGradesAndExams")
      @ResponseBody
      public String insertGradesAndExams(@RequestBody Map<String, Object> data) {
@@ -212,7 +339,7 @@ public class StudentController {
 	    	 e.printStackTrace();
 	         return "failure";
 	     }
-     }
-  
+     }// end of insertGradesAndExams
+
      
 } // 컨트롤러 마감.
