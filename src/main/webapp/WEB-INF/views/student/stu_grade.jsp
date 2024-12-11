@@ -64,7 +64,7 @@
     				<%-- <input type="hidden" id="userNo" name="userNo" value="${param.userNo}"> --%>
 
 					<!-- 페이지 명 -->
-					<h5 class="h3 mb-4 text-gray-800">성적 조회</h5>
+					<h5 class="h3 mb-4 text-gray-800">[학생]성적 조회</h5>
 					
 					<!-- 시험 응시 연도 조회 -->
                     <div class="row">
@@ -115,7 +115,7 @@
 										            <td>${grade.original_score}</td>
 										            <td>${grade.exam_date}</td>
 										            <td>
-										                <a href="stu_grade_details.do?exam_no=${grade.exam_no}?user_no=${grade.user_no}" class="btn btn-info btn-sm">상세 보기</a>
+										                <a href="stu_grade_details.do?exam_no=${grade.exam_no}&user_no=${userNo}" class="btn btn-info btn-sm">상세 보기</a>
 										            </td>
 										        </tr>
 										    </c:forEach>
@@ -142,8 +142,8 @@
                     </div><!-- end of 시험 점수 추이 그래프 -->
                     
                     <div class="row"> <!-- stu_gradeInsert.jsp 로 넘어가는 버튼 -->
-                    	<div class="col-9"></div>
-						<div class="col-3">
+                    	<div class="col-10"></div>
+						<div class="col-2">
 							<a href="stu_gradeInsert.do?userNo=${userNo}" class="btn btn-primary btn-icon-split btn">
 								<span class="icon text-white-50">
 									<i class="fas fa-arrow-up"></i>

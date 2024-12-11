@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CourseRegiDAO">
+	
+	<select id="selectCourseCateGrade" resultType="com.javaclass.teamAcademy.vo.CourseCateVO">
+		SELECT *
+		FROM COURSE_CATE
+		WHERE COURSE_CATE_UPNO = 0
+		ORDER BY COURSE_CATE_NO
+	</select>
+	
+	<select id="selectCourseCateDownList" parameterType="String" resultType="com.javaclass.teamAcademy.vo.CourseCateVO">
+		SELECT *
+		FROM COURSE_CATE
+		WHERE COURSE_CATE_UPNO = #{upon}
+		ORDER BY COURSE_CATE_NO
+	</select>
+	
+	<select id="selectConTchList" parameterType="String" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT DISTINCT ua.USER_NO USER_NO, ua.USER_NAME USER_NAME
+		FROM course c
+		LEFT OUTER JOIN USER_ACCOUNT ua 
+			ON c.COURSE_INSTRUCTOR = ua.USER_NO
+		WHERE c.COURSE_CATE_NO IN (
+			SELECT cc.course_cate_no
+			FROM COURSE_CATE cc 
+			START WITH cc.course_cate_no = #{cate_no}
+			CONNECT BY PRIOR cc.course_cate_no = cc.course_cate_upno
+		)
+		AND c.COURSE_STATUS = '모집중'
+		ORDER BY ua.USER_NAME
+	</select>
+	
+	<select id="selectConCourseList" resultType="com.javaclass.teamAcademy.vo.CourseVO">
+		SELECT
+			c.COURSE_NO COURSE_NO
+			, cc2.COURSE_CATE_NO COURSE_CATE_NO
+			, cc2.COURSE_CATE_NAME COURSE_CATE_NAME
+			, ua.USER_NAME COURSE_INSTRUCTOR
+			, c.COURSE_NAME COURSE_NAME
+			, TO_CHAR(c.COURSE_STARTDATE, 'yyyy-mm-dd') COURSE_STARTDATE
+			, TO_CHAR(c.COURSE_ENDDATE, 'yyyy-mm-dd') COURSE_ENDDATE
+			, cr.CLASSROOM_NAME CLASSROOM_NAME
+			, cntstu.cntstu || '/' || c.COURSE_MAXPERSON COURSE_PERSON
+			, NVL(c.COURSE_FEE, 0) COURSE_FEE
+		FROM course c
+		LEFT OUTER JOIN USER_ACCOUNT ua
+			ON ua.USER_NO = c.COURSE_INSTRUCTOR
+		LEFT OUTER JOIN CLASSROOM cr 
+			ON cr.CLASSROOM_NO = c.COURSE_CLASSROOM
+		LEFT OUTER JOIN COURSE_CATE cc2
+			ON cc2.COURSE_CATE_NO = c.COURSE_CATE_NO
+		LEFT OUTER JOIN (
+		    SELECT c1.COURSE_NO, COUNT(cr1.COURSE_NO) AS cntstu
+		    FROM COURSE c1
+		    LEFT OUTER JOIN COURSE_REGISTRATION cr1 
+		        ON c1.COURSE_NO = cr1.COURSE_NO
+		    GROUP BY c1.COURSE_NO
+		) cntstu 
+		    ON cntstu.COURSE_NO = c.COURSE_NO
+		WHERE c.COURSE_CATE_NO IN (
+			SELECT cc.course_cate_no
+			FROM COURSE_CATE cc 
+			START WITH cc.course_cate_no = #{selected}
+			CONNECT BY PRIOR cc.course_cate_no = cc.course_cate_upno
+		)
+		AND c.COURSE_STATUS = '모집중'
+		<if test="checked != null and checked.size() > 0">
+			AND ua.USER_NO IN
+			<foreach collection="checked" item="item" open="(" close=")" separator=",">
+	            #{item}
+	        </foreach>
+		</if>
+		ORDER BY c.COURSE_NO
+	</select>
+	
+	
+	<select id="selectConCourseSch" parameterType="int" resultType="com.javaclass.teamAcademy.vo.CourseVO">
+		SELECT
+			c.course_no COURSE_NO
+			, c.COURSE_NAME COURSE_NAME
+			, cs.COURSE_DAYOFWEEK || ' / ' || cs.COURSE_STARTTIME ||':00 ~ ' || cs.COURSE_ENDTIME || ':00' course_sch
+		FROM COURSE c 
+		LEFT OUTER JOIN COURSE_SCHEDULE cs ON c.COURSE_NO = cs.COURSE_NO 
+		WHERE c.COURSE_NO = #{course_no}
+		ORDER BY c.COURSE_NO
+			, CASE 	WHEN COURSE_DAYOFWEEK = '월' THEN 1
+					WHEN COURSE_DAYOFWEEK = '화' THEN 2
+					WHEN COURSE_DAYOFWEEK = '수' THEN 3
+					WHEN COURSE_DAYOFWEEK = '목' THEN 4
+					WHEN COURSE_DAYOFWEEK = '금' THEN 5
+					WHEN COURSE_DAYOFWEEK = '토' THEN 6
+					WHEN COURSE_DAYOFWEEK = '일' THEN 7
+			END
+	</select>
+	
+</mapper>

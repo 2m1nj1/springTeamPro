@@ -58,7 +58,7 @@
 			<input type="hidden" id="userNo" name="userNo" value="${userNo}">
 			
             <!-- 페이지 명 -->
-            <h5 class="h3 mb-4 text-gray-800">세부 성적 조회</h5>
+            <h5 class="h3 mb-4 text-gray-800">[학생]세부 성적 조회</h5>
 
             <!-- 시험 정보 출력 박스 -->
             <div class="row">
@@ -74,11 +74,11 @@
                                 <thead>
                                     <tr>
                                         <th>시험 일자</th>
-                                        <th>시험명</th>
+                                        <th>시험 명</th>
                                         <th>수험 번호</th>
                                         <th>학생 이름</th>
-                                        <th>원점수 총합</th>
-                                        <th>백분위 총합</th>
+                                        <th>원점수 합계</th>
+                                        <th>백분위 합계</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -101,14 +101,17 @@
                             <table class="table table-bordered" id="subjectTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <td>과목</td>
-                                        <td>응시</td>
-                                        <td>전체 평균(백분위)</td>
-                                        <td>상위 30%(백분위)</td>
-                                        <td>내점수</td>
-                                        <td>내점수(백분위)</td>
+                                        <td rowspan="2">과목</td>
+                                        <td rowspan="2">응시</td>
+                                        <td rowspan="2">전체 평균(백분위)</td>
+                                        <td rowspan="2">상위 30%(백분위)</td>
+                                        <td colspan="4">내점수</td>
+                                    </tr>
+                                    <tr>
+                                        <td>원점수</td>
+                                        <td>백분위</td>
                                         <td>등급</td>
-                                        <td>전체 석차</td>
+                                        <td>석차</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -128,7 +131,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">국영수 성적 상위 30%와 비교해보기</h6>
                         </div>
                         <div class="card-body">
-                            <canvas id="myBarChart" style="height: 400px;"></canvas>
+                            <canvas id="comparisonChart" width="400" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -142,7 +145,7 @@
 			                <h6 class="m-0 font-weight-bold text-primary">국영수 월별 성적 추이</h6>
 			            </div>
 			            <div class="card-body">
-			                <canvas id="myMonthlyChart" style="height: 400px;"></canvas>
+			                <canvas id="fieldScoresChart" width="400" height="200"></canvas>
 			            </div>
 			        </div>
 			    </div>

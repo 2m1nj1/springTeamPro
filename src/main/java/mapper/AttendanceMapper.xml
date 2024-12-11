@@ -8,13 +8,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 특정 학생(user_no)에 등록된 강좌 목록 불러오기 -->
     <select id="fetchOngoingCourses" parameterType="int" resultType="com.javaclass.teamAcademy.vo.CourseVO">
         SELECT 
-	        c.course_no, c.course_name 
+	        c.course_no
+	        , c.course_name
+	        , ua.user_name AS instructor_name
 	    FROM 
 	        course_registration cr
 	    INNER JOIN 
 	        course c ON cr.course_no = c.course_no
+	    LEFT JOIN
+	    	user_account ua ON c.course_instructor = ua.user_no
 	    WHERE 
-	        cr.course_student = #{userNo}
+	        cr.COURSE_REGI_STUDENT = #{userNo}
 	    ORDER BY 
 	        c.course_name
     </select>	
@@ -22,53 +26,90 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 학생에 대한 특정 강좌의 출결 기록 불러오기 -->
     <select id="fetchAttendanceRecords" parameterType="map" resultType="com.javaclass.teamAcademy.vo.AttendanceVO">
         SELECT 
-            a.attendance_date,
-            c.course_name,
-            ua.user_name AS course_instructor,
-            CASE 
-                WHEN a.attendance_status_no = 1 THEN '출결'
-                WHEN a.attendance_status_no = 2 THEN '지각'
-                WHEN a.attendance_status_no = 3 THEN '조퇴'
-                WHEN a.attendance_status_no = 4 THEN '병가'
-                WHEN a.attendance_status_no = 5 THEN '결석'
-                ELSE '정보 없음'
-            END AS attendance_status,
-            ROW_NUMBER() OVER (ORDER BY a.attendance_date DESC) AS rn
-        FROM 
-            ATTENDANCE a
-        INNER JOIN 
-            COURSE c ON a.course_no = c.course_no
-        INNER JOIN 
-            USER_ACCOUNT ua ON c.course_instructor = ua.user_no
-        WHERE 
-            a.user_no = #{userNo}
-            <if test="courseNo != null and courseNo != ''  ">
-               AND a.course_no = #{courseNo}
-            </if>
-            <if test="startDate != null and startDate != '' ">
-               <![CDATA[ AND a.attendance_date >= #{startDate} ]]>
-            </if>
-            <if test="endDate != null and endDate != '' ">
-               <![CDATA[ AND a.attendance_date <= #{endDate} ]]>
-            </if>
+	        a.attendance_date,
+	        c.course_name,
+	        ua.user_name AS course_instructor,
+	        CASE 
+	            WHEN a.attendance_status_no = 1 THEN '출결'
+	            WHEN a.attendance_status_no = 2 THEN '지각'
+	            WHEN a.attendance_status_no = 3 THEN '조퇴'
+	            WHEN a.attendance_status_no = 4 THEN '병가'
+	            WHEN a.attendance_status_no = 5 THEN '결석'
+	            ELSE '정보 없음'
+	        END AS attendance_status,
+	        ROW_NUMBER() OVER (ORDER BY a.attendance_date DESC) AS rn
+	    FROM 
+	        ATTENDANCE a
+	    INNER JOIN 
+	        COURSE c ON a.course_no = c.course_no
+	    INNER JOIN 
+	        USER_ACCOUNT ua ON c.course_instructor = ua.user_no
+	    INNER JOIN
+	        COURSE_SCHEDULE cs ON c.course_no = cs.course_no
+	    WHERE 
+	        a.user_no = #{userNo}
+	        <if test="courseNo != null and courseNo != ''">
+	           AND a.course_no = #{courseNo}
+	        </if>
+	        <if test="startDate != null and startDate != ''">
+	           <![CDATA[ AND a.attendance_date >= #{startDate} ]]>
+	        </if>
+	        <if test="endDate != null and endDate != ''">
+	           <![CDATA[ AND a.attendance_date <= #{endDate} ]]>
+	        </if>
     </select>
-<!--     
-    총 데이터수 계산
-    <select id="getTotalAttendanceCount" parameterType="map" resultType="int">
-	    SELECT COUNT(*)
-	    FROM ATTENDANCE a
-	    INNER JOIN COURSE c ON a.course_no = c.course_no
-	    INNER JOIN USER_ACCOUNT ua ON c.course_instructor = ua.user_no
-	    WHERE a.user_no = #{userNo}
-	    <if test="courseNo != null and courseNo != ''">
-	        AND a.course_no = #{courseNo}
-	    </if>
-	    <if test="startDate != null and startDate != ''">
-	        AND a.attendance_date &gt;= #{startDate}
-	    </if>
-	    <if test="endDate != null and endDate != ''">
-	        AND a.attendance_date &lt;= #{endDate}
-	    </if>
-	</select> -->
+
+
+	<!-- 출석기록 삽입 -->
+	<insert id="insertAttendance" parameterType="map">
+	    INSERT INTO ATTENDANCE ( attendance_no, user_no, course_no, attendance_status_no, attendance_date)
+	    VALUES ( TEAM2.seq_attendance_no.nextval, #{userNo}, #{courseNo}, #{attendanceStatus}, SYSDATE )
+	</insert>
+    
+    
+    <!-- 출결 업뎃 - 조퇴로 변경하거나... 하는 경우. -->
+    <update id="updateAttendance" parameterType="map">
+	    UPDATE ATTENDANCE
+	    SET attendance_status_no = #{attendanceStatus}
+	    WHERE user_no = #{userNo}
+	      AND course_no = #{courseNo}
+	      AND TO_CHAR(attendance_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</update>
+    
+    
+    <!-- 오늘의 출석기록 -->
+    <select id="checkAttendanceToday" parameterType="map" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM ATTENDANCE
+	    WHERE user_no = #{userNo}
+	      AND course_no = #{courseNo}
+	      AND TO_CHAR(attendance_date, 'HH24:MI') = TO_CHAR(SYSDATE, 'HH24:MI')
+	      AND attendance_status_no IN (1, 2)
+    </select>
+    
+    
+    <!-- 강좌 조퇴시 -->
+    <select id="checkPrematureLeaveToday" parameterType="map" resultType="int">
+	    SELECT COUNT(*) 
+		FROM ATTENDANCE
+		WHERE user_no = #{userNo}
+		  AND course_no = #{courseNo}
+		  AND TO_CHAR(attendance_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		  AND attendance_status_no = 3
+    </select>
+    
+    
+    <!-- 강좌 시간 기록 물어옴. -->
+    <select id="fetchCourseTimings" parameterType="int" resultType="map">
+	    SELECT
+		    to_date(cs.course_starttime, 'HH24') AS courseStartTime,
+		    to_date(cs.course_endtime, 'HH24') AS courseEndTime,
+		    course_dayofweek AS courseDayOfWeek
+		FROM 
+		    course_schedule cs
+		WHERE 
+		    cs.course_no = #{ courseNo }
+		    AND cs.course_dayofweek = TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=KOREAN')
+    </select>
     
 </mapper>

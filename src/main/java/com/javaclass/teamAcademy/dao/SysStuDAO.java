@@ -17,4 +17,5 @@ public interface SysStuDAO {
 	public void deleteStu(UserVO vo);
 	
 	public void insertStu(UserVO vo);
+	
 } // end of ListDao

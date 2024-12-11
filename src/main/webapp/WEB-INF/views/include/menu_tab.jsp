@@ -60,7 +60,7 @@
                         <a class="collapse-item" href="tch_stu_select.do">수강생조회</a>
                         <a class="collapse-item" href="tch_attendance.do">출결관리</a>
                         <a class="collapse-item" href="tch_homework.do">과제관리</a>
-                        <a class="collapse-item" href="tch_garde.do">성적조회</a>
+                        <a class="collapse-item" href="tch_grade.do">성적조회</a>
                     </div>
                 </div>
             </li>
@@ -76,7 +76,7 @@
             
             <!-- Nav Item - 쪽지 -->
             <li class="nav-item">
-                <a class="nav-link" href="comm_getMessageList.do">
+                <a class="nav-link" href="comm_message.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>쪽지</span></a>
             </li>
@@ -148,7 +148,7 @@
 				
             <!-- Nav Item - 로그인 -->
             <li class="nav-item">
-                <a class="nav-link" href="comm_loginform.do">
+                <a class="nav-link" href="comm_login.do">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>로그인</span></a>
             </li>

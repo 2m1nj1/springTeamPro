@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,10 @@ public class SysCourseController {
 		return sysCourseService.selectCourseCateList();
 	} // end of selectCourseCateList();
 	
-	// 강좌 등록
+	// ---------------------------------
+	//			   강좌 등록
+	// ---------------------------------
+	// 강좌 정보 등록
 	@PostMapping("insertCourse")
 	@ResponseBody
 	public int insertCourse(CourseVO vo) {
@@ -38,27 +42,46 @@ public class SysCourseController {
 	} // end of insertCourse()
 	
 	// 강좌 일정 등록
-	@PostMapping("insertSchList")
+	@PostMapping("insertCourseSchList")
 	@ResponseBody
-	public String insertSchList(@RequestBody  ArrayList<CourseSchVO> courseSchList) {
-		System.out.println(">> 컨트롤러 제대로 도착함!!!");
-		System.out.println(">> " + courseSchList);
-		return null;
+	public int insertSchList(@RequestBody  ArrayList<CourseSchVO> courseSchList) {
+		try {
+	        for (CourseSchVO courseSchVO : courseSchList) {
+	            sysCourseService.insertSchList(courseSchVO);
+	        } // end of for
+	    } catch (Exception e) {
+	        System.err.println(">> Error occurred: " + e.getMessage());
+	        e.printStackTrace();
+	    } // end of try_catch
+		
+		return 1;
 	} // end of insertSchList()
 	
 	// 교육 과정 등록
 	@PostMapping("insertLectureList")
 	@ResponseBody
-	public String insertLectureList(LectureVOList lectureVOList) {
-		System.out.println(lectureVOList);
-		
+	public int insertLectureList(LectureVOList lectureVOList) {
+		// 강좌 번호
 		String course_no = lectureVOList.getList().get(0).getCourse_no();
 		
 		for(LectureVO lectureVO : lectureVOList.getList()) {
 			lectureVO.setCourse_no(course_no);
 			sysCourseService.insertLectureList(lectureVO);
 		} // end of for
-		return null;
+		
+		return 1;
 	} /// end of insertLectureList()
+	
+	
+	// ---------------------------------
+	//			   강좌 상세
+	// ---------------------------------
+	@GetMapping("courseDetail")
+	public String selectCourseDetail(CourseVO vo) {
+		//sysCourseService.selectCourseInfo(vo);
+		//sysCourseService.selectCourseSch(vo);
+		//sysCourseService.selectCourseLec(vo);
+		return "system/sys_courseDetail";
+	} // end of selectCourseDetail()
 	
 } // end of SysCourseController

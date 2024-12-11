@@ -51,25 +51,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON
 			g.user_no = ua.user_no
 		WHERE 
-			g.user_no = 28
-			AND EXTRACT(YEAR FROM exam_date) = 2024
+			g.user_no = #{userNo}
+			AND EXTRACT(YEAR FROM exam_date) = #{year}
 		ORDER BY 
 			exam_year DESC
 	</select>
 	
 	<!-- !Grade + Exam 정보 삽입! -->
-	<insert id="insertGradesAndExams" parameterType="map">
-	    DECLARE
-	        v_exam_no NUMBER;
-	    BEGIN
-	        INSERT INTO EXAM (exam_no, exam_name, exam_context, exam_date)
-	        VALUES (team2.seq_exam_no.nextval, #{exam_name}, #{exam_context}, #{exam_date})
-	        
-	        RETURNING exam_no INTO v_exam_no;
-
-	        INSERT INTO GRADE (grade_no, user_no, exam_no, original_score, percentile_score, kor, kor_took, math, math_took, eng, eng_took)
-	        VALUES (team2.seq_grade_no.nextval, #{user_no}, v_exam_no, #{original_score}, #{percentile_score}, #{kor}, #{kor_took}, #{math}, #{math_took}, #{eng}, #{eng_took});
-	    END;
+	<insert id="insertGrade" parameterType="com.javaclass.teamAcademy.vo.GradeVO">
+	    INSERT INTO GRADE (
+	        grade_no, user_no, exam_no, original_score, percentile_score, kor, kor_took, math, math_took, eng, eng_took
+	    ) VALUES (
+	        team2pro.seq_grade_no.nextval, #{user_no}, #{exam_no}, #{original_score}, #{percentile_score}, #{kor}, #{kor_took}, #{math}, #{math_took}, #{eng}, #{eng_took}
+	    )
 	</insert>
 	
 </mapper>

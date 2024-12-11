@@ -14,7 +14,7 @@
 <title>SB Admin 2 - Dashboard</title>
 
 <!-- Custom fonts for this template-->
-<link href="resources/static/vendor/fontawesome-free/css/all.min.css"
+<link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
@@ -27,7 +27,7 @@
 
 
 <!-- Custom styles for this template-->
-<link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/resources/static/css/sb-admin-2.min.css" rel="stylesheet">
 <style type="text/css">
 	*{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -243,23 +243,23 @@
 		</div>
 
 		<!-- Bootstrap core JavaScript-->
-		<script src="resources/static/vendor/jquery/jquery.min.js"></script>
+		<script src="/resources/static/vendor/jquery/jquery.min.js"></script>
 		<script
-			src="resources/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+			src="/resources/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 		<!-- Core plugin JavaScript-->
 		<script
-			src="resources/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+			src="/resources/static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 		<!-- Custom scripts for all pages-->
-		<script src="resources/static/js/sb-admin-2.min.js"></script>
+		<script src="/resources/static/js/sb-admin-2.min.js"></script>
 
 		<!-- Page level plugins -->
-		<script src="resources/static/vendor/chart.js/Chart.min.js"></script>
+		<script src="/resources/static/vendor/chart.js/Chart.min.js"></script>
 
 		<!-- Page level custom scripts -->
-		<script src="resources/static/js/demo/chart-area-demo.js"></script>
-		<script src="resources/static/js/demo/chart-pie-demo.js"></script>
+		<script src="/resources/static/js/demo/chart-area-demo.js"></script>
+		<script src="/resources/static/js/demo/chart-pie-demo.js"></script>
 
 
 		<!-- 개인 추가 .js : 이민지 -->

@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    e.exam_date ASC
 	</select>
 
+
 	<!-- Exam Year 가져올 것임 -->
 	<select id="fetchExamYears" parameterType="int" resultType="int">
 		SELECT 
@@ -45,6 +46,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			g.user_no = #{userNo}
 		ORDER BY 
 			year DESC
+	</select>
+	
+	
+	<!-- 선택된 연도에 대하여 시험명들을 물어옴. -->
+	<select id="fetchExamTitles" parameterType="int" resultType="com.javaclass.teamAcademy.vo.ExamVO">
+	    SELECT exam_no, exam_name, exam_context
+	    FROM exam
+	    WHERE TO_CHAR(exam_date, 'YYYY') = #{year}
+	</select>
+	
+	
+	<!-- 선택된 시험 제목들에 상응하는 시험 정보들 물어옴 -->
+	<select id="fetchExamContext" parameterType="int" resultType="String">
+	    SELECT exam_context
+	    FROM exam
+	    WHERE exam_no = #{examNo}
+	</select>
+	
+	
+	<!-- 시험명 드랍다운으로 만들어줄 sql. -->
+	<select id="selectAllExams" resultType="ExamVO">
+		SELECT
+			exam_no, exam_name, exam_context, exam_date
+		FROM
+			exam
 	</select>
 	
 </mapper>

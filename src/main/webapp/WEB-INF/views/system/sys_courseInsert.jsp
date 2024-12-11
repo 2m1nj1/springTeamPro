@@ -426,7 +426,7 @@
 
 	<!-- 개인 추가 .js : 이민지 -->
 	<script type="text/javascript" src="/resources/js/system/sys_main.js"></script>
-	<script type="text/javascript" src="/resources/js/system/sys_course.js"></script>
+	<script type="text/javascript" src="/resources/js/system/sys_courseInsert.js"></script>
 
 	<!-- timepicker -->
 	<script

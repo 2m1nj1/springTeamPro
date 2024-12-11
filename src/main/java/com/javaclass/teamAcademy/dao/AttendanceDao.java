@@ -16,7 +16,18 @@ public interface AttendanceDao {
 	// 출결 목록조회
 	List<AttendanceVO> fetchAttendanceRecords(Map<String, Object> params);
 	
-	/*
-	 * // 총 데이터 개수 조회 int getTotalAttendanceCount(Map<String, Object> params);
-	 */
+	// 출석정보 DB 삽입
+	public void insertAttendance(Map<String, Object> params);
+	
+	// 출석정보 수정(출석 -> 조퇴)
+	public void updateAttendance(Map<String, Object> params);
+
+	// 오늘의 출석기록 확인
+	int checkAttendanceToday(int userNo, int courseNo);
+
+	// 오늘의 조퇴기록 확인
+	int checkPrematureLeaveToday(int userNo, int courseNo);
+
+	// 강좌 시간 기록 물어옴.
+	Map<String, String> fetchCourseTimings(int courseNo);
 }

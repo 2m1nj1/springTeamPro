@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectCourseStaList" resultType="com.javaclass.teamAcademy.vo.CourseStaVO">
-		SELECT COURSE_STATUS_NAME 
+		SELECT *
 		FROM COURSE_STATUS
 		ORDER BY COURSE_STATUS_NO
 	</select>
@@ -57,5 +57,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, #{classroom_location}
 		)
 	</insert>
+	
+	<select id="countCourse" parameterType="String" resultType="Integer">
+		SELECT count(*)
+		FROM COURSE
+		GROUP BY course_status
+		HAVING COURSE_STATUS = #{courseStaName}
+	</select>
 	
 </mapper>

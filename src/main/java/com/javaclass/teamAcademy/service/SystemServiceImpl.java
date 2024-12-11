@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.javaclass.teamAcademy.dao.SystemDAO;
 import com.javaclass.teamAcademy.vo.ClassroomVO;
 import com.javaclass.teamAcademy.vo.CourseStaVO;
+import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
 
 @Service
@@ -50,6 +51,11 @@ public class SystemServiceImpl implements SystemService {
 	public void insertClassroom(ClassroomVO vo) {
 		systemDao.insertClassroom(vo);
 	} // end of insertClassroom()
+
+	@Override
+	public int countCourse(String courseStaName) {
+		return systemDao.countCourse(courseStaName);
+	} // end of countCourse()
 
 	
 } // end of SystemServiceImpl

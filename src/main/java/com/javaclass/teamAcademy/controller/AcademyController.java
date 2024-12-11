@@ -22,10 +22,10 @@ public class AcademyController {
 	@Autowired
 	private ProfileService profileService;
 
-	@RequestMapping("home.do")
-	public void home() {
-
-	} // end of home()
+//	@RequestMapping("home.do")
+//	public void home() {
+//
+//	} // end of home()
 
 	
 	@RequestMapping("comm_{view}.do")
@@ -54,10 +54,14 @@ public class AcademyController {
 
 	@RequestMapping("userLogin.do")
 	public String userLogin(LogVO vo, HttpSession session) {
+		
 		System.out.println("vo:" + vo.toString());
-	    LogVO result = logService.userLogin(vo);
-	    System.out.println("result:" + result);
-	    if ( result == null || result.getUser_Id() == null ){
+	    
+		LogVO result = logService.userLogin(vo);
+	    
+		System.out.println("result:" + result);
+	    
+		if ( result == null || result.getUser_Id() == null ){
 	    	return "common/comm_loginform";
 	    }else {
 	    	session.setAttribute("login", vo.getUser_Id());

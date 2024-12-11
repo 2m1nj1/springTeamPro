@@ -22,10 +22,14 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	// [학생] nav bar 에 표시될 수강중인 강좌들 불러오기
 	@Override
 	public List<CourseVO> fetchOngoingCourses(int userNo) {
+		try {
 		System.out.println("Dao Layer fetchOngoingCourses() 호출" + userNo);
 		List<CourseVO> courses = sqlsession.selectList( "AttendanceDao.fetchOngoingCourses", userNo );
 		System.out.println("Courses fetched: " + courses);
-		return courses;
+		}catch(Exception e){
+			System.out.println("오류!! " + e.getMessage());
+		}
+		return sqlsession.selectList( "AttendanceDao.fetchOngoingCourses", userNo );
 	}
 
 	// 출결 목록 조회
@@ -34,11 +38,35 @@ public class AttendanceDaoImpl implements AttendanceDao{
 		return sqlsession.selectList( "AttendanceDao.fetchAttendanceRecords", params );
 	}
 	
-	/*
-	 * // 출결 기록 전체 갯수 가져오기...
-	 * 
-	 * @Override public int getTotalAttendanceCount(Map<String, Object> params) {
-	 * return sqlsession.selectOne( "AttendanceDao.getTotalAttendanceCount",
-	 * params); }
-	 */
+	// 출석정보 DB 삽입
+	public void insertAttendance(Map<String, Object> params) {
+	    sqlsession.insert("AttendanceDao.insertAttendance", params);
+	}
+	
+	// 출석정보 업뎃
+	public void updateAttendance(Map<String, Object> params) {
+	    sqlsession.update("AttendanceDao.updateAttendance", params);
+	}
+	
+	// 오늘의 출석기록 확인.
+	@Override
+	public int checkAttendanceToday(int userNo, int courseNo) {
+	    return sqlsession.selectOne("AttendanceDao.checkAttendanceToday", Map.of("userNo", userNo, "courseNo", courseNo));
+	}
+
+	// 오늘의 조퇴기록 확인.
+	@Override
+	public int checkPrematureLeaveToday(int userNo, int courseNo) {
+	    return sqlsession.selectOne("AttendanceDao.checkPrematureLeaveToday", Map.of("userNo", userNo, "courseNo", courseNo));
+	}
+
+	// 강좌 시간 기록 물어옴.
+	@Override
+	public Map<String, String> fetchCourseTimings(int courseNo) {
+	     Map<String, String> timings = sqlsession.selectOne("AttendanceDao.fetchCourseTimings", courseNo);
+	     if(timings == null) {
+	    	 throw new RuntimeException("No timings found for courseNo: " + courseNo);
+	     }
+	     return timings;
+	}
 }

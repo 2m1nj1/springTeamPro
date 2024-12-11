@@ -52,6 +52,13 @@ public class SystemDAOImpl implements SystemDAO {
 		mybatis.insert("SystemDAO.insertClassroom", vo);
 	} // end of insertClassroom()
 
+	@Override
+	public int countCourse(String courseStaName) {
+		Integer result = mybatis.selectOne("SystemDAO.countCourse", courseStaName);
+		if(result == null) { result = 0; } // 결과가 null이면 0으로 return
+		return result;
+	} // end of countCourse()
+
 
 	
 	

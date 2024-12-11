@@ -14,7 +14,7 @@
 <title>SB Admin 2 - Dashboard</title>
 
 <!-- Custom fonts for this template-->
-<link href="resources/static/vendor/fontawesome-free/css/all.min.css"
+<link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
@@ -27,8 +27,8 @@
 
 
 <!-- Custom styles for this template-->
-<link href="resources/static/css/sb-admin-2.min.css" rel="stylesheet">
-<link href="resources/css/system.css" rel="stylesheet">
+<link href="/resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/resources/css/system.css" rel="stylesheet">
 <style type="text/css">
 	*{
 		font-family: 'Noto Sans KR', sans-serif;

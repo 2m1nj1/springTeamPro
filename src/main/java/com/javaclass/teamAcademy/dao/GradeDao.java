@@ -12,6 +12,6 @@ public interface GradeDao {
 
 	List<GradeVO> fetchGradeListByYear(int userNo, int year);
 
-	void insertGradesAndExams(Map<String, Object> data);
+	void insertGrade(GradeVO gradeVO);
 
 }
