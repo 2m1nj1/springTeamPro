@@ -58,9 +58,25 @@
 					<jsp:param name="pageName" value="topBar" />
 				</jsp:include>
 				
-				<div class="  coruseRegiFooter">
+				<!-- 결제창 -->
+				<div class="coruseRegiFooter d-flex justify-content-center">
 					<div class="courseRegiPay">
-						adf
+						<div class="row">
+							<div class="col d-flex justify-content-center">
+							 	<span class="text text-light">선택강좌 </span>
+							 	<span class="text text-light cntChkCourse"> 0</span>
+							 	<span class="text text-light">개</span>
+							</div>
+							<div class="col">
+							 	<span class="text text-light">n</span>
+							 	<span class="text text-light">원</span>
+							</div>
+							<div class="col">
+							 	<div id="btnCourseRegiPay" class="btn btn-light">
+							 		<span class="text text-primary">결제하기</span>
+							 	</div>
+							</div>
+						</div>
 					</div>
 				</div>
 					
@@ -127,10 +143,10 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col">
-											<span class="text text-primary">(선택수)</span>
+											<span class="text text-primary cntChkCourse">0</span>
 											<span class="text">강좌선택 / </span>
 											<span class="text">총 </span>
-											<span id="cntConCourseList" class="text text-primary">(검색결과수) </span>
+											<span id="cntConCourseList" class="text text-primary">${courseInfoListSize} </span>
 											<span class="text">강좌</span>
 										</div>
 									</div>
@@ -141,7 +157,7 @@
 										<c:forEach var="item" items="${courseInfoList}">
 										<div class="row">
 											<div class="col-1 d-flex justify-content-center">
-												<input type="checkbox">
+												<input type="checkbox" class="chkCourseRegi">
 												<input type="hidden" value="${item.course_no}">
 											</div>
 											<div class="col-1 d-flex justify-content-center align-items-center">

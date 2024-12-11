@@ -46,8 +46,9 @@ public class CourseRegiController {
 		
 		//System.out.println(courseInfoList);
 		//System.out.println(allCourseSch);
-	
+		
 		m.addAttribute("courseInfoList", courseInfoList);
+		m.addAttribute("courseInfoListSize", courseInfoList.size());
 		
 		return "system/courseRegi";
 	} // end of courseRegi()
@@ -101,5 +102,16 @@ public class CourseRegiController {
 	} // end of selectConCourseList()
 	
 	
+	// ----------------------------------
+	//			선택한 조건에 해당하는
+	//			 강좌 목록 불러오기
+	// ----------------------------------
+	@PostMapping("courseRegiTimeTable")
+	public String courseRegiTimeTable(Model m, @RequestParam(value="selectedCourse[]") List<String> selectedCourse) {
+		System.out.println(">> 컨트롤러 도착!!" + selectedCourse);
+	
+		//return "system/courseRegiTimeTable";
+		return null;
+	} // end of courseRegiTimeTable()
 	
 } // end of CourseRegiController
