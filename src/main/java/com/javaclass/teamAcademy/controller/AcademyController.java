@@ -131,4 +131,11 @@ public class AcademyController {
 		}
 	}
 		
+	@RequestMapping("logout.do")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:comm_loginform.do";
+	}
 } // end of academyController

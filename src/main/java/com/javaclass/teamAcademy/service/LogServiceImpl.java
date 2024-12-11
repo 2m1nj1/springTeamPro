@@ -1,5 +1,7 @@
 package com.javaclass.teamAcademy.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +75,9 @@ public class LogServiceImpl implements LogService{
 		return logDAO.changePass(user_Email, user_Pass);
 	}
 
-	
+	public void logout(HttpSession session) {
+		
+		session.invalidate(); // 세션 종료
+	}
 
 }

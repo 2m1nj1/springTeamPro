@@ -1,5 +1,7 @@
 package com.javaclass.teamAcademy.service;
 
+import javax.servlet.http.HttpSession;
+
 import com.javaclass.teamAcademy.vo.LogVO;
 
 public interface LogService {
@@ -22,4 +24,5 @@ void userInsert(LogVO logvo);
 
 	int changePass(String user_Email, String user_Pass)throws Exception;
 
+	void logout(HttpSession session);
 }
