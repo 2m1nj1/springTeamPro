@@ -53,9 +53,6 @@ public class StudentController {
 	
 	@Autowired
 	private ServiceTx serviceTx;
-<<<<<<< HEAD
-
-=======
 	
 	@Autowired
 	private ProfileService profileService;
@@ -66,7 +63,6 @@ public class StudentController {
 	@Autowired
 	private BoardService boardService;
 	
->>>>>>> origin/main
     //================================================
 	//				   Homework part
 	//================================================

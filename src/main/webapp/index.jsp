@@ -65,7 +65,8 @@
                                     </div>
                                     <form class="user" name="form" action="userLogin.do" method="post">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
+                              
+                                           <input type="text" class="form-control form-control-user"
                                                 id="id" name="user_Id"
                                                 placeholder="아이디를 입력하세요.">
                                         </div>
