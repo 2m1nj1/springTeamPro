@@ -78,6 +78,8 @@ public class AcademyController {
 	    }else {
 	    	session.setAttribute("login", vo.getUser_Id());
 	    	
+	 
+	    	
 	    	return "redirect:home.do";
 	    }
 	       

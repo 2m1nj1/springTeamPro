@@ -28,27 +28,33 @@ public class CourseRegiController {
 	@GetMapping("courseRegi")
 	public String courseRegi(Model m) {
 		
-		// 학년 리스트 불러오기
-		m.addAttribute("courseConGrade", courseRegiService.selectCourseCateGrade());
-		
-		List<CourseVO> courseInfoList = courseRegiService.selectConCourseList("0", null);
-		
-		//List<CourseVO> allCourseSch = new ArrayList<>();
-		for(CourseVO courseVO : courseInfoList) {
-			List<String> courseSch = courseRegiService.selectConCourseSch(courseVO.getCourse_no());
+		try {
+			// 학년 리스트 불러오기
+			m.addAttribute("courseConGrade", courseRegiService.selectCourseCateGrade());
 			
-//			for(String str : courseSch) {
-//				System.out.println(">> 컨트롤러 결과 : " + str);
-//			}
+			List<CourseVO> courseInfoList = courseRegiService.selectConCourseList("0", null);
 			
-			courseVO.setCourse_sch_list(courseSch);
-		} // end of for
+			//List<CourseVO> allCourseSch = new ArrayList<>();
+			for(CourseVO courseVO : courseInfoList) {
+				List<String> courseSch = courseRegiService.selectConCourseSch(courseVO.getCourse_no());
+				
+//				for(String str : courseSch) {
+//					System.out.println(">> 컨트롤러 결과 : " + str);
+//				}
+				
+				courseVO.setCourse_sch_list(courseSch);
+			} // end of for
+			
+			//System.out.println(courseInfoList);
+			//System.out.println(allCourseSch);
+			
+			m.addAttribute("courseInfoList", courseInfoList);
+			m.addAttribute("courseInfoListSize", courseInfoList.size());
+			
+		} catch(Exception e) {
+			System.err.println(e.getMessage());
+		} 
 		
-		//System.out.println(courseInfoList);
-		//System.out.println(allCourseSch);
-		
-		m.addAttribute("courseInfoList", courseInfoList);
-		m.addAttribute("courseInfoListSize", courseInfoList.size());
 		
 		return "system/courseRegi";
 	} // end of courseRegi()
@@ -103,8 +109,7 @@ public class CourseRegiController {
 	
 	
 	// ----------------------------------
-	//			선택한 조건에 해당하는
-	//			 강좌 목록 불러오기
+	//			시간표 반영 - 못할 듯 ㅠ
 	// ----------------------------------
 	@PostMapping("courseRegiTimeTable")
 	public String courseRegiTimeTable(Model m, @RequestParam(value="selectedCourse[]") List<String> selectedCourse) {

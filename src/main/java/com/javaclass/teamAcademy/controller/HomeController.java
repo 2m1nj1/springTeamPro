@@ -41,7 +41,7 @@ public class HomeController {
 			session.setAttribute("loginUserName", userInfo.getUser_name());		// 회원 이름
 			
 			// 관리자 계정 로그인 시, 관리자 홈 화면 
-			if(userInfo.getUser_cate_no() == 3) { return "system/sys_home"; }
+			if(userInfo.getUser_cate_no() == 3) { return "redirect: sys_home.do"; }
 		} // end of if
 		
 		// 로그인 세션이 없다면

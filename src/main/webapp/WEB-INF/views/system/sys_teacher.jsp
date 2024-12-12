@@ -63,7 +63,7 @@
 					<!-- 간단 통계 -->
 					<div class="row">
 						<!-- 전체 강사 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showAllTch" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-primary shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -71,7 +71,9 @@
 											<div
 												class="text font-weight-bold text-primary text-uppercase mb-1">
 												전체 강사</div>
-											<div id="tchAllCount" class="h5 mb-0 font-weight-bold text-gray-800"></div>
+											<div id="tchAllCount" class="h5 mb-0 font-weight-bold text-gray-800">
+												${cntAllTch}
+											</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-users fa-2x text-gray-300"></i>
@@ -82,15 +84,17 @@
 						</div>
 						
 						<!-- 강의 중인 강사 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showRegiTch" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-success shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
 											<div
 												class="text font-weight-bold text-success text-uppercase mb-1">
-												강의 중인 강사</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+												강좌 개설 강사</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">
+												${cntRegiTch}
+											</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-chalkboard-user fa-2x text-gray-300"></i>
@@ -102,7 +106,7 @@
 						
 						
 						<!-- 강좌가 없는 강사 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showNotRegiTch" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-danger shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -110,7 +114,9 @@
 											<div
 												class="text font-weight-bold text-danger text-uppercase mb-1">
 												강좌가 없는 강사</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">
+												${cntNotRegiTch}
+											</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-user-xmark fa-2x text-gray-300"></i>
@@ -121,7 +127,7 @@
 						</div>
 						
 						<!-- 퇴사한 강사 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showSecTch" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-secondary shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -129,7 +135,9 @@
 											<div
 												class="text font-weight-bold text-secondary text-uppercase mb-1">
 												퇴사한 강사</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">
+												${cntSecTch}
+											</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-user-minus fa-2x text-gray-300"></i>
@@ -223,7 +231,7 @@
 					
 
 					<!-- 하단 버튼 -->
-					<div class="row">
+					<div class="row mb-5">
 						<div class="col-2">
 							<a href="#" class="btn btn-secondary btn-block"><span
 								class="text">선택 삭제</span></a>

@@ -56,7 +56,7 @@
 				<div class="container-fluid">
 
 					<!-- 페이지 명 -->
-					<h1 class="h3 mb-4 text-gray-800">강사상세</h1>
+					<h1 class="h3 mb-4 text-gray-800">강사 등록</h1>
 
 
 					<!-- 수강생 개인 정보 -->
@@ -162,9 +162,18 @@
 												
 												<div class="row">
 													<label class="col-sm-4 col-form-label">이메일</label>
-													<div class="col-sm-8">
-														<input type="text" class="form-control form-control-sm"
-															id="user_email" name="user_email" value="${teacher.user_email}">
+													<div class="col-sm-4">
+															<input type="text" class="form-control form-control-sm"
+																id="user_email_id" name="user_email_id"
+																value="">
+													</div>
+													<div class="col-sm-4">
+														<select class="custom-select custom-select-sm" name="user_email_domain">
+															<option value="">이메일 선택</option>
+															<c:forEach var="item" items="${emailDomainList}">
+																<option value="${item.domain_name}">${item.domain_name}</option>
+															</c:forEach>
+														</select>
 													</div>
 												</div>
 												<div class="row">
@@ -204,43 +213,11 @@
 							</div>
 
 
-							<!-- tab -->
-							<div class="card shadow mb-4">
-								<div class="card-body" id="sys_stu_tab">
-									<!-- 탭 버튼 -->
-									<ul class="nav nav-tabs tab-wrap">
-										<li class="nav-item"><a class="nav-link active"
-											aria-current="page">담당 강좌</a></li>
-										<li class="nav-item"><a class="nav-link">시간표</a></li>
-										<li class="nav-item"><a class="nav-link">프로필</a></li>
-									</ul>
-
-									<!-- 탭 내용 -->
-									<div class="tab-content">
-										<div class="tab-pane active" id="tab_tch_lecture">
-											<jsp:include page="/WEB-INF/views/table/com_course_table.jsp">
-												<jsp:param name="pageName" value="tch_lectures" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_tch_timetable">
-											<jsp:include page="/WEB-INF/views/table/com_timetable_table.jsp">
-												<jsp:param name="pageName" value="tch_timetable" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_tch_profile">
-											<jsp:include page="/WEB-INF/views/table/com_profile_table.jsp">
-												<jsp:param name="pageName" value="tch_profile" />
-											</jsp:include>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- end of tab -->
 
 							<!-- 하단 버튼 -->
-							<div class="row">
+							<div class="row mb-5">
 								<div class="col-2">
-									<div id="" class="btn btn-secondary btn-block btnModal">
+									<div id="btnInsertCancel" class="btn btn-secondary btn-block btnModal">
 										<span class="text">취소</span>
 									</div>
 								</div>

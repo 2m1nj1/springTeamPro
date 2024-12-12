@@ -11,6 +11,82 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE USER_CATE_NO = 1
 	</select>
 	
+	<select id="selectStuRegiCount" resultType="int">
+		SELECT count(*)
+		FROM (
+			SELECT DISTINCT ua.USER_NO 
+			FROM USER_ACCOUNT ua
+			JOIN (
+				SELECT cr.COURSE_REGI_STUDENT COURSE_REGI_STUDENT
+				FROM COURSE_REGISTRATION cr
+				WHERE COURSE_REGI_CANCEL IS NULL
+				)registu
+				ON registu.COURSE_REGI_STUDENT = ua.USER_NO 
+			WHERE USER_CATE_NO = 1
+		)
+	</select>
+	
+	<select id="selectStuSecCount" resultType="int">
+		SELECT count(*)
+		FROM (
+			SELECT user_no
+			FROM USER_ACCOUNT ua 
+			WHERE USER_CATE_NO = 11
+			AND USER_SECDATE
+				BETWEEN TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD')
+				AND LAST_DAY(SYSDATE)
+		)
+	</select>
+	
+	<select id="selectStuRegi" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT *
+		FROM USER_ACCOUNT ua2
+		WHERE USER_NO IN (
+			SELECT DISTINCT ua.USER_NO 
+			FROM USER_ACCOUNT ua
+			JOIN (
+				SELECT cr.COURSE_REGI_STUDENT COURSE_REGI_STUDENT
+				FROM COURSE_REGISTRATION cr
+				WHERE COURSE_REGI_CANCEL IS NULL
+				)registu
+				ON registu.COURSE_REGI_STUDENT = ua.USER_NO 
+			WHERE USER_CATE_NO = 1
+		)
+		ORDER BY USER_NO
+	</select>
+	
+	<select id="selectStuNotRegi" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT *
+		FROM USER_ACCOUNT ua2
+		WHERE USER_NO NOT IN (
+			SELECT DISTINCT ua.USER_NO 
+			FROM USER_ACCOUNT ua
+			JOIN (
+				SELECT cr.COURSE_REGI_STUDENT COURSE_REGI_STUDENT
+				FROM COURSE_REGISTRATION cr
+				WHERE COURSE_REGI_CANCEL IS NULL
+				)registu
+				ON registu.COURSE_REGI_STUDENT = ua.USER_NO 
+			WHERE USER_CATE_NO = 1
+		)
+		ORDER BY USER_NO 
+	</select>
+	
+	<select id="selectStuSec" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT *
+		FROM USER_ACCOUNT ua2
+		WHERE USER_NO IN (
+			SELECT user_no
+			FROM USER_ACCOUNT ua 
+			WHERE USER_CATE_NO = 11
+			AND USER_SECDATE
+				BETWEEN TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD')
+				AND LAST_DAY(SYSDATE)
+		)
+		ORDER BY ua2.USER_SECDATE DESC
+	</select>
+	
+	
 	<select id="selectStuList" resultType="com.javaclass.teamAcademy.vo.UserVO">
 		SELECT 	USER_NO
 				, USER_NAME
@@ -26,7 +102,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT 	USER_NO
 				, USER_CATE_NO
 				, USER_NAME
-				, USER_EMAIL
+				, SUBSTR(USER_EMAIL, 1, INSTR(USER_EMAIL, '@') - 1) user_email_id
+		   		, SUBSTR(USER_EMAIL, INSTR(USER_EMAIL, '@')) user_email_domain
 				, USER_ADDR1
 				, USER_ADDR2
 				, USER_TEL
@@ -39,6 +116,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM USER_ACCOUNT
 		WHERE user_cate_no = 1 AND user_no = #{user_no}
 	</select>
+	
+	<select id="selectStuDetailCourse" parameterType="com.javaclass.teamAcademy.vo.UserVO" resultType="com.javaclass.teamAcademy.vo.CourseVO">
+		SELECT
+			c.COURSE_NO COURSE_NO
+			, cc2.COURSE_CATE_NAME COURSE_CATE_NAME
+			, ua.USER_NAME COURSE_INSTRUCTOR
+			, c.COURSE_NAME COURSE_NAME
+			, TO_CHAR(c.COURSE_STARTDATE, 'yyyy-mm-dd') COURSE_STARTDATE
+			, TO_CHAR(c.COURSE_ENDDATE, 'yyyy-mm-dd') COURSE_ENDDATE
+			, cr.CLASSROOM_NAME CLASSROOM_NAME
+			, NVL(c.COURSE_FEE, 0) COURSE_FEE
+			, c.COURSE_STATUS COURSE_STATUS
+			,  ROUND(
+		        NVL(
+		            (SELECT COUNT(a.ATTENDANCE_DATE)
+		             FROM ATTENDANCE a
+		             WHERE a.COURSE_NO = c.COURSE_NO
+		               AND a.USER_NO = #{user_no}
+		               AND a.ATTENDANCE_STATUS_NO = 1), 0)
+		        / NULLIF((SELECT COUNT(*) 
+		                  FROM ATTENDANCE a2
+		                  WHERE a2.COURSE_NO = c.COURSE_NO), 0), 1
+		    ) ATTENDANCE_RATE
+		FROM COURSE c 
+		JOIN (
+				SELECT cr.COURSE_NO COURSE_NO
+				FROM COURSE_REGISTRATION cr 
+				WHERE cr.COURSE_REGI_STUDENT = #{user_no}
+				AND cr.COURSE_REGI_CANCEL IS NULL
+			) sturegicourse
+			ON c.COURSE_NO = sturegicourse.COURSE_NO
+		LEFT OUTER JOIN COURSE_CATE cc2
+			ON cc2.COURSE_CATE_NO = c.COURSE_CATE_NO
+		LEFT OUTER JOIN USER_ACCOUNT ua
+			ON ua.USER_NO = c.COURSE_INSTRUCTOR
+		LEFT OUTER JOIN CLASSROOM cr 
+			ON cr.CLASSROOM_NO = c.COURSE_CLASSROOM
+	</select>
+	
+	<update id="stuDetailCourseCancel">
+		UPDATE COURSE_REGISTRATION 
+		SET COURSE_REGI_CANCEL = 'N'
+		WHERE COURSE_REGI_STUDENT = #{stuUserNo} AND COURSE_NO = #{cancelCourse}
+	</update>
+	
 	
 	<update id="updateStuDetail" parameterType="com.javaclass.teamAcademy.vo.UserVO">
 		UPDATE 	USER_ACCOUNT SET

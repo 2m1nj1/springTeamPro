@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +29,8 @@
 
 <!-- Custom styles for this template-->
 <link href="/resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+<link href="/resources/css/system.css" rel="stylesheet">
 <style type="text/css">
 	*{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -55,10 +58,14 @@
 				<jsp:include page="/resources/include/top_bar.jsp">
 					<jsp:param name="pageName" value="topBar" />
 				</jsp:include>
-
+				
 				<!-- Begin Page Content -->
 				<div class="container container-fluid">
-					
+					<!-- 모달 -->
+					<jsp:include page="sys_modal.jsp">
+						<jsp:param name="pageName" value="modal" />
+					</jsp:include>
+						
 					<div class="row">
 						<div class="col">
 							<div class="card shadow mb-3">
@@ -75,7 +82,7 @@
 										전체 수강생
 									</div>
 									<div class="row align-items-center">
-										<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+										<div class="h2 mb-0 font-weight-bold text-gray-800">${cntAllStu}</div>
 										<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">명</div>
 									</div>
 									
@@ -99,13 +106,15 @@
 										전체 강사
 									</div>
 									<div class="row align-items-center">
-										<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+										<div class="h2 mb-0 font-weight-bold text-gray-800">${cntAllTch}</div>
 										<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">명</div>
 									</div>
 									
 								</div>
 							</div>
-							<a href="#" class="btn btn-primary btn-block mb-4 shadow"><span class="text">강의실 관리</span></a>
+							<div class="btn btn-primary btnModal btn-block mb-4 shadow"
+								id="btnModal_course_classroom"><span class="text">강의실 관리</span>
+							</div>
 						</div>
 						
 						<div class="col">
@@ -123,7 +132,7 @@
 										<div class="text font-weight-bold text-uppercase mb-1">
 											진행 중인 강좌</div>
 										<div class="row align-items-center">
-											<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="h2 mb-0 font-weight-bold text-gray-800">${count_progress}</div>
 											<div class="text font-weight-bold text-uppercase mb-0"
 												style="padding-left: 5px">개</div>
 										</div>
@@ -133,7 +142,7 @@
 										<div class="text font-weight-bold text-uppercase mb-1">
 											모집 중인 강좌</div>
 										<div class="row align-items-center">
-											<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="h2 mb-0 font-weight-bold text-gray-800">${count_recruit}</div>
 											<div class="text font-weight-bold text-uppercase mb-0"
 												style="padding-left: 5px">개</div>
 										</div>
@@ -144,13 +153,22 @@
 						</div>
 					</div>
 					
+					<!-- 차트 -->
 					<div class="row">
 						<div class="col-8">
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
+								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 									<h6 class="m-0 font-weight-bold text-primary">월별 수강생 통계</h6>
+                                  	<div id="chartYearSelect">
+                                  		<select class="custom-select custom-select-sm">
+                                  			<c:forEach var="item" items="${signUpYear}">
+                                  				<option value="${item}">${item}</option>
+                                  			</c:forEach>
+                                  		</select>
+                                  	</div>
 								</div>
 								<div class="card-body">
+									
 									<div class="chart-area">
 										<div class="chartjs-size-monitor">
 											<div class="chartjs-size-monitor-expand">
@@ -168,56 +186,56 @@
 								</div>
 							</div>
 
-							<div class="row">
-								<div class="col">
-									<div class="card shadow mb-4">
-										<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-											<h6 class="m-0 font-weight-bold text-primary">1:1 문의</h6>
-											<div class="dropdown no-arrow">
-		                                        <a class="button" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-		                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i>
-		                                        </a>
-		                                    </div>
-										</div>
+<!-- 							<div class="row"> -->
+<!-- 								<div class="col"> -->
+<!-- 									<div class="card shadow mb-4"> -->
+<!-- 										<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> -->
+<!-- 											<h6 class="m-0 font-weight-bold text-primary">1:1 문의</h6> -->
+<!-- 											<div class="dropdown no-arrow"> -->
+<!-- 		                                        <a class="button" href="#" role="button" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 		                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i> -->
+<!-- 		                                        </a> -->
+<!-- 		                                    </div> -->
+<!-- 										</div> -->
 										
-										<div class="card-body d-flex flex-row align-items-center justify-content-between">
-											<div class="text font-weight-bold text-uppercase mb-1">
-												새로 들어온 문의
-											</div>
-											<div class="row align-items-center">
-												<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
-												<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">개</div>
-											</div>
-										</div>
+<!-- 										<div class="card-body d-flex flex-row align-items-center justify-content-between"> -->
+<!-- 											<div class="text font-weight-bold text-uppercase mb-1"> -->
+<!-- 												새로 들어온 문의 -->
+<!-- 											</div> -->
+<!-- 											<div class="row align-items-center"> -->
+<!-- 												<div class="h2 mb-0 font-weight-bold text-gray-800">5</div> -->
+<!-- 												<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">개</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
 										
-									</div>
-								</div>
+<!-- 									</div> -->
+<!-- 								</div> -->
 
-								<div class="col">
-									<div class="card shadow mb-4">
-										<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-											<h6 class="m-0 font-weight-bold text-primary">신고</h6>
-											<div class="dropdown no-arrow">
-		                                        <a class="button" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-		                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i>
-		                                        </a>
-		                                    </div>
-										</div>
-										<div class="card-body d-flex flex-row align-items-center justify-content-between">
-											<div class="text font-weight-bold text-uppercase mb-1">
-												새로 들어온 신고
-											</div>
-											<div class="row align-items-center">
-												<div class="h2 mb-0 font-weight-bold text-gray-800">5</div>
-												<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">개</div>
-											</div>
+<!-- 								<div class="col"> -->
+<!-- 									<div class="card shadow mb-4"> -->
+<!-- 										<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> -->
+<!-- 											<h6 class="m-0 font-weight-bold text-primary">신고</h6> -->
+<!-- 											<div class="dropdown no-arrow"> -->
+<!-- 		                                        <a class="button" href="#" role="button" aria-haspopup="true" aria-expanded="false"> -->
+<!-- 		                                            <i class="fas fa-gear fa-sm fa-fw text-gray-400"></i> -->
+<!-- 		                                        </a> -->
+<!-- 		                                    </div> -->
+<!-- 										</div> -->
+<!-- 										<div class="card-body d-flex flex-row align-items-center justify-content-between"> -->
+<!-- 											<div class="text font-weight-bold text-uppercase mb-1"> -->
+<!-- 												새로 들어온 신고 -->
+<!-- 											</div> -->
+<!-- 											<div class="row align-items-center"> -->
+<!-- 												<div class="h2 mb-0 font-weight-bold text-gray-800">5</div> -->
+<!-- 												<div class="text font-weight-bold text-uppercase mb-0" style="padding-left: 5px">개</div> -->
+<!-- 											</div> -->
 											
-										</div>
-									</div>
-								</div>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
-							</div>
-
+<!-- 							</div> -->
+							<!-- end of row -->
 
 						</div>
 						
@@ -257,12 +275,12 @@
 		<!-- Page level plugins -->
 		<script src="/resources/static/vendor/chart.js/Chart.min.js"></script>
 
-		<!-- Page level custom scripts -->
-		<script src="/resources/static/js/demo/chart-area-demo.js"></script>
-		<script src="/resources/static/js/demo/chart-pie-demo.js"></script>
-
-
 		<!-- 개인 추가 .js : 이민지 -->
 		<script type="text/javascript" src="/resources/js/system/sys_tab.js"></script>
+		<script type="text/javascript" src="/resources/js/system/sys_main.js"></script>
+		
+		<!-- 차트 -->
+		<script src="/resources/js/system/chart/signUpStuChart.js"></script>
+		
 </body>
 </html>

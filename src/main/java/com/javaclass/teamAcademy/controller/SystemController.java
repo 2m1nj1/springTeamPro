@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaclass.teamAcademy.service.SysCourseService;
+import com.javaclass.teamAcademy.service.SysStuService;
+import com.javaclass.teamAcademy.service.SysTchService;
 import com.javaclass.teamAcademy.service.SystemService;
+import com.javaclass.teamAcademy.vo.ChartVO;
 import com.javaclass.teamAcademy.vo.ClassroomVO;
 import com.javaclass.teamAcademy.vo.CourseStaVO;
 import com.javaclass.teamAcademy.vo.CourseVO;
@@ -25,16 +28,23 @@ public class SystemController {
 	private SystemService systemService;
 	
 	@Autowired
+	private SysStuService sysStuService;
+	
+	@Autowired
+	private SysTchService sysTchService;
+	
+	@Autowired
 	private SysCourseService sysCourseService;
 	
 	@GetMapping("sys_{view}.do")
 	public String returnView(@PathVariable String view, Model m) {
+	
 		
 		// 이메일 도메인(selector) 불러올 view
-		Set<String> emailDomainListView = Set.of("stuInsert", "stuDetail");
+		Set<String> emailDomainListView = Set.of("stuInsert", "tchInsert");
 		
 		if(emailDomainListView.contains(view)) {
-			List<EmailDomainVO> emailDomainList = systemService.selectEmailDomainList(); 
+			List<EmailDomainVO> emailDomainList = systemService.selectEmailDomainList();
 			m.addAttribute("emailDomainList", emailDomainList);
 		} // end of if
 		
@@ -45,6 +55,47 @@ public class SystemController {
 			m.addAttribute("courseStaList", courseStaList);
 		} // end of if
 		
+		
+		// 관리자 홈 view
+		if(view.equals("home")) {
+			m.addAttribute("cntAllStu", sysStuService.selectStuAllCount());
+			m.addAttribute("cntAllTch", sysTchService.selectTchAllCount());
+			
+			List<CourseStaVO> courseStaList = systemService.selectCourseStaList(); 
+			for(CourseStaVO courseStaVO : courseStaList) {
+				int rsCount = systemService.countCourse(courseStaVO.getCourse_status_name());					
+				m.addAttribute("count_" + courseStaVO.getCourse_status_eng(), rsCount);
+			} // end of for
+			
+			// 가입 년도
+			m.addAttribute("signUpYear", systemService.selectsignUpYear());
+		} // end of if
+		
+		
+		// 수강생 관리 view
+		if(view.equals("student")) {
+			int cntAllStu 	= sysStuService.selectStuAllCount();
+			int cntRegiStu 	= sysStuService.selectStuRegiCount();
+			
+			m.addAttribute("cntAllStu", cntAllStu);
+			m.addAttribute("cntRegiStu", cntRegiStu);
+			m.addAttribute("cntNotRegiStu", cntAllStu-cntRegiStu);
+			m.addAttribute("cntSecStu", sysStuService.selectStuSecCount());
+		} // end of if - student
+		
+		// 강사 관리 view
+		if(view.equals("teacher")) {
+			int cntAllTch 	= sysTchService.selectTchAllCount();
+			int cntRegiTch 	= sysTchService.selectTchRegiCount();
+			
+			m.addAttribute("cntAllTch", cntAllTch);
+			m.addAttribute("cntRegiTch", cntRegiTch);
+			m.addAttribute("cntNotRegiTch", cntAllTch-cntRegiTch);
+			m.addAttribute("cntSecTch", sysTchService.selectTchSecCount());
+		} // end of if - teacher
+		
+	
+		
 		// 강좌 view
 		if(view.equals("course")) {
 			try {
@@ -54,7 +105,6 @@ public class SystemController {
 					int rsCount = systemService.countCourse(courseStaVO.getCourse_status_name());					
 					m.addAttribute("count_" + courseStaVO.getCourse_status_eng(), rsCount);
 				} // end of for
-				
 				
 				// 강좌 리스트
 				List<CourseVO> courseList = sysCourseService.selectCourseList();
@@ -120,5 +170,16 @@ public class SystemController {
 		systemService.insertClassroom(vo);
 		return null;
 	} // end of insertClassroom()
+	
+	
+	@PostMapping("chartStuCnt")
+	@ResponseBody 
+	public List<ChartVO> chartStuCnt(String selectedYear){
+		System.out.println(">> 컨트롤러 인자 : " + selectedYear);
+		List<ChartVO> result = systemService.chartStuCnt(selectedYear);
+		System.out.println(">> 컨트롤러 결과 : " + result);
+		return result;
+	} // end of chartStuCnt()
+	
 	
 } // end of systemController

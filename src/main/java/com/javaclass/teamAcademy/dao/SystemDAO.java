@@ -2,6 +2,7 @@ package com.javaclass.teamAcademy.dao;
 
 import java.util.List;
 
+import com.javaclass.teamAcademy.vo.ChartVO;
 import com.javaclass.teamAcademy.vo.ClassroomVO;
 import com.javaclass.teamAcademy.vo.CourseStaVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
@@ -23,4 +24,8 @@ public interface SystemDAO {
 	public void insertClassroom(ClassroomVO vo);
 	
 	public int countCourse(String courseStaName);
+	
+	public List<String> selectsignUpYear();
+	
+	public List<ChartVO> chartStuCnt(String year);
 } // end of SystemDAO

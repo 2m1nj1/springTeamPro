@@ -11,6 +11,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE USER_CATE_NO = 2
 	</select>
 	
+	<select id="selectTchRegiCount" resultType="int">
+		SELECT count(*) 
+		FROM USER_ACCOUNT ua 
+		WHERE USER_CATE_NO = 2 
+		AND USER_NO IN
+			(
+				SELECT DISTINCT c.COURSE_INSTRUCTOR 
+				FROM COURSE c 
+			)
+	</select>
+	
+	<select id="selectTchSecCount" resultType="int">
+		SELECT count(*)
+		FROM (
+			SELECT user_no
+			FROM USER_ACCOUNT ua 
+			WHERE USER_CATE_NO = 12
+			AND USER_SECDATE
+				BETWEEN TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD')
+				AND LAST_DAY(SYSDATE)
+		)
+	</select>
+	
 	<select id="selectTchList" parameterType="com.javaclass.teamAcademy.vo.UserVO" resultType="com.javaclass.teamAcademy.vo.UserVO">
 		SELECT 	USER_NO
 				, USER_NAME
@@ -30,11 +53,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY USER_NO
 	</select>
 	
+	<select id="selectTchRegi" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT 	USER_NO
+				, USER_NAME
+				, USER_TEL
+				, USER_EMAIL
+				, TO_CHAR(USER_SIGNUPDATE, 'yyyy-mm-dd') user_signupdate 
+		FROM USER_ACCOUNT
+		WHERE USER_CATE_NO = 2 
+		AND USER_NO IN (
+			SELECT DISTINCT c.COURSE_INSTRUCTOR 
+			FROM COURSE c 
+			)
+		ORDER BY USER_NO
+	</select>
+	
+	<select id="selectTchNotRegi" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT 	USER_NO
+				, USER_NAME
+				, USER_TEL
+				, USER_EMAIL
+				, TO_CHAR(USER_SIGNUPDATE, 'yyyy-mm-dd') user_signupdate 
+		FROM USER_ACCOUNT 
+		WHERE USER_CATE_NO = 2 
+		AND USER_NO NOT IN (
+			SELECT DISTINCT c.COURSE_INSTRUCTOR 
+			FROM COURSE c 
+			)
+		ORDER BY USER_NO
+	</select>
+	
+	<select id="selectTchSec" resultType="com.javaclass.teamAcademy.vo.UserVO">
+		SELECT 	USER_NO
+				, USER_NAME
+				, USER_TEL
+				, USER_EMAIL
+				, TO_CHAR(USER_SIGNUPDATE, 'yyyy-mm-dd') user_signupdate 
+		FROM USER_ACCOUNT
+		WHERE USER_CATE_NO = 12
+		AND USER_SECDATE
+			BETWEEN TO_CHAR(TRUNC(SYSDATE,'MM'),'YYYYMMDD')
+			AND LAST_DAY(SYSDATE)
+		ORDER BY USER_SECDATE DESC
+	</select>
+	
 	<select id="selectTchDetail" parameterType="com.javaclass.teamAcademy.vo.UserVO" resultType="com.javaclass.teamAcademy.vo.UserVO">
 		SELECT 	USER_NO
 				, USER_CATE_NO
 				, USER_NAME
-				, USER_EMAIL
+				, SUBSTR(USER_EMAIL, 1, INSTR(USER_EMAIL, '@') - 1) user_email_id
+		   		, SUBSTR(USER_EMAIL, INSTR(USER_EMAIL, '@')) user_email_domain
 				, USER_ADDR1
 				, USER_ADDR2
 				, USER_TEL

@@ -25,6 +25,38 @@ $(function(){
 	
 	
 	// ----------------------------------
+	//        	상태별 강사 목록 보기
+	// ----------------------------------
+	function loadStudentList(url) {
+	    $.ajax({
+	        type: 'POST',
+	        url: url,
+	        success: makeTchList,
+	        error: function () {
+	            alert("강사 목록 로딩 실패");
+	        }
+	    });
+	} // end of loadStudentList
+
+	$('#showAllTch').click(function () {
+	    loadStudentList('showAllTch');
+	});
+
+	$('#showRegiTch').click(function () {
+	    loadStudentList('showRegiTch');
+	});
+	
+	$('#showNotRegiTch').click(function () {
+	    loadStudentList('showNotRegiTch');
+	});
+	
+	$('#showSecTch').click(function () {
+	    loadStudentList('showSecTch');
+	});
+	
+	
+	
+	// ----------------------------------
 	// 			강사 목록 불러오기
 	// ----------------------------------
 	function selectTchList() {
@@ -98,5 +130,11 @@ $(function(){
 	$('div#btnInsert').click(function(){
 		$('form#tchInsertForm').submit();
 	}); // end of .click()
+	
+	
+	// 등록 취소
+	$('#btnInsertCancel').click(function(){
+		window.location = "sys_teacher.do";
+	});
 	
 }); // end of function()

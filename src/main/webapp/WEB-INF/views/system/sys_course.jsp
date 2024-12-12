@@ -153,142 +153,187 @@
 					
 					
 					<!-- 검색 조건 설정 -->
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col"> -->
+<!-- 							<div class="card shadow mb-4"> -->
+<!-- 								<div class="card-header py-3"> -->
+<!-- 									<h6 class="m-0 font-weight-bold text-primary" -->
+<!-- 									style="display: inline; padding-right:10px"> -->
+<!-- 									검색 조건 설정</h6> -->
+<!-- 									<a href="#" class="btn-sm btn-secondary btnConClear"> <span -->
+<!-- 										class="text">초기화</span> -->
+<!-- 									</a> -->
+<!-- 								</div> -->
+								
+<!-- 								<div class="card-body"> -->
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-3"> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-4 col-form-label">강사명</label> -->
+<!-- 												<div class="col-sm-8"> -->
+<!-- 													<div class="input-group"> -->
+<!-- 														<input type="text" class="form-control form-control-sm" -->
+<!-- 														id="course_instructor" name="" value=""> -->
+<!-- 														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_instructor"> -->
+<!-- 															<i class="fa-solid fa-magnifying-glass"></i> -->
+<!-- 														</button> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-4 col-form-label">강의실</label> -->
+<!-- 												<div class="col-sm-8"> -->
+<!-- 													<div class="input-group"> -->
+<!-- 														<input type="text" class="form-control form-control-sm" -->
+<!-- 														id="course_classroom" name="" value=""> -->
+<!-- 														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_classroom"> -->
+<!-- 															<i class="fa-solid fa-magnifying-glass"></i> -->
+<!-- 														</button> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-4 col-form-label">강의요일</label> -->
+<!-- 												<div class="col-sm-8"> -->
+<!-- 													<input type="text" class="form-control form-control-sm" -->
+<!-- 														id="" name="" value=""> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+
+<!-- 										<div class="col-6"> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-3 col-form-label">강좌명</label> -->
+<!-- 												<div class="col-sm-9"> -->
+<!-- 													<div class="input-group"> -->
+<!-- 														<input type="text" class="form-control form-control-sm" -->
+<!-- 														id="course_name" name="" value=""> -->
+<!-- 														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_name"> -->
+<!-- 															<i class="fa-solid fa-magnifying-glass"></i> -->
+<!-- 														</button> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-3 col-form-label">강좌기간</label> -->
+<!-- 												<div class="col-sm-9"> -->
+<!-- 													<div class="row"> -->
+<!-- 														<div class="col"> -->
+<!-- 															<input type="date" class="form-control form-control-sm" -->
+<!-- 															id="" name="" value=""> -->
+<!-- 														</div> -->
+<!-- 														~ -->
+<!-- 														<div class="col"> -->
+<!-- 															<input type="date" class="form-control form-control-sm" -->
+<!-- 															id="" name="" value=""> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-3 col-form-label">강의시간</label> -->
+<!-- 												<div class="col-sm-9"> -->
+<!-- 													<div class="row"> -->
+<!-- 														<div class="col"> -->
+<!-- 															<input type="time" class="form-control form-control-sm" -->
+<!-- 															id="" name="" value=""> -->
+<!-- 														</div> -->
+<!-- 														~ -->
+<!-- 														<div class="col"> -->
+<!-- 															<input type="time" class="form-control form-control-sm" -->
+<!-- 															id="" name="" value=""> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+													
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+										
+<!-- 										<div class="col-3"> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-4 col-form-label">정원</label> -->
+<!-- 												<div class="col-sm-8"> -->
+<!-- 													<input type="text" class="form-control form-control-sm" -->
+<!-- 														id="" name="" value=""> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-4 col-form-label">진행률</label> -->
+<!-- 												<div class="col-sm-8"> -->
+<!-- 													<input type="text" class="form-control form-control-sm" -->
+<!-- 														id="" name="" value=""> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 											<div class="row"> -->
+<!-- 												<label class="col-sm-4 col-form-label">상태</label> -->
+<!-- 												<div class="col-sm-8"> -->
+<!-- 													<input type="text" class="form-control form-control-sm" -->
+<!-- 														id="" name="" value=""> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+									
+<!-- 									<div class="row"> -->
+<!-- 										<label class="col-sm-1 col-form-label">태그</label> -->
+<!-- 										<div class="col-sm-11"> -->
+<!-- 											<input type="text" class="form-control form-control-sm" id="" -->
+<!-- 												name="" value=""> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+									
+<!-- 								</div> -->
+<!-- 								end of card body  -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+					<!-- end of 검색 조건 설정 -->
+					
+					<!-- 키워드 검색 -->
 					<div class="row">
 						<div class="col">
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary"
-									style="display: inline; padding-right:10px">
-									검색 조건 설정</h6>
-									<a href="#" class="btn-sm btn-secondary btnConClear"> <span
-										class="text">초기화</span>
-									</a>
-								</div>
-								
 								<div class="card-body">
 									<div class="row">
-										<div class="col-3">
-											<div class="row">
-												<label class="col-sm-4 col-form-label">강사명</label>
-												<div class="col-sm-8">
-													<div class="input-group">
-														<input type="text" class="form-control form-control-sm"
-														id="course_instructor" name="" value="">
-														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_instructor">
-															<i class="fa-solid fa-magnifying-glass"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">강의실</label>
-												<div class="col-sm-8">
-													<div class="input-group">
-														<input type="text" class="form-control form-control-sm"
-														id="course_classroom" name="" value="">
-														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_classroom">
-															<i class="fa-solid fa-magnifying-glass"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">강의요일</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
-										</div>
-
-										<div class="col-6">
-											<div class="row">
-												<label class="col-sm-3 col-form-label">강좌명</label>
-												<div class="col-sm-9">
-													<div class="input-group">
-														<input type="text" class="form-control form-control-sm"
-														id="course_name" name="" value="">
-														<button class="btnModal btn btn-sm btn-outline-primary" type="button" id="btnModal_course_name">
-															<i class="fa-solid fa-magnifying-glass"></i>
-														</button>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-3 col-form-label">강좌기간</label>
-												<div class="col-sm-9">
-													<div class="row">
-														<div class="col">
-															<input type="date" class="form-control form-control-sm"
-															id="" name="" value="">
-														</div>
-														~
-														<div class="col">
-															<input type="date" class="form-control form-control-sm"
-															id="" name="" value="">
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-3 col-form-label">강의시간</label>
-												<div class="col-sm-9">
-													<div class="row">
-														<div class="col">
-															<input type="time" class="form-control form-control-sm"
-															id="" name="" value="">
-														</div>
-														~
-														<div class="col">
-															<input type="time" class="form-control form-control-sm"
-															id="" name="" value="">
-														</div>
-													</div>
-													
-												</div>
+										<div class="col-8">
+											<div class="input-group">
+												<button class="btn btn-outline-secondary dropdown-toggle"
+													type="button" data-bs-toggle="dropdown"
+													aria-expanded="false">검색어 선택</button>
+												<ul class="dropdown-menu">
+													<li><a class="dropdown-item" href="#">Action</a></li>
+													<li><a class="dropdown-item" href="#">Another
+															action</a></li>
+													<li><a class="dropdown-item" href="#">Something
+															else here</a></li>
+													<li><hr class="dropdown-divider"></li>
+													<li><a class="dropdown-item" href="#">Separated
+															link</a></li>
+												</ul>
+												<input type="text" class="form-control"
+													aria-label="Text input with dropdown button">
 											</div>
 										</div>
 										
-										<div class="col-3">
-											<div class="row">
-												<label class="col-sm-4 col-form-label">정원</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">진행률</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
-											<div class="row">
-												<label class="col-sm-4 col-form-label">상태</label>
-												<div class="col-sm-8">
-													<input type="text" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
+										<div class="col-2">
+											<a href="#" class="btn btn-secondary btn-block"><span
+											class="text">검색 초기화</span></a>
 										</div>
+										
+										<div class="col-2">
+											<a href="#" class="btn btn-primary btn-block"><span
+												class="text">검색</span></a>
+										</div>
+
 									</div>
+								
 									
-									<div class="row">
-										<label class="col-sm-1 col-form-label">태그</label>
-										<div class="col-sm-11">
-											<input type="text" class="form-control form-control-sm" id=""
-												name="" value="">
-										</div>
-									</div>
 									
 								</div>
-								<!-- end of card body  -->
 							</div>
 						</div>
 					</div>
-					<!-- end of 검색 조건 설정 -->
-					
+					<!-- end of 키워드 검색 -->
 					
 					
 					<!-- 강좌 목록 -->

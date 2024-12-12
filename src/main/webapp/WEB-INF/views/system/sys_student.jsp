@@ -67,7 +67,7 @@
 					<!-- 간단 통계 -->
 					<div class="row">
 						<!-- 전체 수강생 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showAllStu" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-primary shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -76,7 +76,9 @@
 												class="text font-weight-bold text-primary text-uppercase mb-1">
 												전체 수강생</div>
 											<div class="h5 mb-0 font-weight-bold text-gray-800">
-												<div class="text" id="stuAllCount"></div>
+												<div class="text" id="stuAllCount">
+													${cntAllStu}
+												</div>
 											</div>
 										</div>
 										<div class="col-auto">
@@ -88,7 +90,7 @@
 						</div>
 						
 						<!-- 수강 강좌가 있는 수강생 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showRegiStu" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-success shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -96,7 +98,10 @@
 											<div
 												class="text font-weight-bold text-success text-uppercase mb-1">
 												수강 중인 수강생</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+											<div  id="stuRegiCount"
+												class="h5 mb-0 font-weight-bold text-gray-800">
+												${cntRegiStu}
+											</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-user-pen fa-2x text-gray-300"></i>
@@ -108,7 +113,7 @@
 						
 						
 						<!-- 수강 강좌가 없는 수강생 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showNotRegiStu" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-danger shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -116,7 +121,9 @@
 											<div
 												class="text font-weight-bold text-danger text-uppercase mb-1">
 												강좌가 없는 수강생</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">
+												${cntNotRegiStu}
+											</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-user-xmark fa-2x text-gray-300"></i>
@@ -127,7 +134,7 @@
 						</div>
 						
 						<!-- 탈퇴 수강생 -->
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div id="showSecStu" class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-secondary shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
@@ -135,7 +142,9 @@
 											<div
 												class="text font-weight-bold text-secondary text-uppercase mb-1">
 												탈퇴 수강생</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">
+												${cntSecStu}
+											</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-user-minus fa-2x text-gray-300"></i>
@@ -151,53 +160,53 @@
 					
 
 					<!-- 검색 조건 설정 -->
-					<div class="row">
-						<div class="col">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">
-									검색 조건 설정</h6>
-								</div>
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col"> -->
+<!-- 							<div class="card shadow mb-4"> -->
+<!-- 								<div class="card-header py-3"> -->
+<!-- 									<h6 class="m-0 font-weight-bold text-primary"> -->
+<!-- 									검색 조건 설정</h6> -->
+<!-- 								</div> -->
 								
 							
-								<div class="card-body">
+<!-- 								<div class="card-body"> -->
 
-									<div class="row">
-										<label class="col-sm-1 col-form-label">강좌명</label>
-										<div class="col-sm-11">
-											<input type="text" class="form-control form-control-sm" id=""
-												name="" value="">
-										</div>
-									</div>
+<!-- 									<div class="row"> -->
+<!-- 										<label class="col-sm-1 col-form-label">강좌명</label> -->
+<!-- 										<div class="col-sm-11"> -->
+<!-- 											<input type="text" class="form-control form-control-sm" id="" -->
+<!-- 												name="" value=""> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 
-									<div class="row">
-										<label class="col-sm-1 col-form-label">강사명</label>
-										<div class="col-sm-3">
-											<input type="text" class="form-control form-control-sm" id=""
-												name="" value="">
-										</div>
+<!-- 									<div class="row"> -->
+<!-- 										<label class="col-sm-1 col-form-label">강사명</label> -->
+<!-- 										<div class="col-sm-3"> -->
+<!-- 											<input type="text" class="form-control form-control-sm" id="" -->
+<!-- 												name="" value=""> -->
+<!-- 										</div> -->
 
 
-										<label class="col-sm-2 col-form-label">등록기간</label>
-										<div class="col-sm-6">
-											<div class="row">
-												<div class="col">
-													<input type="date" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-												~
-												<div class="col">
-													<input type="date" class="form-control form-control-sm"
-														id="" name="" value="">
-												</div>
-											</div>
-										</div>
-									</div>
+<!-- 										<label class="col-sm-2 col-form-label">등록기간</label> -->
+<!-- 										<div class="col-sm-6"> -->
+<!-- 											<div class="row"> -->
+<!-- 												<div class="col"> -->
+<!-- 													<input type="date" class="form-control form-control-sm" -->
+<!-- 														id="" name="" value=""> -->
+<!-- 												</div> -->
+<!-- 												~ -->
+<!-- 												<div class="col"> -->
+<!-- 													<input type="date" class="form-control form-control-sm" -->
+<!-- 														id="" name="" value=""> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 
-								</div>
-							</div>
-						</div>
-					</div>
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 					<!-- end of 검색 조건 설정 -->
 
 					<!-- 키워드 검색 -->

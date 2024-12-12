@@ -1,8 +1,9 @@
 $(function(){
 	
 	
-	let selectedTch = [];	// 선택 강사 담아 둘 배열
-	let selectedItem = ''; 	// 선택 카테고리
+	let selectedTch = [];		// 선택 강사 담아 둘 배열
+	let selectedItem = ''; 		// 선택 카테고리
+	let selectedCourse = [];	// 선택한 강좌 배열 담기
 	
 	clickCateItem('.courseConGrade');
 	clickCateItem('.courseConArea');
@@ -27,6 +28,11 @@ $(function(){
 			selectedItem = $(this).find('div input').val();
 			loadCategoryData(selectedItem, '#courseConTch', 'selectConTch', 'courseConTch');
 			loadCourseList(selectedItem);
+			
+			
+			// 선택 강좌 초기화
+			selectedCourse = []; // 초기화
+			$('.cntChkCourse').html(0);
 		}); // end of .on
 	} // end of clickCateItem()
 	
@@ -43,7 +49,7 @@ $(function(){
     			, success: function(result) {
     				setTchList(result, targetDivSelector, newClass);
     			}, error: function(){
-    				alert('강좌 분류 (강사) 불러오기 실패');
+    				console.log('강좌 분류 (강사) 불러오기 실패');
     			}
     		});
     	} else {
@@ -54,7 +60,7 @@ $(function(){
     	        , success: function(result) {
     	        	setCategoryList(result, targetDivSelector, newClass);
     	        }, error: function() {
-    	            alert('강좌 분류 불러오기 실패');
+    	        	console.log('강좌 분류 불러오기 실패');
     	        }
     	    });
     	} // end of if
@@ -192,7 +198,7 @@ $(function(){
 			} , dataType: 'json'
 			, success: makeConCourseList
 			, error: function(){
-				alert('강좌 목록 조건 검색 실패');
+				console.log('강좌 목록 조건 검색 실패');
 			}
 		}); // end of .ajax()
 	} // end of loadCourseList()
@@ -265,13 +271,12 @@ $(function(){
 	} // end of makeConCourseList()
 	
 	
-	// 선택한 강좌 배열 담기
-	let selectedCourse = [];
+	
 	
 	// ----------------------------------
 	//			체크 박스 클릭
 	// ----------------------------------
-	$('#conCourseList').on("click", "input.chkCourseRegi", function(e){
+	$('div#conCourseList').on("click", "input.chkCourseRegi", function(e){
 		e.stopImmediatePropagation();
 		selectedCourse = []; // 초기화
 		

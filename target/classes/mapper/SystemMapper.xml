@@ -65,4 +65,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		HAVING COURSE_STATUS = #{courseStaName}
 	</select>
 	
+	<select id="selectsignUpYear" resultType="String">
+		 SELECT DISTINCT TO_CHAR(ua.USER_SIGNUPDATE, 'yyyy') y
+		 FROM USER_ACCOUNT ua 
+		 ORDER BY y DESC
+	</select>
+	
+	<select id="chartStuCnt" parameterType="String" resultType="com.javaclass.teamAcademy.vo.ChartVO">
+		SELECT 
+		    TO_CHAR(USER_SIGNUPDATE, 'MM') MONTH,
+    		COUNT(*) STUCNT
+		FROM 
+		    USER_ACCOUNT
+		WHERE 
+		    TO_CHAR(USER_SIGNUPDATE, 'YYYY') = #{year, jdbcType=VARCHAR}
+		AND USER_CATE_NO = 1
+		GROUP BY 
+		    TO_CHAR(USER_SIGNUPDATE, 'MM')
+		ORDER BY 
+		    TO_CHAR(USER_SIGNUPDATE, 'MM')
+	</select>
+	
 </mapper>

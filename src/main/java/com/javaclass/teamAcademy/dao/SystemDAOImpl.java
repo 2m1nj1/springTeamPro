@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaclass.teamAcademy.vo.ChartVO;
 import com.javaclass.teamAcademy.vo.ClassroomVO;
 import com.javaclass.teamAcademy.vo.CourseStaVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
@@ -58,6 +59,22 @@ public class SystemDAOImpl implements SystemDAO {
 		if(result == null) { result = 0; } // 결과가 null이면 0으로 return
 		return result;
 	} // end of countCourse()
+
+	@Override
+	public List<String> selectsignUpYear() {
+		List<String> result = mybatis.selectList("SystemDAO.selectsignUpYear");
+		
+		for(String str : result) {
+			System.out.println(">> " + str.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<ChartVO> chartStuCnt(String year) {
+		List<ChartVO> result = mybatis.selectList("SystemDAO.chartStuCnt", year);
+		return result;
+	} 
 
 
 	

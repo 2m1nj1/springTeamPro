@@ -26,6 +26,7 @@
 
 <!-- Custom styles for this template-->
 <link href="/resources/static/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/resources/css/system.css" rel="stylesheet">
 <style type="text/css">
 	*{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -162,13 +163,15 @@
 														<div class="col-sm-4">
 															<input type="text" class="form-control form-control-sm"
 																id="user_email_id" name="user_email_id"
-																value="">
+																value="${student.user_email_id}">
 														</div>
 														<div class="col-sm-5">
 															<select class="custom-select custom-select-sm" name="user_email_domain">
 																<option value="">이메일 선택</option>
 																<c:forEach var="item" items="${emailDomainList}">
-																	<option value="${item.domain_name}">${item.domain_name}</option>
+																	<option value="${item.domain_name}"
+																		<c:if test="${student.user_email_domain eq item.domain_name}">selected</c:if>>
+																		${item.domain_name}</option>
 																</c:forEach>
 															</select>
 														</div>
@@ -251,12 +254,14 @@
 									</ul>
 
 									<!-- 탭 내용 -->
-									<div class="tab-content">
+									<div class="tab-content" id="stuDetailTabContent">
+										<!-- 수강 중인 강좌 -->
 										<div class="tab-pane active" id="tab_stu_lecture">
-											<jsp:include page="../table/com_course_table.jsp">
-												<jsp:param name="pageName" value="stu_lectures" />
-											</jsp:include>
+											<jsp:include page="../table/stu_course_table.jsp">
+										        <jsp:param name="stuDetailCourse" value="${courseInfoList}" />
+										    </jsp:include>
 										</div>
+										
 										<div class="tab-pane" id="tab_stu_timetable">
 											<jsp:include page="../table/com_timetable_table.jsp">
 												<jsp:param name="pageName" value="stu_timetable" />
@@ -283,7 +288,7 @@
 							<!-- end of tab -->
 
 							<!-- 하단 버튼 -->
-							<div class="row">
+							<div class="row mb-5">
 								<div class="col-2">
 									<div id="btnModal_stuDelete" class="btn btn-secondary btn-block btnModal">
 										<span class="text">삭제</span>

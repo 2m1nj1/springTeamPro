@@ -20,10 +20,37 @@ public class SysTchServiceImpl implements SysTchService {
 	} // end of selectStuCount()
 	
 	@Override
+	public int selectTchRegiCount() {
+		return sysTchDao.selectTchRegiCount();
+	}
+	
+	@Override
+	public int selectTchSecCount() {
+		return sysTchDao.selectTchSecCount();
+	}
+	
+	@Override
 	public List<UserVO> selectTchList(UserVO vo) {
 		return sysTchDao.selectTchList(vo);
 	} // end of selectTchList()
+	
+	
+	@Override
+	public List<UserVO> selectTchRegi() {
+		return sysTchDao.selectTchRegi();
+	}
 
+	@Override
+	public List<UserVO> selectTchNotRegi() {
+		return sysTchDao.selectTchNotRegi();
+	}
+
+	@Override
+	public List<UserVO> selectTchSec() {
+		return sysTchDao.selectTchSec();
+	}
+	
+	
 	@Override
 	public UserVO selectTchDetail(UserVO vo) {
 		return sysTchDao.selectTchDetail(vo);
@@ -45,6 +72,7 @@ public class SysTchServiceImpl implements SysTchService {
 		sysTchDao.insertTch(vo);
 	} // end of insertStu()
 
+	
 	
 	
 } // end of ListService

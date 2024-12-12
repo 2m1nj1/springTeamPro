@@ -244,50 +244,6 @@
 							</div>
 							<!-- end of card -->
 
-							<!-- tab -->
-							<div class="card shadow mb-4">
-								<div class="card-body" id="sys_stu_tab">
-									<!-- 탭 버튼 -->
-									<ul class="nav nav-tabs tab-wrap">
-										<li class="nav-item"><a class="nav-link active"
-											aria-current="page">수강 중인 강좌</a></li>
-										<li class="nav-item"><a class="nav-link">시간표</a></li>
-										<li class="nav-item"><a class="nav-link">성적</a></li>
-										<li class="nav-item"><a class="nav-link">과제</a></li>
-										<li class="nav-item"><a class="nav-link">프로필</a></li>
-									</ul>
-
-									<!-- 탭 내용 -->
-									<div class="tab-content">
-										<div class="tab-pane active" id="tab_stu_lecture">
-											<jsp:include page="../table/com_course_table.jsp">
-												<jsp:param name="pageName" value="stu_lectures" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_stu_timetable">
-											<jsp:include page="../table/com_timetable_table.jsp">
-												<jsp:param name="pageName" value="stu_timetable" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_stu_grade">
-											<jsp:include page="../table/stu_grade_table.jsp">
-												<jsp:param name="pageName" value="stu_grade" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_stu_homework">
-											<jsp:include page="../table/stu_homework_table.jsp">
-												<jsp:param name="pageName" value="stu_homework" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_stu_profile">
-											<jsp:include page="../table/com_profile_table.jsp">
-												<jsp:param name="pageName" value="stu_profile" />
-											</jsp:include>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- end of tab -->
 
 							<!-- 하단 버튼 -->
 							<div class="row">

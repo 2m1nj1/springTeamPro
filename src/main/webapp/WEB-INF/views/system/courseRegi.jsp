@@ -60,7 +60,7 @@
 				
 				<!-- 결제창 -->
 				<div class="coruseRegiFooter d-flex justify-content-center">
-					<div class="courseRegiPay">
+					<div class="courseRegiPay shadow">
 						<div class="row">
 							<div class="col d-flex justify-content-center">
 							 	<span class="text text-light">선택강좌 </span>
@@ -144,7 +144,7 @@
 									<div class="row">
 										<div class="col">
 											<span class="text text-primary cntChkCourse">0</span>
-											<span class="text">강좌선택 / </span>
+											<span class="text">강좌선택&nbsp;/&nbsp;</span>
 											<span class="text">총 </span>
 											<span id="cntConCourseList" class="text text-primary">${courseInfoListSize} </span>
 											<span class="text">강좌</span>
@@ -176,7 +176,7 @@
 												<div class="row">
 													<div class="col">
 														<span class="text">강좌 기간 : ${item.course_startDate}</span>
-														<span class="text"> ~ ${item.course_endDate} | </span>
+														<span class="text"> ~ ${item.course_endDate}&nbsp;|&nbsp;</span>
 														<span class="text">${item.course_fee} 원</span>
 													</div>
 												</div>

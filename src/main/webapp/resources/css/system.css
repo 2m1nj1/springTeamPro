@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+#stuDetailTabContent {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .coruseRegiFooter {
 	position: fixed;
    	bottom: 0;

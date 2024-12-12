@@ -147,9 +147,20 @@
 											<div class="col">
 												<div class="row">
 													<label class="col-sm-4 col-form-label">이메일</label>
-													<div class="col-sm-8">
+													<div class="col-sm-4">
 														<input type="text" class="form-control form-control-sm"
-															id="user_email" name="user_email" value="${teacher.user_email}">
+															id="user_email_id" name="user_email_id"
+															value="${teacher.user_email_id}">
+													</div>
+													<div class="col-sm-4">
+														<select class="custom-select custom-select-sm" name="user_email_domain">
+															<option value="">이메일 선택</option>
+															<c:forEach var="item" items="${emailDomainList}">
+																<option value="${item.domain_name}"
+																	<c:if test="${teacher.user_email_domain eq item.domain_name}">selected</c:if>>
+																	${item.domain_name}</option>
+															</c:forEach>
+														</select>
 													</div>
 												</div>
 												<div class="row">
@@ -203,9 +214,9 @@
 									<!-- 탭 내용 -->
 									<div class="tab-content">
 										<div class="tab-pane active" id="tab_tch_lecture">
-											<jsp:include page="/WEB-INF/views/table/com_course_table.jsp">
-												<jsp:param name="pageName" value="tch_lectures" />
-											</jsp:include>
+<%-- 											<jsp:include page="/WEB-INF/views/table/com_course_table.jsp"> --%>
+<%-- 												<jsp:param name="pageName" value="tch_lectures" /> --%>
+<%-- 											</jsp:include> --%>
 										</div>
 										<div class="tab-pane" id="tab_tch_timetable">
 											<jsp:include page="/WEB-INF/views/table/com_timetable_table.jsp">

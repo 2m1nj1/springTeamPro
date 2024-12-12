@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaclass.teamAcademy.dao.SystemDAO;
+import com.javaclass.teamAcademy.vo.ChartVO;
 import com.javaclass.teamAcademy.vo.ClassroomVO;
 import com.javaclass.teamAcademy.vo.CourseStaVO;
-import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.EmailDomainVO;
 
 @Service
@@ -56,6 +56,16 @@ public class SystemServiceImpl implements SystemService {
 	public int countCourse(String courseStaName) {
 		return systemDao.countCourse(courseStaName);
 	} // end of countCourse()
+
+	@Override
+	public List<String> selectsignUpYear() {
+		return systemDao.selectsignUpYear();
+	}
+
+	@Override
+	public List<ChartVO> chartStuCnt(String year) {
+		return systemDao.chartStuCnt(year);
+	}
 
 	
 } // end of SystemServiceImpl

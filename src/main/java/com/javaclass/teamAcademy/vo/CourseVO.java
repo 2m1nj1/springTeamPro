@@ -25,6 +25,7 @@ public class CourseVO {
 	private String	course_person;		// 수강 인원 / 정원
 	private String	course_sch;			// 강좌 일정 (1개)
 	private String	course_cate_name;	// 강좌분류명
+	private String	attendance_rate;	// 강좌 출석률
 	
 	private List<String> course_sch_list;	// 강좌 일정 (묶음)
 	private String instructor_name;

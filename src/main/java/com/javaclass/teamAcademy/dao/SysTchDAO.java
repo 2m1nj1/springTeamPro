@@ -8,7 +8,17 @@ public interface SysTchDAO {
 	
 	public int selectTchAllCount();
 	
+	public int selectTchRegiCount();
+	
+	public int selectTchSecCount();
+	
 	public List<UserVO> selectTchList(UserVO vo);
+	
+	public List<UserVO> selectTchRegi();
+	
+	public List<UserVO> selectTchNotRegi();
+	
+	public List<UserVO> selectTchSec();
 	
 	public UserVO selectTchDetail(UserVO vo);
 	

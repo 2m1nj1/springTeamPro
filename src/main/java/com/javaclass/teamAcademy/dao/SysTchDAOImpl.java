@@ -20,11 +20,21 @@ public class SysTchDAOImpl implements SysTchDAO {
 	} // end of selectStuCount()
 	
 	@Override
+	public int selectTchRegiCount() {
+		return mybatis.selectOne("SysTchDAO.selectTchRegiCount");
+	} // end of selectTchRegiCount()
+	
+	@Override
+	public int selectTchSecCount() {
+		return mybatis.selectOne("SysTchDAO.selectTchSecCount");
+	} // end of selectTchSecCount()
+	
+	@Override
 	public List<UserVO> selectTchList(UserVO vo) {
 		return mybatis.selectList("SysTchDAO.selectTchList", vo);
 	} // end of selectTchList()
 
-
+	
 	@Override
 	public UserVO selectTchDetail(UserVO vo) {
 		return mybatis.selectOne("SysTchDAO.selectTchDetail", vo);
@@ -45,6 +55,20 @@ public class SysTchDAOImpl implements SysTchDAO {
 		mybatis.insert("SysTchDAO.insertTch", vo);
 	} // end of insertStu()
 
+	@Override
+	public List<UserVO> selectTchRegi() {
+		return mybatis.selectList("SysTchDAO.selectTchRegi");
+	}
+
+	@Override
+	public List<UserVO> selectTchNotRegi() {
+		return mybatis.selectList("SysTchDAO.selectTchNotRegi");
+	}
+
+	@Override
+	public List<UserVO> selectTchSec() {
+		return mybatis.selectList("SysTchDAO.selectTchSec");
+	}
 	
 	
 } // end of ListDaoImpl
