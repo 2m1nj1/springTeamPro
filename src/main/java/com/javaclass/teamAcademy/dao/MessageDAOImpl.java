@@ -34,24 +34,24 @@ public class MessageDAOImpl implements MessageDAO {
 		return result;
 	}
 	
-	public List<MessageVO> getMessageList() {
+	public List<MessageVO> getMessageList(int user_no) {
 		System.out.println("===> Mybatis getMessageList() 호출");
 		// 받는 목록
-		List<MessageVO> result = mybatis.selectList("MessageDAO.getMessageList");
+		List<MessageVO> result = mybatis.selectList("MessageDAO.getMessageList", user_no);
 		return result;
 	}
 
-	public List<MessageVO> reciveMessageList() {
+	public List<MessageVO> reciveMessageList(int user_no) {
 		System.out.println("===> Mybatis reciveMessageList() 호출");
 		// 받는 목록
-		List<MessageVO> reciveResult = mybatis.selectList("MessageDAO.reciveMessageList");
+		List<MessageVO> reciveResult = mybatis.selectList("MessageDAO.reciveMessageList", user_no);
 		return reciveResult;
 	}
 
-	public List<MessageVO> sendMessageList() {
+	public List<MessageVO> sendMessageList(int user_no) {
 		System.out.println("===> Mybatis sendMessageList() 호출");
 		// 보내는 목록
-		List<MessageVO> sendResult = mybatis.selectList("MessageDAO.sendMessageList");
+		List<MessageVO> sendResult = mybatis.selectList("MessageDAO.sendMessageList", user_no);
 		return sendResult;
 	}
 }

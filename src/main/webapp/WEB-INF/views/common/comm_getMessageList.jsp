@@ -92,7 +92,7 @@
 											<c:forEach var="reciveMessage" items="${reciveMessageList}">
 												<tr data_id="1">
 													<td><input type="checkbox" class="checkbox"></td>
-													<td><a href="comm_getMessage.do?msg_no=${reciveMessage.msg_no}">${reciveMessage.sender_name}</a></td>
+													<td>${reciveMessage.sender_name}</td>
 													<td><a href="comm_getMessage.do?msg_no=${reciveMessage.msg_no}">${reciveMessage.msg_title}</a></td>
 													<td>${reciveMessage.msg_date}</td> 
 													<%-- <td><fmt:formatDate value="${reciveMessage.msg_date}"
@@ -120,7 +120,7 @@
 											<c:forEach var="sendMessage" items="${sendMessageList}">
 												<tr data_id="2">
 													<td><input type="checkbox" class="checkbox"></td>
-													<td><a href="comm_getMessage.do?msg_no=${sendMessage.msg_no}">${sendMessage.reciver_name}</a></td>
+													<td>${sendMessage.reciver_name}</td>
 													<td><a href="comm_getMessage.do?msg_no=${sendMessage.msg_no}">${sendMessage.msg_title}</a></td>
 													<td>${sendMessage.msg_date}</td>
 													<%-- <td><fmt:formatDate value="${sendMessage.msg_date}"
@@ -177,9 +177,10 @@
 	<script src="/resources/static/js/demo/chart-pie-demo.js"></script>
 
 	<!-- 개인 추가 .js : 한국인 -->
-	<script src="/resources/js/common/comm_messageList.js"></script>
+	<script src="/resources/js/comm/comm_messageList.js"></script>
 	
 	<!-- tab -->
 	<script src="/resources/js/system/sys_tab.js"></script>
+	
 </body>
 </html>

@@ -145,7 +145,6 @@
 	<script src="/resources/static/js/demo/chart-area-demo.js"></script>
 	<script src="/resources/static/js/demo/chart-pie-demo.js"></script>
 
-	<!-- 개인 추가 .js : 한국인 -->
-	<script src="/resources/js/common/comm_messageList.js"></script>
+	
 </body>
 </html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TchAttendanceDAO">
+
+	<!-- 출결 목록  출결상태 순으로 정렬 해서 모든 정보 불러오기 -->
+	<select id="tchAttendance" resultType="com.javaclass.teamAcademy.vo.TchAttendanceVO">
+	SELECT *
+	FROM ATTENDANCE a
+	JOIN USER_ACCOUNT ua 
+	ON 	a.USER_NO = ua.USER_NO
+	JOIN COURSE c 
+	ON	a.COURSE_NO = c.COURSE_NO 
+	ORDER BY ATTENDANCE_STATUS_NO
+	</select>
+
+	<select id="getAttendanceByDate" resultType="com.javaclass.teamAcademy.vo.TchAttendanceVO">
+	SELECT *
+	FROM ATTENDANCE a
+	JOIN USER_ACCOUNT ua 
+	ON 	a.USER_NO = ua.USER_NO
+	JOIN COURSE c 
+	ON	a.COURSE_NO = c.COURSE_NO 
+	ORDER BY course_no =2
+	</select>
+
+
+
+</mapper>

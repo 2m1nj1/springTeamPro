@@ -4,8 +4,9 @@ $(function(){
     $('.checkbox_all').click(function() {
            // 모든 체크박스를 전체 선택/해제
            $('.checkbox').prop('checked', this.checked);
+           		//alert("확인");
        });
-
+    	
        // 개별 체크박스 클릭 시 전체 선택 체크박스의 상태 업데이트
        $('.checkbox').click(function() {
           // 개별 체크박스가 모두 선택되었는지 확인하여 전체 선택 체크박스의 상태를 업데이트

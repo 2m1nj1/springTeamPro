@@ -11,9 +11,9 @@ public interface MessageDAO {
 	
 	public MessageVO getMessage(MessageVO vo);
 	
-	public List<MessageVO> getMessageList();
+	public List<MessageVO> getMessageList(int user_no);
 	
-	public List<MessageVO> reciveMessageList();	
+	public List<MessageVO> reciveMessageList(int user_no);	
 	
-	public List<MessageVO> sendMessageList();
+	public List<MessageVO> sendMessageList(int user_no);
 }
