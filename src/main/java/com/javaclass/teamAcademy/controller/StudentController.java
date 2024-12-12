@@ -1,6 +1,11 @@
 package com.javaclass.teamAcademy.controller;
 
 import java.io.File;
+<<<<<<< HEAD
+=======
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+>>>>>>> 9894cfc (하승모 최종커밋)
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +39,11 @@ import com.javaclass.teamAcademy.service.LogService;
 import com.javaclass.teamAcademy.service.ProfileService;
 import com.javaclass.teamAcademy.service.ServiceTx;
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+<<<<<<< HEAD
 import com.javaclass.teamAcademy.vo.BoardVO;
+=======
+import com.javaclass.teamAcademy.vo.CourseSchVO;
+>>>>>>> 9894cfc (하승모 최종커밋)
 import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.ExamVO;
 import com.javaclass.teamAcademy.vo.GradeVO;
@@ -53,6 +62,7 @@ public class StudentController {
 	
 	@Autowired
 	private ServiceTx serviceTx;
+<<<<<<< HEAD
 	
 	@Autowired
 	private ProfileService profileService;
@@ -63,11 +73,14 @@ public class StudentController {
 	@Autowired
 	private BoardService boardService;
 	
+=======
+
+>>>>>>> 9894cfc (하승모 최종커밋)
     //================================================
 	//				   Homework part
 	//================================================
 	// 데이터 물어오는 라우팅(루팅, routing) - [학생] 과제제출 페이지랑 연결.
-	// Render the homework page
+	// stu_homework.jsp 페이지 로딩
     @RequestMapping("stu_homework")
     public String getHomeworkPage(HttpSession session, Model m) {
         Integer userNo = (Integer)session.getAttribute("loginUserPK");
@@ -95,6 +108,10 @@ public class StudentController {
     }// end of fetchHomeworkByCourse
     
     
+<<<<<<< HEAD
+=======
+    // fetchHomeworkStatus 로 라우팅.
+>>>>>>> 9894cfc (하승모 최종커밋)
     @RequestMapping("fetchHomeworkStatus.do")
     @ResponseBody
     public Map<String, Object> fetchHomeworkStatus(
@@ -111,7 +128,11 @@ public class StudentController {
         response.put("isSubmitted", isSubmitted);
 
         return response;
+<<<<<<< HEAD
     }
+=======
+    }// end of fetchHomeworkStatus
+>>>>>>> 9894cfc (하승모 최종커밋)
     
     
     // 선택한 번호의 과제 정보를 가져옴.
@@ -225,39 +246,43 @@ public class StudentController {
  	
  	// 출결 validation
  	@RequestMapping(value = "/validateAttendance", method = RequestMethod.GET)
+<<<<<<< HEAD
  	public @ResponseBody Map<String, Object> validateAttendance(
  		HttpSession session, 
  	    @RequestParam int courseNo) {
  		Integer userNo = (Integer) session.getAttribute("loginUserPK");
  		System.out.println("Parameters received: userNo=" + userNo + ", courseNo=" + courseNo);
  		
+=======
+ 	@ResponseBody
+ 	public Map<String, Object> validateAttendance(@RequestParam int userNo, @RequestParam int courseNo) {
+>>>>>>> 9894cfc (하승모 최종커밋)
  	    Map<String, Object> response = new HashMap<>();
  	    try {
- 	        // Check if the user has already attended or left early today
- 	        boolean alreadyAttended = attendanceService.checkAttendanceToday(userNo, courseNo);
- 	        boolean alreadyLeftEarly = attendanceService.checkPrematureLeaveToday(userNo, courseNo);
- 	        
- 	        response.put("status", "success");
+ 	        System.out.println("Validating attendance for userNo: " + userNo + ", courseNo: " + courseNo);
 
- 	        // Fetch course start and end times
- 	        Map<String, String> courseTimings = attendanceService.getCourseTimings(courseNo);
+ 	        CourseSchVO courseTimings = attendanceService.getCourseTimings(courseNo);
+ 	        if (courseTimings == null ) {
+ 	            response.put("status", "error");
+ 	            response.put("message", "No timings found for courseNo: " + courseNo);
+ 	            return response;
+ 	        }
 
- 	        response.put("alreadyAttended", alreadyAttended);
- 	        response.put("alreadyLeftEarly", alreadyLeftEarly);
- 	        
- 	        response.put("courseStartTime", courseTimings.get("courseStartTime"));
- 	        response.put("courseEndTime", courseTimings.get("courseEndTime"));
  	        response.put("status", "success");
+ 	        response.put("courseStartTime", courseTimings.getCourse_startTime());
+ 	        response.put("courseEndTime", courseTimings.getCourse_endTime());
+ 	        response.put("courseDayOfWeek", courseTimings.getCourse_dayOfWeek());
  	    } catch (Exception e) {
  	        e.printStackTrace();
  	        response.put("status", "error");
+ 	        response.put("message", "Validation failed: " + e.getMessage());
  	    }
  	    return response;
- 	} // end of validateAttendance
+ 	}// end of validateAttendance
 
  	
  	// 출석 버튼 누르면 실행되는거
- 	@PostMapping("markAttendance")
+ 	@PostMapping("/markAttendance")
  	@ResponseBody
  	public String markAttendance(HttpSession session, @RequestParam int courseNo, @RequestParam int attendanceStatus) {
  	    Integer userNo = (Integer) session.getAttribute("loginUserPK");
@@ -272,12 +297,20 @@ public class StudentController {
  	    }
  	    
  	    try {
+<<<<<<< HEAD
  	        Map<String, String> courseTimings = attendanceService.getCourseTimings(courseNo);
+=======
+ 	    	CourseSchVO courseTimings = attendanceService.getCourseTimings(courseNo);
+>>>>>>> 9894cfc (하승모 최종커밋)
  	        if (courseTimings == null) {
  	            return "markAttendance - errorFetchingCourseTimings";
  	        }
 
+<<<<<<< HEAD
  	        String startTime = courseTimings.get("courseStartTime");
+=======
+ 	        String startTime = courseTimings.getCourse_startTime();
+>>>>>>> 9894cfc (하승모 최종커밋)
  	        LocalTime courseStartTime = LocalTime.parse(startTime);
  	        LocalTime now = LocalTime.now();
  	        if (now.isAfter(courseStartTime.minusMinutes(30)) && now.isBefore(courseStartTime)) {
@@ -464,7 +497,7 @@ public class StudentController {
     	List<GradeVO> gradeList = year != null
     			? serviceTx.fetchGradeListByYear(userNo, year) :
     			 serviceTx.fetchGradeList(userNo);
-    	 
+    	
     	List<ExamVO> examList = serviceTx.fetchExamList(userNo);
     	 
     	Map<String, Object> response = new HashMap<>();

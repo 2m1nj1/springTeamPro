@@ -12,4 +12,4 @@ public class AttendanceVO {
 	
 	private int user_no; // 출석부 열람하려는 학생 번호
 	private int course_no; // 출석부 열람하려는 강좌 번호(수강생이 수강 중인 강의임)
-}
+}// end of AttendanceVO

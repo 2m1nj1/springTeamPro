@@ -144,6 +144,7 @@ $(function () {
         renderPage(currentPage);
         renderPagination();
     }
+<<<<<<< HEAD
 
     // 과제 제출 버튼 업데이트 - 마감 / 제출 / 제출완료
     function updateSubmitButtonStatus(hwNo, hwEndDate, hwEndTime) {
@@ -183,6 +184,47 @@ $(function () {
     }
 
 // 팝업띄우기
+=======
+
+    // 과제 제출 버튼 업데이트 - 마감 / 제출 / 제출완료
+    function updateSubmitButtonStatus(hwNo, hwEndDate, hwEndTime) {
+        const submitButton = document.getElementById(`submit-btn-${hwNo}`);
+        const currentTime = new Date();
+        const hwDeadline = new Date(`${hwEndDate}T${hwEndTime}`);
+
+        if (currentTime > hwDeadline) {
+            submitButton.classList.remove('btn-warning');
+            submitButton.classList.add('btn-danger');
+            submitButton.textContent = '제출 마감';
+            submitButton.disabled = true; // 마감 기한 지나면 버튼 비활성화.
+        } else {
+            // 과제가 이미 제출되었었는지 확인함
+            $.ajax({
+                url: `fetchHomeworkStatus.do`,
+                method: "GET",
+                data: { hwNo },
+                success: function (response) {
+                    if (response.isSubmitted) {
+                        submitButton.classList.remove('btn-warning', 'btn-danger');
+                        submitButton.classList.add('btn-success');
+                        submitButton.textContent = '제출 완료';
+                        submitButton.disabled = true;
+                    } else {
+                        submitButton.classList.remove('btn-danger', 'btn-success');
+                        submitButton.classList.add('btn-warning');
+                        submitButton.textContent = '과제 제출';
+                        submitButton.disabled = false;
+                    }
+                },
+                error: function () {
+                    console.error(`Failed to fetch submission status for hwNo: ${hwNo}`);
+                }
+            });
+        }
+    }
+
+    // 팝업띄우기
+>>>>>>> 9894cfc (하승모 최종커밋)
     window.openPopup = function (hwNo) {
         console.log("Popup 과제 번호: ", { hwNo });
 
@@ -255,7 +297,7 @@ $(function () {
         const queryString = `?studentUserNo=${studentUserNo}&courseInstructor=${courseInstructor}&courseNo=${courseNo}&instructorName=${encodeURIComponent(instructorName)}`;
         
         // comm_insertMessage.jsp 에 파라미터 넘김 
-        window.location.href = `common/comm_insertMessage.jsp${queryString}`;
+        window.location.href = `/comm_insertMessage.do${queryString}`;
         
     };// end of messageInstructor
 

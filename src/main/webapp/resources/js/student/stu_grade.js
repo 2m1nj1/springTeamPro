@@ -27,7 +27,7 @@ $(function () {
         fetchExamYears(userNo); // 페이지 로딩시 드랍다운으로 years 정보 가져옴.
     }); // end of trigger fetchExamYears
     
- // 드랍다운 아이템에 연도 가져와야지...
+    // 드랍다운 아이템에 연도 가져와야지...
     function fetchExamYears(userNo) {
         $.ajax({
             type: "GET",

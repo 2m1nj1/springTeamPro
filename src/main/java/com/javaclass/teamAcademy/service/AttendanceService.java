@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+import com.javaclass.teamAcademy.vo.CourseSchVO;
 import com.javaclass.teamAcademy.vo.CourseVO;
 
 public interface AttendanceService {
@@ -30,5 +31,5 @@ public interface AttendanceService {
 	boolean checkPrematureLeaveToday(int userNo, int courseNo);
 
 	// 강좌 시간 물어오기
-	Map<String, String> getCourseTimings(int courseNo);
+	CourseSchVO getCourseTimings(int courseNo);
 }

@@ -3,6 +3,7 @@ $(function () {
     let currentPage = 0;
     const itemsPerPage = 10;
 
+    
     // 드랍다운을 위한 수강중인 강좌목록 불러옴
     function fetchOngoingCourses(userNo) {
         $.ajax({
@@ -24,11 +25,16 @@ $(function () {
             },
             error: function (error) {
                 console.error("Error fetching courses:", error);
+<<<<<<< HEAD
                 alert("[fetchOngoingCourses] 에러발생.");
+=======
+                alert("[fetchOngoingCourses] 전체 출석부를 불러옵니다!");
+>>>>>>> 9894cfc (하승모 최종커밋)
             }
         }); // end of ajax
     }// end of fetchOngoingCourses
 
+    
     // 출결기록 불러와서 첫 페이지 로딩.
     function loadAttendances(userNo, courseNo, startDate, endDate) {
         const requestData = {
@@ -115,7 +121,7 @@ $(function () {
         if (recordsToShow.length === 0) {
             attendanceList.html("<p>출석 기록이 없습니다.</p>");
             return;
-        }
+        }// end of if
 
         const tableHeader = `
             <table class="table table-bordered">
@@ -138,7 +144,7 @@ $(function () {
                 case "병가": statusColorClass = "text-info"; break;
                 case "지각": statusColorClass = "text-warning"; break;
                 default: statusColorClass = "text-secondary"; break;
-            }
+            }// switch case - 출석/결석/병결/지각/ default = 조퇴
             return `
                 <tr>
                     <td>${record.attendance_date}</td>
@@ -157,6 +163,7 @@ $(function () {
         attendanceList.html(tableHeader + tableRows + tableFooter);
     }// end of renderFilteredAttendances
 
+    
     // 필터링이랑 pagination을 위한 버튼.
     $("#tblCourseDropdown").on("change", function () {
         const courseNo = $(this).val();
@@ -166,6 +173,7 @@ $(function () {
         loadAttendances(userNo, courseNo, startDate, endDate);
     });// end of tblCourseDropdown
 
+    
     $("#startDate").on("change", function () {
         const startDate = $(this).val();
         const endDate = $("#endDate").val();
@@ -174,6 +182,7 @@ $(function () {
         loadAttendances(userNo, courseNo, startDate, endDate);
     });// end of startDate
 
+    
     $("#endDate").on("change", function () {
         const endDate = $(this).val();
         const startDate = $("#startDate").val();
@@ -195,7 +204,7 @@ $(function () {
                     callback(response);
                 } else {
                 	console.log("Unexpected response:", response);
-                    alert("[validateAttendance] 출결기록 확인 실패. 재시도 요망.");
+                    alert("[validateAttendance] 강의 출석날이 아닙니다!");
                 }
             },
             error: function (error) {
@@ -205,7 +214,13 @@ $(function () {
         }); // end of ajax
     }// end of validateAttendance
     
+<<<<<<< HEAD
     let isSubmitting = false; //여러 번 제출하는 거 막아놓음...
+=======
+    
+    let isSubmitting = false; //여러 번 누르는 거 막아놓음...
+    
+>>>>>>> 9894cfc (하승모 최종커밋)
     
     // '출석' 버튼 누를 시에 출결기록 insert
     $("#attendedButton").click(function () {
@@ -216,37 +231,32 @@ $(function () {
         
         console.log("UserNo: ", userNo, " CourseNo: ", courseNo);
 
+<<<<<<< HEAD
         if (!courseNo || !userNo) {
+=======
+        if (!courseNo || !userNo) { // 강좌번호나 유저번호 안 들어오면 안됨.
+>>>>>>> 9894cfc (하승모 최종커밋)
             alert("강좌를 선택하고 로그인 상태를 확인해주세요.");
             isSubmitting = false;
             return;
-        }
+        }// end of if
 
         validateAttendance(userNo, courseNo, function (validation) {
-            if (validation.alreadyAttended) {
-                alert("오늘은 이미 출석했습니다!");
-                return;
-            }
-
             const now = new Date();
             const currentTime = now.getHours() * 60 + now.getMinutes();
             const courseStartTime = parseTime(validation.courseStartTime);
-            
-            //정시 출석을 기준으로 했을 시;
-            let attendanceStatus = 1; // 정시 출석
+
+            let attendanceStatus = 1; // 기본 - "출석"
             if (currentTime > courseStartTime) {
-                attendanceStatus = 2; // 지각시
-            } else if (currentTime < courseStartTime - 30) {
-                alert("강좌 시작 전 30분 부터 출석할 수 있습니다!");
-                return;
+                attendanceStatus = 3; // "지각"
             }
 
-            // 출석기록 DB에 저장...
             $.ajax({
                 type: "POST",
                 url: "/markAttendance",
-                data: { userNo, courseNo },
+                data: { userNo, courseNo, attendanceStatus },
                 success: function (response) {
+<<<<<<< HEAD
                 	if (response === 'successMarkAttendance') {
                         alert('출석 성공');
                     } else if (response === 'markedLate') {
@@ -258,8 +268,21 @@ $(function () {
                 error: function (error) {
                     console.log(error);
                     alert("!서버 에러!");
+=======
+                    if (response === "successMarkAttendance") {
+                        alert("출석 성공");
+                    } else if (response === "markedLate") {
+                        alert("지각으로 기록되었습니다.");
+                    } else {
+                        alert("출석 실패: " + response);
+                    }
+                },
+                error: function (error) {
+                    console.error("Error marking attendance:", error);
+                    alert("출석 실패. 서버 오류.");
+>>>>>>> 9894cfc (하승모 최종커밋)
                 }
-            }); // end of ajax
+            });// end of ajax
         }); // end of validateAttendance
     }); // end of attendance button onclick
 
@@ -285,7 +308,7 @@ $(function () {
             const courseStartTime = parseTime(validation.courseStartTime);
             const courseEndTime = parseTime(validation.courseEndTime);
             if (currentTime < courseStartTime || currentTime > courseEndTime) {
-                alert("강의 시간과 달라 조퇴할 수 없습니다.");
+                alert("해당 강의 시간이 아닙니다. 조퇴할 수 없습니다.");
                 return;
             }
             
@@ -315,7 +338,7 @@ $(function () {
     }); // end of prematureLeaveButton
     
 
-    // HH:MM 형식의 시간을 분 단위로 환산하는 기능.
+    // HH24:MI 형식의 시간을 분 단위로 환산하는 기능.
     function parseTime(timeStr) {
         const [hours, minutes] = timeStr.split(":").map(Number);
         return hours * 60 + minutes;
@@ -324,43 +347,41 @@ $(function () {
     
     // 시간에 맞지 않는 경우 출석(강의 시작 30분 전), 조퇴(강의) 버튼 비활성화
     $("#attCourseDropdown").on("change", function () {
-        const courseNo = $(this).val();
+    	const courseNo = $(this).val();
         const userNo = $("#userNo").val();
 
         if (!courseNo) {
             $("#attendedButton").prop("disabled", true);
             $("#prematureLeaveButton").prop("disabled", true);
             return;
-        }
-        
-        // validateAttendance 함수 호출.
+        }// end of if
+
         validateAttendance(userNo, courseNo, function (validation) {
             const now = new Date();
-            const currentDay = now.toLocaleString('ko-KR', { weekday: 'long' }); // 오늘 요일을 한글로 받음.
+            const currentDay = now.toLocaleString("ko-KR", { weekday: "long" });
             const currentTime = now.getHours() * 60 + now.getMinutes();
             const courseStartTime = parseTime(validation.courseStartTime);
             const courseEndTime = parseTime(validation.courseEndTime);
             const courseDayOfWeek = validation.courseDayOfWeek;
 
-            console.log("Today:", currentDay);
-            console.log("Course Day:", courseDayOfWeek);
-            
-            // 조건에 따라 버튼 활성화 / 비활성화
+            console.log("Today:", currentDay, "Course Day:", courseDayOfWeek);
+
             const isCorrectDay = currentDay === courseDayOfWeek;
-            const canAttend = isCorrectDay && currentTime >= courseStartTime - 30 && !validation.alreadyAttended;
-            const canLeaveEarly = isCorrectDay && currentTime >= courseStartTime && currentTime <= courseEndTime && !validation.alreadyLeftEarly;
-            
+            const canAttend =
+                isCorrectDay &&
+                currentTime >= courseStartTime - 30 &&
+                currentTime <= courseStartTime &&
+                !validation.alreadyAttended;
+            const canLeaveEarly =
+                isCorrectDay &&
+                currentTime > courseStartTime &&
+                currentTime <= courseEndTime &&
+                !validation.alreadyLeftEarly;
+
             $("#attendedButton").prop("disabled", !canAttend);
             $("#prematureLeaveButton").prop("disabled", !canLeaveEarly);
         });// end of validateAttendance
     }); // end of parseTime
-
-    
-    
-    
-    
-    
-    
 
     // 초기 페이지 로딩
     $(document).ready(() => {

@@ -58,14 +58,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        a.attendance_date DESC
     </select>
 
-
 	<!-- 출석기록 삽입 -->
 	<insert id="insertAttendance" parameterType="map">
 	    INSERT INTO ATTENDANCE ( attendance_no, user_no, course_no, attendance_status_no, attendance_date)
 	    VALUES ( TEAM2.seq_attendance_no.nextval, #{userNo}, #{courseNo}, #{attendanceStatus}, SYSDATE )
 	</insert>
-    
-    
+       
     <!-- 출결 업뎃 - 조퇴로 변경하거나... 하는 경우. -->
     <update id="updateAttendance" parameterType="map">
 	    UPDATE ATTENDANCE
@@ -74,8 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	      AND course_no = #{courseNo}
 	      AND TO_CHAR(attendance_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 	</update>
-    
-    
+       
     <!-- 오늘의 출석기록 -->
     <select id="checkAttendanceToday" parameterType="map" resultType="int">
 	    SELECT COUNT(*) 
@@ -85,8 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	      AND TO_CHAR(attendance_date, 'HH24:MI') = TO_CHAR(SYSDATE, 'HH24:MI')
 	      AND attendance_status_no IN (1, 2)
     </select>
-    
-    
+       
     <!-- 강좌 조퇴시 -->
     <select id="checkPrematureLeaveToday" parameterType="map" resultType="int">
 	    SELECT COUNT(*) 
@@ -96,19 +92,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  AND TO_CHAR(attendance_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 		  AND attendance_status_no = 3
     </select>
-    
-    
+        
     <!-- 강좌 시간 기록 물어옴. -->
-    <select id="fetchCourseTimings" parameterType="int" resultType="map">
+    <select id="fetchCourseTimings" parameterType="com.javaclass.teamAcademy.vo.CourseSchVO" resultType="com.javaclass.teamAcademy.vo.CourseSchVO">
 	    SELECT
-		    to_date(cs.course_starttime, 'HH24') AS courseStartTime,
-		    to_date(cs.course_endtime, 'HH24') AS courseEndTime,
-		    course_dayofweek AS courseDayOfWeek
-		FROM 
-		    course_schedule cs
-		WHERE 
-		    cs.course_no = #{ courseNo }
-		    AND cs.course_dayofweek = TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=KOREAN')
+	    	cs.course_dayofweek AS course_dayOfWeek,
+	        TO_DATE(cs.course_starttime, 'HH24:MI') AS course_startTime,
+	        TO_DATE(cs.course_endtime, 'HH24:MI') AS course_endTime
+	    FROM 
+	        course_schedule cs
+	    WHERE 
+	        cs.course_no = #{courseNo}
+	        AND cs.course_dayofweek = TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=KOREAN')
     </select>
     
 </mapper>

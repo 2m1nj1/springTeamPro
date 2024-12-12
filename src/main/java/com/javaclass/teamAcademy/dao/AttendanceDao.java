@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+import com.javaclass.teamAcademy.vo.CourseSchVO;
 import com.javaclass.teamAcademy.vo.CourseVO;
 
 public interface AttendanceDao {
@@ -29,5 +30,5 @@ public interface AttendanceDao {
 	int checkPrematureLeaveToday(int userNo, int courseNo);
 
 	// 강좌 시간 기록 물어옴.
-	Map<String, String> fetchCourseTimings(int courseNo);
+	CourseSchVO fetchCourseTimings(int courseNo);
 }

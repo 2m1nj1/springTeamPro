@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaclass.teamAcademy.dao.AttendanceDao;
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+import com.javaclass.teamAcademy.vo.CourseSchVO;
 import com.javaclass.teamAcademy.vo.CourseVO;
 
 @Service
@@ -38,7 +39,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}// end of getAttendanceRecords
 
 	
-	// 출석 (1)
+	// 출석 - (1)
 	@Override
 	public void markAttendance(int userNo, int courseNo, int attendanceStatus) {
 	    Map<String, Object> params = new HashMap<>();
@@ -49,7 +50,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}// end of markAttendance
 
 	
-	// 조퇴 (3) 로 수정
+	// 조퇴 - (3) 로 수정
 	@Override
 	public void markEarlyLeave(int userNo, int courseNo, int attendanceStatus) {
 	    Map<String, Object> params = new HashMap<>();
@@ -76,7 +77,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	
 	// 강좌 시간 정보 물어옴
 	@Override
-	public Map<String, String> getCourseTimings(int courseNo) {
+	public CourseSchVO getCourseTimings(int courseNo) {
 	    try {
 	        return adao.fetchCourseTimings(courseNo);
 	    } catch (RuntimeException e) {
@@ -86,5 +87,4 @@ public class AttendanceServiceImpl implements AttendanceService{
 	    }
 	}// end of getCourseTimings
 
-	
-}
+}// end of AttendanceService
