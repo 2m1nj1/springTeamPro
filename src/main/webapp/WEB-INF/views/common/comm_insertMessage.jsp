@@ -56,7 +56,7 @@
 					<hr>
 					<!--  enctype="multipart/form-data" -->
 					<form action="saveMessage.do" method="post">
-
+					<input name="msg_no" type="hidden" value="${message.msg_no}" />
 						<div class="row">
 							<div class="col-6">
 								<div class="row mb-3">

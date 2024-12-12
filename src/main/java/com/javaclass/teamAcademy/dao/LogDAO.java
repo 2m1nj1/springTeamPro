@@ -22,6 +22,14 @@ public interface LogDAO {
 	String findUserId(String user_Name, String user_Email);
 
 	LogVO getLog(Integer user_No);
+
+	void updateLog(LogVO logvo);
+
+	int changePass(LogVO vo);
+
+	LogVO getUserByEmail(String user_Email);
+
+	int changePass(String user_Email, String user_Pass);
 	
 }
 

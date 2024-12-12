@@ -43,9 +43,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="loginCheck" parameterType="com.javaclass.teamAcademy.vo.LogVO" resultType="com.javaclass.teamAcademy.vo.LogVO">
 		SELECT *
 	    FROM USER_ACCOUNT
-	    WHERE user_Id = #{user_Id}
+	    WHERE user_Id = #{user_Id, jdbcType=VARCHAR}
 	    <if test="user_Pass != null">
-	    AND user_Pass = #{user_Pass}
+	    AND user_Pass = #{user_Pass, jdbcType=VARCHAR}
 		</if>
 	</select>
 	
@@ -73,5 +73,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    WHERE user_No = #{user_No}
 	</select>
 	
+	<update id="updateLog" parameterType="com.javaclass.teamAcademy.vo.LogVO">
+		UPDATE user_Account
+		SET user_Parent_tel = #{user_Parent_tel}
+			, user_School = #{user_School}
+			, user_Grade = #{user_Grade}
+			, user_Email = #{user_Email}	
+		WHERE user_No = #{user_No}
+	</update>
 	
+	<update id="changePass" parameterType="com.javaclass.teamAcademy.vo.LogVO">
+        UPDATE user_Account
+        SET user_Pass = #{user_Pass}
+        WHERE user_Email  = #{user_Email}
+    </update>
+    
+    <select id="getUserByEmail" parameterType="string" resultType="com.javaclass.teamAcademy.vo.LogVO">
+        SELECT *
+        FROM user_Account
+        WHERE user_Email = #{user_Email}
+    </select>
+    
 </mapper>

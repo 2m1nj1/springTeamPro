@@ -2,49 +2,12 @@ $(function(){
 	
 	loadMessages();
 	
-	
-//	
-//	// ------------------------------------------
-//	// 					Tab 구현 js 
-//	// ------------------------------------------
-//	// Tab
-//	let btn_tab = $('div#com_msg_tab a');
-//
-//	// Tab 클릭 시 보일 내용
-//	let panelDivs = $('div#com_msg_tab > div.tab-content > div.tab-pane');
-//
-//	btn_tab.show();
-//	//panelDivs.hide();
-//
-//	// default로 열려있는 tab 과 내용
-//	var lastAnchor	= btn_tab.filter('.active');
-//	var lastPanel	= $(lastAnchor.attr('href'));
-//
-//	// Tab 클릭 시 이벤트
-//	btn_tab.click(function(){
-//		// 이벤트가 발생한 요소
-//		let currentAnchor	= $(this);
-//
-//		// 이벤트가 발생한 요소의 속성 href 값
-//		let currentPanel	= $(currentAnchor.attr('href'));
-//
-//		lastAnchor.removeClass('active');
-//		lastPanel.hide();
-//
-//		currentAnchor.addClass('active');
-//		currentPanel.show();
-//
-//		lastAnchor = currentAnchor;
-//		lastPanel = currentPanel;
-//
-//	}); // end of .click()
-
 	//쪽지함에서 전체 선택 했을 때
-	$('.checkbox_all').click(function() {
+	$('input.checkbox_all').click(function() {	
 		// 모든 체크박스를 전체 선택/해제
 		$('.checkbox').prop('checked', this.checked);
 	});
-
+					
 	// 개별 체크박스 클릭 시 전체 선택 체크박스의 상태 업데이트
 	$('.checkbox').click(function() {
 		// 개별 체크박스가 모두 선택되었는지 확인하여 전체 선택 체크박스의 상태를 업데이트

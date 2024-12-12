@@ -13,6 +13,7 @@ import com.javaclass.teamAcademy.dao.HomeworkDaoImpl;
 import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.HomeworkDoneVO;
 import com.javaclass.teamAcademy.vo.HomeworkVO;
+import com.javaclass.teamAcademy.vo.UserVO;
 
 @Service
 public class HomeworkServiceImpl implements HomeworkService{
@@ -21,6 +22,8 @@ public class HomeworkServiceImpl implements HomeworkService{
 	@Autowired
 	private HomeworkDaoImpl homeworkDao;
 
+	
+	
 	// 유저에 따른 강좌 목록 불러오기
 	@Override
     public List<CourseVO> getLecturesByUser(int userNo) {

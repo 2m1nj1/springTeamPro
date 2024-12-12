@@ -10,8 +10,7 @@ public class LogVO {
 	private String user_Id;
 	private String user_Pass;
 	private String user_Name;
-	private String user_Ci;
-	private String user_Email;
+	private String user_Ci;	
 	private String user_Addr1;
 	private String user_Tel;
 	private String user_Parent_tel;
@@ -24,4 +23,6 @@ public class LogVO {
 	private String user_Addr2;
 	private String user_AuthKey;
 	private String user_Auth;
+	private String user_Email;
+	
 }

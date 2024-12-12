@@ -57,7 +57,7 @@
 		</select> 
 
 	<!-- 받는 메시지 목록 -->
-	<select id="reciveMessageList" resultType="com.javaclass.teamAcademy.vo.MessageVO">
+	<select id="reciveMessageList" parameterType="int" resultType="com.javaclass.teamAcademy.vo.MessageVO">
 		SELECT
 			m.msg_no,
 			ua.user_name AS sender_name,
@@ -71,12 +71,12 @@
 		ON m.MSG_SENDER = ua.user_no
 		JOIN USER_ACCOUNT rec
 		ON m.MSG_RECIVER = rec.user_no
-		WHERE m.MSG_RECIVER = 28													
+		WHERE m.MSG_RECIVER = #{user_no}													
 		ORDER BY m.msg_date DESC
 	</select>
 
 	<!-- 보내는 메시지 목록 -->
-	<select id="sendMessageList" resultType="com.javaclass.teamAcademy.vo.MessageVO">
+	<select id="sendMessageList" parameterType="int" resultType="com.javaclass.teamAcademy.vo.MessageVO">
 	SELECT
 		m.msg_no,
 		rec.user_name AS reciver_name,
@@ -90,7 +90,7 @@
 	ON m.msg_sender = ua.user_no
 	JOIN USER_ACCOUNT rec
 	ON m.msg_reciver = rec.user_no
-	WHERE m.msg_sender = 5
+	WHERE m.msg_sender = #{user_no}
 	ORDER BY m.msg_date DESC
 	</select>
 	

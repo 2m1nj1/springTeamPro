@@ -173,6 +173,7 @@ $(function(){
 		loadCourseList(selectedItem, selectedTch)
 	}); // end of .on()
 	
+	
 	// ----------------------------------
 	//			선택한 조건에 해당하는
 	//			 강좌 목록 불러오기
@@ -262,6 +263,45 @@ $(function(){
         $('#conCourseList').html(content);
        
 	} // end of makeConCourseList()
-
+	
+	
+	// 선택한 강좌 배열 담기
+	let selectedCourse = [];
+	
+	// ----------------------------------
+	//			체크 박스 클릭
+	// ----------------------------------
+	$('#conCourseList').on("click", "input.chkCourseRegi", function(e){
+		e.stopImmediatePropagation();
+		selectedCourse = []; // 초기화
+		
+		// 현재 선택 중인 chkCourseRegi 를 배열화
+		$('input.chkCourseRegi:checked').each(function(){
+			selectedCourse.push($(this).next('input').val());
+		}); // end of .each()
+		
+		// console.log(selectedCourse); // 확인용
+		
+		$('.cntChkCourse').html(selectedCourse.length);
+	}); // end of .on()
+	
+	$('#btnCourseRegiPay').click(function(){
+		if(selectedCourse.length > 0) {
+			$.ajax({
+				type: 'post'
+				, url: 'courseRegiTimeTable'
+				, data: {
+					selectedCourse: selectedCourse
+				} , dataType: 'json'
+				, success: function(){
+					//alert('결제 페이지 로딩 성공!')
+				} , error: function(){
+					//alert('결제 페이지 로딩 실패!');
+				}
+			}); // end of .ajax()
+		} else {
+			alert('결제할 강좌를 선택해주세요!');
+		} // end of if
+	}); // end of .click()
 	
 }); // end of function()
