@@ -36,6 +36,11 @@ public class HomeworkServiceImpl implements HomeworkService{
         return homeworkDao.getHomeworkByCourse(courseNo);
     } // end of getHomeworkByCourse
 
+    // 과제 등록했는지?
+    @Override
+    public boolean isHomeworkSubmitted(int hwNo, int userNo) {
+        return homeworkDao.isHomeworkSubmitted(hwNo, userNo);
+    }// end of isHomeworkSubmitted
     
     // 과제 상세정보 물어오기
 	@Override
@@ -62,7 +67,7 @@ public class HomeworkServiceImpl implements HomeworkService{
 	        directory.mkdirs();
 	    }
 
-	    // 유일한 파Generate a unique filename
+	    // 파일명 생성
 	    String uniqueFilename = UUID.randomUUID() + "_" + file.getOriginalFilename();
 	    String filePath = uploadDir + uniqueFilename;
 
@@ -93,5 +98,11 @@ public class HomeworkServiceImpl implements HomeworkService{
 		System.out.println("saveHomeworkSubmission 호출! : " + homeworkDone );
 		homeworkDao.saveHomeworkSubmission(homeworkDone);
 	}// end of saveHomeworkSubmission
+	
+	// 가장 마지막에 저장한 upload_id 물어옴
+	@Override
+	public int getLastUploadId() {
+	    return homeworkDao.getLastUploadId();
+	}// end of getLastUploadId
 
 } // end of HomeworkServiceImpl

@@ -31,6 +31,7 @@ public class HomeworkDaoImpl implements HomeworkDao {
         return lectures;
     }// end of getLecturesByUser
 
+    
     // 강좌에 따른 과제 목록 불러오기
     @Override
     public List<HomeworkVO> getHomeworkByCourse(int courseNo) {
@@ -39,6 +40,14 @@ public class HomeworkDaoImpl implements HomeworkDao {
     	System.out.println("Fetched homeworks : " + homeworks);
         return homeworks;
     }// end of getHomeworkByCourse
+    
+    
+    // 과제 제출여부 판단
+ 	public boolean isHomeworkSubmitted(int hwNo, int userNo) {
+ 		Integer count = sqlSession.selectOne("HomeworkDao.isHomeworkSubmitted", Map.of("hwNo", hwNo, "userNo", userNo));
+ 	    return count != null && count > 0;
+ 	}// end of isHomeworkSubmitted
+    
 
     // 강좌 상세정보 불러오기
 	@Override
@@ -49,6 +58,7 @@ public class HomeworkDaoImpl implements HomeworkDao {
 		return hwInfo;
 	}// end of getHomeworkDetails
 
+	
 	@Override
 	public void saveHomeworkSubmission(HomeworkDoneVO homeworkDone) {
 		sqlSession.insert("HomeworkDao.saveHomeworkSubmission", homeworkDone);		
@@ -100,5 +110,12 @@ public class HomeworkDaoImpl implements HomeworkDao {
 		}
 	    return destination.getAbsolutePath();
 	}// end of saveFile
+
+	
+	// 마지막 업로드 아이디 물어옴 
+	@Override
+	public int getLastUploadId() {
+	    return sqlSession.selectOne("HomeworkDao.getLastUploadId");
+	}// end of getLastUploadId
        
 }// end of HomeworkDaoImpl

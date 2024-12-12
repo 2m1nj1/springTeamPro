@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardDAO">
+
+	<!-- oracle 인 경우 -->
+	<select id="getBoardList" resultType="com.javaclass.teamAcademy.vo.BoardVO"  >			
+		SELECT *
+		FROM BOARD
+		ORDER BY BOARD_NO DESC		
+	</select>
+	
+	<select id="getBoard" parameterType="com.javaclass.teamAcademy.vo.BoardVO" resultType="com.javaclass.teamAcademy.vo.BoardVO">
+		SELECT *
+		FROM BOARD
+		WHERE board_No = #{board_No}
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.javaclass.teamAcademy.vo.BoardVO">
+		INSERT INTO BOARD(BOARD_NO
+						, BOARD_WRITER
+						, BOARD_CATE
+						, BOARD_TITLE
+						, BOARD_CONTEXT
+						, BOARD_CNT
+						, BOARD_DATE
+						)
+					VALUES(seq_board_no.nextval
+						, #{board_Writer}
+						, #{board_Cate}
+						, #{board_Title}
+						, #{board_Context}
+						, 0
+						, to_char(sysdate, 'YYYY-MM-DD')
+						)
+	</insert>
+
+	<update id="updateBoard" parameterType="com.javaclass.teamAcademy.vo.BoardVO">
+		UPDATE BOARD SET
+		board_Cate = #{board_Cate}
+		, board_Title = #{board_Title}
+		, board_Context = #{board_Context}
+		, board_Date = sysdate
+		WHERE board_No = #{board_No}
+	</update>
+
+	<delete id="deleteBoard" parameterType="com.javaclass.teamAcademy.vo.BoardVO">
+		DELETE FROM BOARD
+		WHERE board_No = #{board_No}
+	</delete>
+
+
+</mapper>

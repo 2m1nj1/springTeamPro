@@ -27,4 +27,5 @@ public class CourseVO {
 	private String	course_cate_name;	// 강좌분류명
 	
 	private List<String> course_sch_list;	// 강좌 일정 (묶음)
+	private String instructor_name;
 } // end of CourseVO

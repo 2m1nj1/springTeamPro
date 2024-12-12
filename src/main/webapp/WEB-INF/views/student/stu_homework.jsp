@@ -134,6 +134,12 @@
 		.form-control-sm {
 		    height: calc(1.5em + 0.75rem + 2px); /* 높이조정 */
 		}
+		
+		.btn-success {
+		    background-color: #28a745;
+		    border-color: #28a745;
+		    color: white;
+		}
     </style>
 
 </head>
@@ -209,6 +215,7 @@
                     </div> <!-- end of col - 과제 목록 출력 tbl -->
                 </div> <!-- end of row - 과제 정보 출력 박스 -->
                 
+                <div class="row">
                 <div class="col-sm-12 col-md-5">
                     <div class="dataTables_info pagintion-info" id="dataTable_info" role="status"
                      aria-live="polite"></div> <!-- 동적생성으로 고쳐야 함 -->
@@ -221,7 +228,7 @@
         				</ul> <!-- end of pagination list -->
     				</div> <!-- end of dataTable_paginate -->
 				</div> <!-- end of pagination area -->
-
+				</div>
             </div> <!-- end of container-fluid -->
         </div> <!-- end of content -->
     </div> <!-- end of content Wrapper -->

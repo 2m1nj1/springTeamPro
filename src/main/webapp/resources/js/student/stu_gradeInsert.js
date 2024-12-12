@@ -93,8 +93,8 @@ $(function () {
         };
 
         // 필요 항목들 유효성 검사...
-        consloe.log( "data.exam_no : " + data.exam_no + "data.user_name" + data.user_name +
-        		"data.original_score" + dtat.original_score + "data.percentile_score" + data.percentile_score );
+        console.log( "data.exam_no : " + data.exam_no + "data.user_name" + data.user_name +
+        		"data.original_score" + data.original_score + "data.percentile_score" + data.percentile_score );
         if ( !data.exam_no || !data.user_name || !data.original_score || !data.percentile_score ) {
             alert("모든 필수 항목을 입력하세요!");
             return;

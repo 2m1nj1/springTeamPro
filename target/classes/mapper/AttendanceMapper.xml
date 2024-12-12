@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 학생에 대한 특정 강좌의 출결 기록 불러오기 -->
     <select id="fetchAttendanceRecords" parameterType="map" resultType="com.javaclass.teamAcademy.vo.AttendanceVO">
-        SELECT 
+        SELECT DISTINCT
 	        a.attendance_date,
 	        c.course_name,
 	        ua.user_name AS course_instructor,
@@ -36,16 +36,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            WHEN a.attendance_status_no = 4 THEN '병가'
 	            WHEN a.attendance_status_no = 5 THEN '결석'
 	            ELSE '정보 없음'
-	        END AS attendance_status,
-	        ROW_NUMBER() OVER (ORDER BY a.attendance_date DESC) AS rn
+	        END AS attendance_status
 	    FROM 
 	        ATTENDANCE a
 	    INNER JOIN 
 	        COURSE c ON a.course_no = c.course_no
 	    INNER JOIN 
 	        USER_ACCOUNT ua ON c.course_instructor = ua.user_no
-	    INNER JOIN
-	        COURSE_SCHEDULE cs ON c.course_no = cs.course_no
 	    WHERE 
 	        a.user_no = #{userNo}
 	        <if test="courseNo != null and courseNo != ''">
@@ -57,6 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        <if test="endDate != null and endDate != ''">
 	           <![CDATA[ AND a.attendance_date <= #{endDate} ]]>
 	        </if>
+	    ORDER BY 
+	        a.attendance_date DESC
     </select>
 
 

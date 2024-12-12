@@ -24,7 +24,7 @@ $(function () {
             },
             error: function (error) {
                 console.error("Error fetching courses:", error);
-                alert("수강중인 강좌 목록을 불러오는 데 실패했습니다.");
+                alert("[fetchOngoingCourses] 에러발생.");
             }
         }); // end of ajax
     }// end of fetchOngoingCourses
@@ -204,16 +204,21 @@ $(function () {
             }
         }); // end of ajax
     }// end of validateAttendance
-
+    
+    let isSubmitting = false; //여러 번 제출하는 거 막아놓음...
     
     // '출석' 버튼 누를 시에 출결기록 insert
-    $("#attendedButton").on("change", function () {
+    $("#attendedButton").click(function () {
     	console.log("attendedButton Dropdown value: ", $(this).val());
+    	
         const userNo = $("#userNo").val();
         const courseNo = $("#attCourseDropdown").val();
+        
+        console.log("UserNo: ", userNo, " CourseNo: ", courseNo);
 
-        if (!courseNo) {
-            alert("강좌를 선택해주세요.");
+        if (!courseNo || !userNo) {
+            alert("강좌를 선택하고 로그인 상태를 확인해주세요.");
+            isSubmitting = false;
             return;
         }
 
@@ -242,18 +247,16 @@ $(function () {
                 url: "/markAttendance",
                 data: { userNo, courseNo },
                 success: function (response) {
-                	if (response === "successMarkAttendance") {
-                        if (attendanceStatus === 1) {
-                            alert("출석 완료!");
-                        } else {
-                            alert("지각 처리 완료!");
-                        }
+                	if (response === 'successMarkAttendance') {
+                        alert('출석 성공');
+                    } else if (response === 'markedLate') {
+                        alert('지각으로 기록되었습니다.');
                     } else {
-                        alert("출석 실패! 다시 시도해주세요.");
+                        alert('출석 실패: ' + response);
                     }
                 },
                 error: function (error) {
-                    console.error(error);
+                    console.log(error);
                     alert("!서버 에러!");
                 }
             }); // end of ajax
@@ -294,20 +297,19 @@ $(function () {
 
             // 조퇴기록 DB 저장
             $.ajax({
-                type: "POST",
-                url: "/markEarlyLeave",
-                data: { userNo, courseNo },
+                url: 'markEarlyLeave',
+                type: 'POST',
+                data: { courseNo },
                 success: function (response) {
-                    if (response === "successMarkEarlyLeave") {
-                        alert("조퇴 성공!");
+                    if (response === 'successMarkEarlyLeave') {
+                        alert('조퇴 처리되었습니다.');
                     } else {
-                        alert("조퇴 실패! 다시 시도해주세요.");
+                        alert(response);
                     }
                 },
-                error: function (error) {
-                    console.error(error);
-                    alert("!조퇴 관련 서버 오류!.");
-                }
+                error: function () {
+                    alert('조퇴 처리 중 오류가 발생했습니다.');
+                },
             }); // end of ajax
         }); // end of validateAttendance
     }); // end of prematureLeaveButton

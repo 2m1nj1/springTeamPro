@@ -25,4 +25,8 @@ public interface HomeworkService {
 
 	int saveUpload(int hwNo, String filePath);
 
+	int getLastUploadId();
+
+	boolean isHomeworkSubmitted(int hwNo, int userNo);
+
 }

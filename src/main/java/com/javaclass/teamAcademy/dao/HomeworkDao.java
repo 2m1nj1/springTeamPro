@@ -14,12 +14,14 @@ public interface HomeworkDao {
     List<CourseVO> getLecturesByUser(int userNo);
     
     List<HomeworkVO> getHomeworkByCourse(int courseNo);
-
-    HomeworkVO getHomeworkDetails(int hwNo);
     
     public void saveHomeworkSubmission(HomeworkDoneVO homeworkDone);
     
     public String saveFile(MultipartFile file);
 
 	int saveUpload(int hwNo, String filePath);
+	
+	HomeworkVO getHomeworkDetails(int hwNo);
+
+	int getLastUploadId();
 }

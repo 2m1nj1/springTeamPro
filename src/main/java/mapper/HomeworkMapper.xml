@@ -31,12 +31,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        hw.hw_course, 
 	        c.course_instructor, 
 	        c.course_name, 
-	        u.user_name 
+	        u.user_name,
+	        -- Check submission
+	        CASE 
+	            WHEN EXISTS (
+	                SELECT 1 FROM homework_done hd 
+	                WHERE hd.hw_no = hw.hw_no AND hd.hw_done_student = #{studentUserNo}
+	            ) THEN 1 ELSE 0 
+	        END AS isSubmitted
 	    FROM homework hw
 	    JOIN course c ON hw.hw_course = c.course_no
 	    JOIN user_account u ON c.course_instructor = u.user_no
 	    WHERE hw.hw_course = #{courseNo}
 	    ORDER BY hw.hw_no DESC
+	</select>
+
+	<!-- 과제 하나라도 있으면 과제 제출 버튼 success 로 비활성화 -->
+	<select id="isHomeworkSubmitted" parameterType="map" resultType="int">
+	    SELECT COUNT(*)
+	    FROM homework_done
+	    WHERE hw_no = #{hwNo} AND hw_done_student = #{userNo}
 	</select>
 
 	<!-- hwNo에 따른 과제 세부사항 가져옴. -->
@@ -55,23 +69,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM homework hw
 		LEFT JOIN course c ON hw.hw_course = c.course_no
 		LEFT JOIN user_account u ON c.course_instructor = u.user_no
-		WHERE hw.hw_course = #{hwNo}
+		WHERE hw.hw_no = #{hwNo}
 		ORDER BY hw.hw_no DESC
 	</select>
-
-	<insert id="saveHomeworkSubmission" parameterType="com.javaclass.teamAcademy.vo.HomeworkDoneVO">
-	    INSERT INTO homework_done( hw_done_no,  hw_done_student, hw_done_title, hw_done_date, upload_no )
-	    VALUES ( TEAM2PRO.SEQ_HW_DONE_NO.NEXTVAL,  #{userNo}, #{doneTitle}, #{doneDate}, #{uploadNo} )
-	</insert>
 	
+	<!-- Upload 테이블에 instance 추가 -->
 	<insert id="saveUpload" parameterType="map">
 	    INSERT INTO upload ( upload_no,  service_no, upload_location )
 	    VALUES ( TEAM2PRO.SEQ_UPLOAD_NO.NEXTVAL,  3, #{filePath} )
 	</insert>
 	
+	<!-- Upload 테이블에 가장 마지막에 추가된 Upload_no 가져오기 -->
 	<select id="getLastUploadId" resultType="int">
 	    SELECT MAX(upload_no) FROM upload
 	</select>
+	
+	<!-- Homework_Done 테이블에 instance 추가 -->
+	<insert id="saveHomeworkSubmission" parameterType="com.javaclass.teamAcademy.vo.HomeworkDoneVO">
+	    INSERT INTO homework_done(
+	     hw_done_no
+	     , hw_no
+	     , hw_done_student
+	     , hw_done_title
+	     , hw_done_date
+	     , upload_no
+	      )
+	    VALUES (
+	     TEAM2PRO.SEQ_HW_DONE_NO.NEXTVAL
+	     , #{hwNo}
+	     , #{userNo}
+	     , #{doneTitle}
+	     , SYSDATE
+	     , #{uploadNo} 
+	     )
+	</insert>
 
-	 
 </mapper>

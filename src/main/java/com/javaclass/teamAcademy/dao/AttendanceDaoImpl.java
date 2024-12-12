@@ -30,43 +30,49 @@ public class AttendanceDaoImpl implements AttendanceDao{
 			System.out.println("오류!! " + e.getMessage());
 		}
 		return sqlsession.selectList( "AttendanceDao.fetchOngoingCourses", userNo );
-	}
+	}// end of fetchOngoingCourses
 
 	// 출결 목록 조회
 	@Override
 	public List<AttendanceVO> fetchAttendanceRecords(Map<String, Object> params) {
 		return sqlsession.selectList( "AttendanceDao.fetchAttendanceRecords", params );
-	}
+	}// end of fetchAttendanceRecords
 	
 	// 출석정보 DB 삽입
 	public void insertAttendance(Map<String, Object> params) {
 	    sqlsession.insert("AttendanceDao.insertAttendance", params);
-	}
+	}// end of insertAttendance
 	
 	// 출석정보 업뎃
 	public void updateAttendance(Map<String, Object> params) {
 	    sqlsession.update("AttendanceDao.updateAttendance", params);
-	}
+	}// end of updateAttendance
 	
 	// 오늘의 출석기록 확인.
 	@Override
 	public int checkAttendanceToday(int userNo, int courseNo) {
 	    return sqlsession.selectOne("AttendanceDao.checkAttendanceToday", Map.of("userNo", userNo, "courseNo", courseNo));
-	}
+	}// end of checkAttendanceToday
 
 	// 오늘의 조퇴기록 확인.
 	@Override
 	public int checkPrematureLeaveToday(int userNo, int courseNo) {
 	    return sqlsession.selectOne("AttendanceDao.checkPrematureLeaveToday", Map.of("userNo", userNo, "courseNo", courseNo));
-	}
+	}// end of checkPrematureLeaveToday
 
 	// 강좌 시간 기록 물어옴.
 	@Override
 	public Map<String, String> fetchCourseTimings(int courseNo) {
-	     Map<String, String> timings = sqlsession.selectOne("AttendanceDao.fetchCourseTimings", courseNo);
-	     if(timings == null) {
-	    	 throw new RuntimeException("No timings found for courseNo: " + courseNo);
-	     }
-	     return timings;
-	}
+		if (courseNo <= 0) {
+	        throw new IllegalArgumentException("Invalid courseNo: " + courseNo);
+	    }
+
+	    Map<String, String> timings = sqlsession.selectOne("fetchCourseTimings) AttendanceDao.fetchCourseTimings", courseNo);
+	    if (timings == null || timings.isEmpty()) {
+	        throw new RuntimeException("fetchCourseTimings) No timings found for courseNo: " + courseNo);
+	    }
+ 
+	    System.out.println("fetchCourseTimings) Fetched course timings: " + timings);
+	    return timings;
+	}// end of fetchCourseTimings
 }

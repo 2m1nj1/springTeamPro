@@ -1,9 +1,9 @@
 $(function () {
-	console.log("js 잘 실행됨!");
-	
-	const studentUserNo = document.getElementById("userNo").value;
-	console.log("Student User No: ", studentUserNo);
-	
+    console.log("js 잘 실행됨!");
+
+    const studentUserNo = document.getElementById("userNo").value;
+    console.log("Student User No: ", studentUserNo);
+
     const coursesDropdown = document.getElementById("coursesDropdown");
     const homeworkContainer = document.getElementById("homeworkContainer");
 
@@ -30,10 +30,10 @@ $(function () {
             error: function () {
                 homeworkContainer.innerHTML = "<p>과제목록 불러오기 실패. 다시 시도해주세요.</p>";
             },
-        }); // end of ajax
-    }); // coursesDropdown.addEventListener
+        });
+    });
 
-    
+    // 과제 목록 카드 업데이트 시 페이지와 버튼 상태 렌더링
     function displayHomework(homeworkList) {
         const totalPages = Math.ceil(homeworkList.length / itemsPerPage);
         const paginationContainer = document.getElementById("pagination");
@@ -43,9 +43,11 @@ $(function () {
             const startIndex = (page - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, homeworkList.length);
 
-            // Render cards for the current page
             for (let i = startIndex; i < endIndex; i++) {
                 const homework = homeworkList[i];
+                const submitButtonClass = homework.isSubmitted ? 'btn-success' : 'btn-warning';
+                const submitButtonText = homework.isSubmitted ? '제출 완료' : '과제 제출';
+
                 const card = `
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -103,39 +105,33 @@ $(function () {
                 </div>
             </div>
             `;
-            homeworkContainer.innerHTML += card;
-                					
-                // 각 카드 만드는 과정서 버튼 상태 업데이트함.
+                homeworkContainer.innerHTML += card;
                 updateSubmitButtonStatus(homework.hw_no, homework.hw_enddate, homework.hw_endtime);
-                
-            } // end of for
-        } // end of renderPage
+            }// end of for
+        }// end of renderPage
 
         function renderPagination() {
-            paginationContainer.innerHTML = ""; // Clear previous pagination
+            paginationContainer.innerHTML = ""; // 기존의 Pagination 삭제
 
             // Pagination - "이전" 버튼
             paginationContainer.innerHTML += `
                 <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
                     <a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Previous</a>
-                </li>
-            `;
+                </li>`;
 
             // Pagination - 숫자 버튼
             for (let i = 1; i <= totalPages; i++) {
                 paginationContainer.innerHTML += `
                     <li class="page-item ${currentPage === i ? "active" : ""}">
                         <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-                    </li>
-                `;
-            } // end of 숫자 버튼
+                    </li>`;
+            }
 
             // Pagination - "다음" 버튼
             paginationContainer.innerHTML += `
                 <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
                     <a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Next</a>
-                </li>
-            `;
+                </li>`;
         }
 
         window.changePage = function (page) {
@@ -147,10 +143,46 @@ $(function () {
 
         renderPage(currentPage);
         renderPagination();
-    }// end of displayHomework
+    }
 
-    
-    // 팝업띄우기
+    // 과제 제출 버튼 업데이트 - 마감 / 제출 / 제출완료
+    function updateSubmitButtonStatus(hwNo, hwEndDate, hwEndTime) {
+        const submitButton = document.getElementById(`submit-btn-${hwNo}`);
+        const currentTime = new Date();
+        const hwDeadline = new Date(`${hwEndDate}T${hwEndTime}`);
+
+        if (currentTime > hwDeadline) {
+            submitButton.classList.remove('btn-warning');
+            submitButton.classList.add('btn-danger');
+            submitButton.textContent = '제출 마감';
+            submitButton.disabled = true; // 마감 기한 지나면 버튼 비활성화.
+        } else {
+            // 과제가 이미 제출되었었는지 확인함
+            $.ajax({
+                url: `fetchHomeworkStatus.do`,
+                method: "GET",
+                data: { hwNo },
+                success: function (response) {
+                    if (response.isSubmitted) {
+                        submitButton.classList.remove('btn-warning', 'btn-danger');
+                        submitButton.classList.add('btn-success');
+                        submitButton.textContent = '제출 완료';
+                        submitButton.disabled = true;
+                    } else {
+                        submitButton.classList.remove('btn-danger', 'btn-success');
+                        submitButton.classList.add('btn-warning');
+                        submitButton.textContent = '과제 제출';
+                        submitButton.disabled = false;
+                    }
+                },
+                error: function () {
+                    console.error(`Failed to fetch submission status for hwNo: ${hwNo}`);
+                }
+            });
+        }
+    }
+
+// 팝업띄우기
     window.openPopup = function (hwNo) {
         console.log("Popup 과제 번호: ", { hwNo });
 
@@ -161,7 +193,7 @@ $(function () {
             success: function (homework) {
                 console.log("Fetched Homework Data:", homework);
 
-                // Populate popup fields
+                // 팝업 공간 지정
                 const homeworkTitle = document.getElementById("homeworkTitle");
                 const dueDate = document.getElementById("dueDate");
                 const courseName = document.getElementById("courseName");
@@ -176,7 +208,7 @@ $(function () {
                 instructorName.value = homework.user_name || "N/A";
                 assignmentContext.value = homework.hw_context || "N/A";
                 
-                // Show overlay and popup
+                // 오버레이와 팝업 보이게 하기
                 const overlay = document.getElementById("overlay");
                 const popup = document.getElementById("popup");
                 overlay.style.display = "block";
@@ -275,8 +307,45 @@ $(function () {
             submitButton.classList.add('btn-danger');
             submitButton.textContent = '제출 마감';
             submitButton.disabled = true; // 마감 기한 지나면 버튼 비활성화.
+        }else {
+            // Check if the homework is already submitted
+            $.ajax({
+                url: `fetchHomeworkStatus.do`,
+                method: "GET",
+                data: { hwNo },
+                success: function (response) {
+                    if (response.isSubmitted) {
+                        // 마감 지나고 과제 제출 기록 DB에 있을시;
+                    	submitButton.classList.remove('btn-warning', 'btn-danger');
+                        submitButton.classList.add('btn-success');
+                        submitButton.textContent = '제출 완료';
+                        submitButton.disabled = true;
+                    } else {
+                        // 과제 제출 안됨, 데드라인 아직 안 넘었을 적에...
+                        submitButton.classList.remove('btn-danger', 'btn-success');
+                        submitButton.classList.add('btn-warning');
+                        submitButton.textContent = '과제 제출';
+                        submitButton.disabled = false;
+                    }
+                },
+                error: function () {
+                    console.error(`Failed to fetch submission status for hwNo: ${hwNo}`);
+                }
+            });
         }// end of if
     }// end of updateSubmitButtonStatus
+    
+    
+    function handleSubmission(hwNo) {
+        // Handle file upload and submission here
+        alert(`Submit homework for hwNo: ${hwNo}`);
+        
+        const submitButton = document.getElementById(`submit-btn-${hwNo}`);
+        submitButton.classList.remove('btn-warning');
+        submitButton.classList.add('btn-success');
+        submitButton.textContent = '제출 완료';
+        submitButton.disabled = true;
+    }// end of handleSubmission
     
     
     // "과제 제출하기"
@@ -315,14 +384,13 @@ $(function () {
                 alert("submitHomework 에러! 재시도 부탁드립니다.");
             });
     };// end of submitHomework
-    
-    
-    // 과제 목록 카드 업데이트 시 버튼 상태( 마감 / 제출 / 제출완료 ) 업뎃. 
+  
+    // DOMContentLoaded 이벤트에 상태 업데이트 호출
     document.addEventListener('DOMContentLoaded', () => {
         if (homeworkList && homeworkList.length > 0) {
             homeworkList.forEach(homework => {
                 updateSubmitButtonStatus(homework.hw_no, homework.hw_enddate, homework.hw_endtime);
             });
         }
-    }); // end of DOMContentLoaded
+    });
 });
