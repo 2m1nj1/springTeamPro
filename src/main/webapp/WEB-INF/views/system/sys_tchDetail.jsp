@@ -81,7 +81,7 @@
 											<div>
 												<div class="card mb-4">
 													<div class="card-body">
-														<img src="/resources/img/profile_default.png" alt="이미지 설명">
+														<img src="/resources/img/profile_default.png" alt="이미지 설명" style="width: 228px;">
 													</div>
 												</div>
 											</div>

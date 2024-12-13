@@ -126,8 +126,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY c.COURSE_NO
 	</select>
 	
-	<select id="selectCourseInfo" parameterType="com.javaclass.teamAcademy.vo.CourseVO">
+	<select id="selectCourseInfo" parameterType="com.javaclass.teamAcademy.vo.CourseVO" resultType="com.javaclass.teamAcademy.vo.CourseVO">	
+		SELECT
+			c1.COURSE_NO COURSE_NO
+			, c1.COURSE_NAME COURSE_NAME
+			, TO_CHAR(c1.COURSE_STARTDATE, 'yyyy-mm-dd') COURSE_STARTDATE
+			, TO_CHAR(c1.COURSE_ENDDATE, 'yyyy-mm-dd') COURSE_ENDDATE
+			, c1.COURSE_INSTRUCTOR COURSE_INSTRUCTOR
+			, '(' || c1.COURSE_INSTRUCTOR || ') ' || ua.USER_NAME INSTRUCTOR_NAME
+			, c1.COURSE_CLASSROOM COURSE_CLASSROOM 
+			, '(' || c1.COURSE_CLASSROOM  || ') ' ||  c.CLASSROOM_NAME CLASSROOM_NAME
+			, c1.COURSE_FEE COURSE_FEE
+			, cntstu.cntstu COURSE_PERSON
+			, c1.COURSE_MAXPERSON COURSE_MAXPERSON
+			, c1.COURSE_STATUS COURSE_STATUS
+			, c1.COURSE_CATE_NO COURSE_CATE_NO
+			, cc.COURSE_CATE_NAME COURSE_CATE_NAME
+		FROM COURSE c1
+		LEFT OUTER JOIN USER_ACCOUNT ua
+			ON ua.USER_NO = COURSE_INSTRUCTOR
+		LEFT OUTER JOIN CLASSROOM c
+			ON c.CLASSROOM_NO = c1.COURSE_CLASSROOM
+		LEFT OUTER JOIN (
+				    SELECT c2.COURSE_NO COURSE_NO, COUNT(cr1.COURSE_NO) AS cntstu
+				    FROM COURSE c2
+				    LEFT OUTER JOIN COURSE_REGISTRATION cr1 
+				        ON c2.COURSE_NO = cr1.COURSE_NO
+				    GROUP BY c2.COURSE_NO
+				) cntstu
+		ON cntstu.COURSE_NO = c1.COURSE_NO
+		LEFT OUTER JOIN COURSE_CATE cc
+			ON cc.COURSE_CATE_NO = c1.COURSE_CATE_NO
+		WHERE c1.COURSE_NO = #{course_no}
+	</select>
 	
+	
+	<select id="selectCourseSch" parameterType="com.javaclass.teamAcademy.vo.CourseVO" resultType="com.javaclass.teamAcademy.vo.CourseSchVO">
+		SELECT *
+		FROM COURSE_SCHEDULE cs
+		WHERE COURSE_NO  = #{course_no}
+		ORDER BY COURSE_SCHEDULE_NO
+	</select>
+	
+	<select id="selectCourseLec"  parameterType="com.javaclass.teamAcademy.vo.CourseVO" resultType="com.javaclass.teamAcademy.vo.LectureVO">
+		SELECT *
+		FROM LECTURE l 
+		WHERE COURSE_NO = #{course_no}
+		ORDER BY LECTURE_ROWNUM
 	</select>
 	
 </mapper>
