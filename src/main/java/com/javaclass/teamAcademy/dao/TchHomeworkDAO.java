@@ -7,7 +7,7 @@ import com.javaclass.teamAcademy.vo.TchHomeworkVO;
 public interface TchHomeworkDAO {
 		public void insertHomework(TchHomeworkVO vo);
 		
-		public List<TchHomeworkVO> homeworkList();
+		public List<TchHomeworkVO> homeworkList(int user_no);
 			
 			
 		

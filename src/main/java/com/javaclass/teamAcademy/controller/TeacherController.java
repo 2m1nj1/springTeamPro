@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,19 +25,21 @@ public class TeacherController {
 		@Autowired
 		private TchAttendanceService tchAttendanceService;
 		
-		int user_no = 4;	// 향후 로그인 한 사람의 user_no
-		
 		@RequestMapping("tch_{view}.do")
 		public String returnView(@PathVariable String view) {
 			
 			return "teacher/tch_" + view;
 		} // end of returnView
 		
+				
 		// 학생 목록 조회
 		@RequestMapping("tch_attendance")
-		public String attendance(Model m) {
+		public String attendance(Model m, HttpSession session) {
+						// 로그인 한 user의 id
+		 	int user_no = (int)session.getAttribute("loginUserPK");
 			
-			List<TchAttendanceVO> tchAttendance = tchAttendanceService.tchAttendance();
+			List<TchAttendanceVO> tchAttendance = tchAttendanceService.tchAttendance(user_no);
+			//vo.setUser_no((int) session.getAttribute("loginUserPK"));
 			m.addAttribute("tchAttendance", tchAttendance);
 			
 			System.out.println("tchAttendance list: " + tchAttendance);

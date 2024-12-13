@@ -64,7 +64,7 @@ $(function(){
 	// 메시지 목록을 AJAX로 불러오기
 	function loadHomeworks() {
 			$.ajax({
-				url: '/teacher/tch_homeworkList.do',  // 목록을 가져오는 AJAX 호출
+				url: '/teacher/tch_homework.do',  // 목록을 가져오는 AJAX 호출
 				type: 'GET',
 				success: function(response) {
 					 //alert("성공");

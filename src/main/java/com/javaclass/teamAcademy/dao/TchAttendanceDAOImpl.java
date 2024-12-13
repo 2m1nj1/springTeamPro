@@ -15,11 +15,11 @@ public class TchAttendanceDAOImpl implements TchAttendanceDAO {
 	private SqlSessionTemplate mybatis;
 
 	
-	public List<TchAttendanceVO> tchAttendance() {
+	public List<TchAttendanceVO> tchAttendance(int user_no) {
 	  System.out.println("======> Mybatis tchAttendance() 호출");
 	  
 	  List<TchAttendanceVO> result =
-	  mybatis.selectList("TchAttendanceDAO.tchAttendance"); 
+	  mybatis.selectList("TchAttendanceDAO.tchAttendance" ,user_no); 
 	  return result;
 	  }
 	 

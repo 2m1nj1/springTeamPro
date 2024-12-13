@@ -125,7 +125,7 @@
 				<div class="container container-fluid">
 
 					<!--페이지 명 -->
-					<h5 class="h3 mb-4 text-gray-800">[강사별] 강좌 출결 조회</h5>
+					<h5 class="h3 mb-4 text-gray-800">강좌 출결 조회</h5>
 
 					<!-- 출결 정보 출력 박스 -->
 					<div class="row">

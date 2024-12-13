@@ -17,15 +17,15 @@ public class TchHomeworkDAOImpl implements TchHomeworkDAO {
 	public void insertHomework(TchHomeworkVO vo) {
 		System.out.println("===> Mybatis insertHomework() 호출" + vo.toString());
 		mybatis.insert("TchHomeworkDAO.insertHomework", vo);
-		System.out.println("[insertHomework] 결과: ");
+		//System.out.println("[insertHomework] 결과: ");
 		
 	}
 	
-	public List<TchHomeworkVO> homeworkList() {
+	public List<TchHomeworkVO> homeworkList(int user_no) {
 		System.out.println("===> Mybatis homeworkList() 호출");
 		// 상세 목록
-		List<TchHomeworkVO> listResult = mybatis.selectList("TchHomeworkDAO.homeworkList");
-		System.out.println("[homeworkList] 결과: "+ listResult);
+		List<TchHomeworkVO> listResult = mybatis.selectList("TchHomeworkDAO.homeworkList", user_no);
+		//System.out.println("[homeworkList] 결과: "+ listResult);
 		return listResult;
 	}
 	

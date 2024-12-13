@@ -20,8 +20,8 @@ public class TchHomeworkServiceImpl implements TchHomeworkService {
 	}
 	
 		// 과제 목록
-	public List<TchHomeworkVO> homeworkList() {
-		return tchHomeworkDAO.homeworkList();
+	public List<TchHomeworkVO> homeworkList(int user_no) {
+		return tchHomeworkDAO.homeworkList(user_no);
 	}
 
 //	@Override

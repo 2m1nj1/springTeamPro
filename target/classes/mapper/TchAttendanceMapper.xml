@@ -4,14 +4,14 @@
 <mapper namespace="TchAttendanceDAO">
 
 	<!-- 출결 목록  출결상태 순으로 정렬 해서 모든 정보 불러오기 -->
-	<select id="tchAttendance" resultType="com.javaclass.teamAcademy.vo.TchAttendanceVO">
+	<select id="tchAttendance" parameterType="int" resultType="com.javaclass.teamAcademy.vo.TchAttendanceVO">
 	SELECT *
 	FROM ATTENDANCE a
 	JOIN USER_ACCOUNT ua 
 	ON 	a.USER_NO = ua.USER_NO
 	JOIN COURSE c 
 	ON	a.COURSE_NO = c.COURSE_NO 
-	ORDER BY ATTENDANCE_STATUS_NO
+	ORDER BY a.ATTENDANCE_STATUS_NO
 	</select>
 
 	<select id="getAttendanceByDate" resultType="com.javaclass.teamAcademy.vo.TchAttendanceVO">

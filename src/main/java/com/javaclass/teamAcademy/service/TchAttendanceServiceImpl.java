@@ -15,8 +15,8 @@ public class TchAttendanceServiceImpl implements TchAttendanceService {
 		private TchAttendanceDAO tchAttendanceDAO;
 		
 		//강좌별 학생 목록 
-		public List<TchAttendanceVO>tchAttendance() {
-			return tchAttendanceDAO.tchAttendance();
+		public List<TchAttendanceVO>tchAttendance(int user_no) {
+			return tchAttendanceDAO.tchAttendance(user_no);
 		}
 	
 

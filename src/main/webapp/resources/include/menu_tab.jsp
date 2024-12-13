@@ -73,7 +73,7 @@
 	                        <a class="collapse-item" href="tch_stu_select.do">수강생조회</a>
 	                        <a class="collapse-item" href="tch_attendance.do">출결관리</a>
 	                        <a class="collapse-item" href="tch_homework.do">과제관리</a>
-	                        <a class="collapse-item" href="tch_garde.do">성적조회</a>
+	                        <a class="collapse-item" href="tch_grade.do">성적조회</a>
 	                    </div>
 	                </div>
 	            </li>

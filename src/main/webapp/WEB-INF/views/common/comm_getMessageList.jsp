@@ -138,8 +138,8 @@
 
 					<div class="row">
 						<div class="col-2">
-							<a href="comm_deleteMessage.do?msg_no=${message.msg_no}"
-								class="btn btn-secondary btn-block"><span class="text">쪽지삭제</span></a>
+							<%-- <a href="comm_deleteMessage.do?msg_no=${message.msg_no}"
+								class="btn btn-secondary btn-block"><span class="text">쪽지삭제</span></a> --%>
 						</div>
 
 						<div class="col-8"></div>

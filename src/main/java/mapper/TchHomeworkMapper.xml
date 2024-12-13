@@ -29,21 +29,22 @@
 	</insert>
 	
 	<!-- 과제 목록 -->
-	<select id="homeworkList" parameterType="com.javaclass.teamAcademy.vo.TchHomeworkVO" resultType="com.javaclass.teamAcademy.vo.TchHomeworkVO">
+	<select id="homeworkList" parameterType="int" resultType="com.javaclass.teamAcademy.vo.TchHomeworkVO">
 		SELECT 	h.hw_no, h.hw_course, h.hw_title, h.HW_CONTEXT,
-				h.HW_STARTDATE, h.HW_ENDDATE, h.UPLOAD_NO,
-				s.SERVICE_NO, u.PK_NO, u.UPLOAD_LOCATION,
-				ua.USER_NO, ua.USER_NAME 
+		h.HW_STARTDATE, h.HW_ENDDATE, u.UPLOAD_NO,
+		s.SERVICE_NO, u.PK_NO, u.UPLOAD_LOCATION,
+		ua.USER_NO, ua.USER_NAME 
 		FROM HOMEWORK h
 		JOIN COURSE c 
 		ON h.HW_COURSE = c.COURSE_NO 
 		JOIN UPLOAD u 
-		ON h.UPLOAD_NO = u.UPLOAD_NO 
+		ON u.UPLOAD_NO = u.UPLOAD_NO 
 		JOIN SERVICE s 
 		ON u.SERVICE_NO = s.SERVICE_NO 
 		JOIN USER_ACCOUNT ua 
 		ON c.COURSE_INSTRUCTOR = ua.USER_NO
-		WHERE h.HW_COURSE = 1
+		WHERE h.hw_course	= #{hw_course}
+		AND u.SERVICE_NO 	= #{service_no}
 	</select> 
 
 	<!-- 과제 상세 -->

@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Insert title here</title>
+<title>tch_homeworkList.jsp</title>
 
 <!-- Custom fonts for this template-->
 <link href="resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -153,33 +153,33 @@ document.addEventListener("DOMContentLoaded", function() {
 				<hr>
 				
 				<!-- Form to get message -->
-					<form action="tch_insertHomework.do" method="post">
+					<form action="../tch_insertHomework.do" method="post">
 						<!-- Hidden field for message sequence number -->
 						<input name="hw_no" type="hidden" value="${homework.hw_no}" />
 						<table border="1" cellpadding="0" cellspacing="0">
 							<tr>
-								<td bgcolor="#557de1">강좌번호</td>
+								<td bgcolor="#557de1" style="color: white;">강좌번호</td>
 								<td align="left"><input name="hw_course" type="text" /></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">과제 제목</td>
+								<td bgcolor="#557de1" style="color: white;">과제 제목</td>
 								<td align="left"><input name="hw_title" type="text" /></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">과제 내용</td>
+								<td bgcolor="#557de1" style="color: white;">과제 내용</td>
 								<td align="left"><textarea name="hw_context" cols="40" 
 									rows="20"></textarea></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">과제 시작일</td>
+								<td bgcolor="#557de1" style="color: white;">과제 시작일</td>
 								<td align="left"><input name="hw_startdate" type="text" /></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">과제 마감일</td>
+								<td bgcolor="#557de1" style="color: white;">과제 마감일</td>
 								<td align="left"><input name="hw_enddate" type="text" /></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">첨부 파일</td>
+								<td bgcolor="#557de1" style="color: white;">첨부 파일</td>
 								<td align="left"><input name="upload_location" type="file" /></td>
 							</tr>
 						</table>

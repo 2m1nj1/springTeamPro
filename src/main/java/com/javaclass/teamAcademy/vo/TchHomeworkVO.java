@@ -18,7 +18,11 @@ public class TchHomeworkVO {
 		private String  upload_location; // 첨부파일경로
 		
 		private String  user_name;		 // 사용자 이름
-		private String  user_no;			// 회원번호
+		private String  user_no;		 // 회원번호
+		
+		private Integer course_no;       // 강좌번호
+		private String  course_name;
+		private Integer course_instructor; // 담당강사
 	
 	
 }

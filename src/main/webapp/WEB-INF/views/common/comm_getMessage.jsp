@@ -86,38 +86,52 @@
 						<input name="seq" type="hidden" value="${message.msg_no}" />
 						<table border="1" cellpadding="0" cellspacing="0">
 							<tr>
-								<td bgcolor="#557de1">수신인</td>
+								<td bgcolor="#557de1" style="color: white;">수신인</td>
 								<td align="left"><input name="msg_reciver" type="text"
 									value="${message.reciver_name}" /></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">발신인</td>
+								<td bgcolor="#557de1" style="color: white;">발신인</td>
 								<td align="left"><input name="msg_sender" type="text"
 									value="${message.sender_name}"/></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">제목</td>
+								<td bgcolor="#557de1" style="color: white;">제목</td>
 								<td align="left"><input name="msg_title" type="text"
 									value="${message.msg_title}" /></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">내용</td>
+								<td bgcolor="#557de1" style="color: white;">내용</td>
 								<td align="left"><textarea name="msg_context" cols="50"
 										rows="20">${message.msg_context}</textarea></td>
 							</tr>
 							<tr>
-								<td bgcolor="#557de1">보낸일시</td>
+								<td bgcolor="#557de1" style="color: white;">보낸일시</td>
 								<td align="left">${message.msg_date}</td>
 							</tr>
 						</table>
 					</form>
 
 					<hr>
-
 					<!-- Links for other actions -->
-					<a href="comm_insertMessage.do">쪽지쓰기</a>&nbsp;&nbsp;&nbsp; 
-					<a href="comm_deleteMessage.do?msg_no=${message.msg_no}">쪽지삭제</a>&nbsp;&nbsp;&nbsp;
-					<a href="comm_getMessageList.do">쪽지함 목록</a>
+					<div class="row mb-5">
+						<!-- <div class="col-6"> -->
+						<div class="col-2">
+							<a href="comm_deleteMessage.do?msg_no=${message.msg_no}"
+								class="btn btn-secondary btn-block"><span class="text">쪽지삭제</span></a>
+						</div>
+						
+						<div class="col-2">
+							<a href="comm_getMessageList.do"
+								class="btn btn-success btn-block"><span class="text">목록가기</span></a>
+						</div>
+						
+						<div class="col-2">
+							<a href="comm_insertMessage.do" class="btn btn-primary btn-block"><span
+								class="text">쪽지쓰기</span></a>
+						<!-- </div> -->
+						</div>
+					</div>  <!-- end of row -->
 
 				</div>
 			</div>

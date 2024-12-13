@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Insert title here</title>
+<title>tch_insertHomework.jsp</title>
 <!-- Custom fonts for this template-->
 <link href="../resources/static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">

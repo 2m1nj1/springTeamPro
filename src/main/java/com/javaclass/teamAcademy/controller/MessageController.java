@@ -62,7 +62,7 @@ import com.javaclass.teamAcademy.vo.UserVO;
 		//메세지 저장 후 목록 보기
 		@RequestMapping("saveMessage.do")
 		public String saveMessage(@ModelAttribute MessageVO vo, HttpSession session) {
-			vo.setMsg_sender((Integer) session.getAttribute("loginUserPK"));
+            vo.setMsg_sender((Integer) session.getAttribute("loginUserPK"));
 		//	System.out.println("입력값 확인: " + vo.toString());
 			try {
 				messageService.insertMessage(vo);

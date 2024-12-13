@@ -12,7 +12,7 @@ public interface TchHomeworkService {
 		void insertHomework(TchHomeworkVO vo);
 	
 		// 과제 목록
-		List<TchHomeworkVO> homeworkList();
+		List<TchHomeworkVO> homeworkList(int user_no);
 		
 //		// 과제 상세 조회
 //		TchHomeworkVO homework(TchHomeworkVO vo);

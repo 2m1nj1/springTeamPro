@@ -7,7 +7,7 @@ import com.javaclass.teamAcademy.vo.TchHomeworkVO;
 
 public interface TchAttendanceService {
 	
-	List<TchAttendanceVO> tchAttendance();
+	List<TchAttendanceVO> tchAttendance(int user_no);
 
 	
 

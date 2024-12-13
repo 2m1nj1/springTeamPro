@@ -2,6 +2,8 @@ package com.javaclass.teamAcademy.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +21,14 @@ public class HomeworkController {
 	@Autowired
 	private TchHomeworkService tchHomeworkService;
 	
+
+	
 	// 과제 작성
 	@RequestMapping("tch_insertHomework.do")
-	public String insertHomework(TchHomeworkVO vo) {
-		System.out.println("[tch_insertHomework]" + vo.toString());
+	public String insertHomework(TchHomeworkVO vo,HttpSession session) {
+		// 로그인 한 user의 id
+	 	System.out.println("[tch_insertHomework]" + vo.toString());
+		
 		tchHomeworkService.insertHomework(vo);
 		return "teacher/tch_homeworkList";
 	}
@@ -38,9 +44,11 @@ public class HomeworkController {
 	
 	//과제 목록 조회
 	@GetMapping("tch_homeworkList.do")
-	public String homeworkList(Model m) {	
- 		
-		List<TchHomeworkVO> homeworkList = tchHomeworkService.homeworkList();
+	public String homeworkList(Model m, HttpSession session) {	
+		int user_no = (int)session.getAttribute("loginUserPK");	
+		
+		List<TchHomeworkVO> homeworkList = tchHomeworkService.homeworkList(user_no);
+		
 		m.addAttribute("homeworkList", homeworkList);
 		System.out.println("homeworkList: " + homeworkList);
 		
