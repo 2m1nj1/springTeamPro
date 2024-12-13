@@ -49,7 +49,8 @@ public class LoginChk {
 			
 			// 로그인/회원가입/아이디찾기/비밀번호찾기 요청은 세션 없어도 진행 가능
 			List<String> allowedUris = Arrays.asList(
-					"/userLogin.do", "/comm_register.do", "/comm_findId.do", "/comm_findPass.do");
+					"/userLogin.do", "/comm_register.do", "/comm_findId.do", "/comm_findPass.do", "/userInsert.do"
+					,"/sendPassword.do", "verifyCode.do");
 
 			if (allowedUris.contains(requestURI)) {
 			    return point.proceed();

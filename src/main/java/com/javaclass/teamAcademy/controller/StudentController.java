@@ -1,8 +1,6 @@
 package com.javaclass.teamAcademy.controller;
 
 import java.io.File;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +25,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.javaclass.teamAcademy.service.AttendanceService;
+import com.javaclass.teamAcademy.service.BoardService;
 import com.javaclass.teamAcademy.service.HomeworkService;
+import com.javaclass.teamAcademy.service.ProfileService;
 import com.javaclass.teamAcademy.service.ServiceTx;
 import com.javaclass.teamAcademy.vo.AttendanceVO;
+import com.javaclass.teamAcademy.vo.BoardVO;
 import com.javaclass.teamAcademy.vo.CourseSchVO;
 import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.ExamVO;
 import com.javaclass.teamAcademy.vo.GradeVO;
 import com.javaclass.teamAcademy.vo.HomeworkDoneVO;
 import com.javaclass.teamAcademy.vo.HomeworkVO;
+import com.javaclass.teamAcademy.vo.LogVO;
 
 @Controller
 public class StudentController {
@@ -48,6 +53,12 @@ public class StudentController {
 	
 	@Autowired
 	private ServiceTx serviceTx;
+	
+	@Autowired
+	private ProfileService profileService;
+	
+	@Autowired
+	private BoardService boardService;
 
     //================================================
 	//				   Homework part
@@ -474,8 +485,6 @@ public class StudentController {
         }
     }// end of insertGrade
     
-<<<<<<< HEAD
-=======
     @RequestMapping("sstu_{view}.do")
 	public String returnView(@PathVariable String view,
 					        Model m,
@@ -526,6 +535,5 @@ public class StudentController {
 		return "redirect:sstu_profile.do?user_No=" + logvo.getUser_No();
 		//return "redirect:stu_profile.do";
 	}
->>>>>>> d17c6e1 (qweqwe)
      
 } // 컨트롤러 마감.

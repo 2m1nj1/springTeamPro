@@ -124,8 +124,4 @@
 
 
 </body>
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
 </html>

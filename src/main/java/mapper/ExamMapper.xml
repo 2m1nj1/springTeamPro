@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN
 			grade g
 		 ON
-			e.exam_no = g.grade_no
+			e.exam_no = g.exam_no
 		INNER JOIN
 			user_account ua
 		 ON
