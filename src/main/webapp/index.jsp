@@ -33,7 +33,7 @@
 	$(function() {
 		//'로그인' 버튼이 눌렸을 떄
 		$('#Login').click(function() {
-			alert("로그인 버튼 눌림!");
+			//alert("로그인 버튼 눌림!");
 
 			//window.location = "userLogin.do"
 			$('form[name="form"]').submit();

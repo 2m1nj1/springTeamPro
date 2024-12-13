@@ -30,7 +30,7 @@ public class HomeworkController {
 	 	System.out.println("[tch_insertHomework]" + vo.toString());
 		
 		tchHomeworkService.insertHomework(vo);
-		return "teacher/tch_homeworkList";
+		return "teacher/tch_homework";
 	}
 	
 	

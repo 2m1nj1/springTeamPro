@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				<div class="container container-fluid">
 			
 				<!-- 아코디언으로 만들고 싶었으나 기존탭 응용해서 대체 -->				
-				<form action="tch_insertHomework.do" method="post">
+				<form action="tch_homework.do" method="post">
 					<!-- tab -->
 					<div class="card shadow mb-4">
 						<div class="card-body" id="tch_hom_tab">
