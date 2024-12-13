@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>교담 - 관리자</title>
 
 <!-- Custom fonts for this template-->
 <link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -80,7 +80,9 @@
 										<div class="col-3">
 											<div>
 												<div class="card mb-4">
-													<div class="card-body">프로필사진이 여기에 뜹니다~</div>
+													<div class="card-body">
+														<img src="/resources/img/profile_default.png" alt="이미지 설명">
+													</div>
 												</div>
 											</div>
 
@@ -201,36 +203,36 @@
 
 
 							<!-- tab -->
-							<div class="card shadow mb-4">
-								<div class="card-body" id="sys_stu_tab">
-									<!-- 탭 버튼 -->
-									<ul class="nav nav-tabs tab-wrap">
-										<li class="nav-item"><a class="nav-link active"
-											aria-current="page">담당 강좌</a></li>
-										<li class="nav-item"><a class="nav-link">시간표</a></li>
-										<li class="nav-item"><a class="nav-link">프로필</a></li>
-									</ul>
+<!-- 							<div class="card shadow mb-4"> -->
+<!-- 								<div class="card-body" id="sys_stu_tab"> -->
+<!-- 									탭 버튼 -->
+<!-- 									<ul class="nav nav-tabs tab-wrap"> -->
+<!-- 										<li class="nav-item"><a class="nav-link active" -->
+<!-- 											aria-current="page">담당 강좌</a></li> -->
+<!-- 										<li class="nav-item"><a class="nav-link">시간표</a></li> -->
+<!-- 										<li class="nav-item"><a class="nav-link">프로필</a></li> -->
+<!-- 									</ul> -->
 
-									<!-- 탭 내용 -->
-									<div class="tab-content">
-										<div class="tab-pane active" id="tab_tch_lecture">
+<!-- 									탭 내용 -->
+<!-- 									<div class="tab-content"> -->
+<!-- 										<div class="tab-pane active" id="tab_tch_lecture"> -->
 <%-- 											<jsp:include page="/WEB-INF/views/table/com_course_table.jsp"> --%>
 <%-- 												<jsp:param name="pageName" value="tch_lectures" /> --%>
 <%-- 											</jsp:include> --%>
-										</div>
-										<div class="tab-pane" id="tab_tch_timetable">
-											<jsp:include page="/WEB-INF/views/table/com_timetable_table.jsp">
-												<jsp:param name="pageName" value="tch_timetable" />
-											</jsp:include>
-										</div>
-										<div class="tab-pane" id="tab_tch_profile">
-											<jsp:include page="/WEB-INF/views/table/com_profile_table.jsp">
-												<jsp:param name="pageName" value="tch_profile" />
-											</jsp:include>
-										</div>
-									</div>
-								</div>
-							</div>
+<!-- 										</div> -->
+<!-- 										<div class="tab-pane" id="tab_tch_timetable"> -->
+<%-- 											<jsp:include page="/WEB-INF/views/table/com_timetable_table.jsp"> --%>
+<%-- 												<jsp:param name="pageName" value="tch_timetable" /> --%>
+<%-- 											</jsp:include> --%>
+<!-- 										</div> -->
+<!-- 										<div class="tab-pane" id="tab_tch_profile"> -->
+<%-- 											<jsp:include page="/WEB-INF/views/table/com_profile_table.jsp"> --%>
+<%-- 												<jsp:param name="pageName" value="tch_profile" /> --%>
+<%-- 											</jsp:include> --%>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							<!-- end of tab -->
 
 							<!-- 하단 버튼 -->

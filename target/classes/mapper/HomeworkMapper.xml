@@ -32,10 +32,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        c.course_instructor, 
 	        c.course_name, 
 	        u.user_name,
-<<<<<<< HEAD
-	        -- Check submission
-=======
->>>>>>> 9894cfc (하승모 최종커밋)
 	        CASE 
 	            WHEN EXISTS (
 	                SELECT 1 FROM homework_done hd 
@@ -95,10 +91,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     , hw_done_student
 	     , hw_done_title
 	     , hw_done_date
-<<<<<<< HEAD
-	     , upload_no
-=======
->>>>>>> 9894cfc (하승모 최종커밋)
 	      )
 	    VALUES (
 	     TEAM2PRO.SEQ_HW_DONE_NO.NEXTVAL
@@ -106,10 +98,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     , #{userNo}
 	     , #{doneTitle}
 	     , SYSDATE
-<<<<<<< HEAD
-	     , #{uploadNo} 
-=======
->>>>>>> 9894cfc (하승모 최종커밋)
 	     )
 	</insert>
 

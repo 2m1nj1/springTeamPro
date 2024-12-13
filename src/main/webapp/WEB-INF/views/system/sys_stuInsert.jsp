@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>교담 - 관리자</title>
 
 <!-- Custom fonts for this template-->
 <link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -81,7 +81,7 @@
 											<!-- 프로필 이미지 출력 -->
 											<div class="col-3">
 												<div>
-													<div class="card mb-4">
+													<div class="card mb-4" style="height:200px">
 														<div class="card-body">프로필사진이 여기에 뜹니다~</div>
 													</div>
 												</div>
@@ -246,7 +246,7 @@
 
 
 							<!-- 하단 버튼 -->
-							<div class="row">
+							<div class="row mb-5">
 								<div class="col-2">
 									<div id="#" class="btn btn-secondary btn-block btnModal">
 										<span class="text">취소</span>

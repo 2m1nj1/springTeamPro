@@ -105,12 +105,12 @@
 	                    <span>커뮤니티</span></a>
 	            </li>
 	            <li class="nav-item">
-	                <a class="nav-link" href="comm_notice.do">
+	                <a class="nav-link" href="#">
 	                    <i class="fas fa-fw fa-chart-area"></i>
 	                    <span>공지사항</span></a>
 	            </li>
 	            <li class="nav-item">
-	                <a class="nav-link" href="comm_inquiry.do">
+	                <a class="nav-link" href="#">
 	                    <i class="fas fa-fw fa-chart-area"></i>
 	                    <span>문의하기</span></a>
 	            </li>
@@ -130,7 +130,7 @@
 	                        <a class="collapse-item" href="tch_info.do">강사개인정보</a>
 	                        <a class="collapse-item" href="sstu_profile.do?user_No=${user_No}">수강생프로필</a>
 	                        <a class="collapse-item" href="tch_profile.do">강사프로필</a>
-	                        <a class="collapse-item" href="stu_payment.do">결제관리</a>
+	                        <a class="collapse-item" href="#">결제관리</a>
 	                    </div>
 	                </div>
 	            </li>

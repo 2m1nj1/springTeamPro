@@ -25,11 +25,7 @@ $(function () {
             },
             error: function (error) {
                 console.error("Error fetching courses:", error);
-<<<<<<< HEAD
-                alert("[fetchOngoingCourses] 에러발생.");
-=======
                 alert("[fetchOngoingCourses] 전체 출석부를 불러옵니다!");
->>>>>>> 9894cfc (하승모 최종커밋)
             }
         }); // end of ajax
     }// end of fetchOngoingCourses
@@ -213,14 +209,10 @@ $(function () {
             }
         }); // end of ajax
     }// end of validateAttendance
-    
-<<<<<<< HEAD
-    let isSubmitting = false; //여러 번 제출하는 거 막아놓음...
-=======
+   
     
     let isSubmitting = false; //여러 번 누르는 거 막아놓음...
     
->>>>>>> 9894cfc (하승모 최종커밋)
     
     // '출석' 버튼 누를 시에 출결기록 insert
     $("#attendedButton").click(function () {
@@ -231,11 +223,7 @@ $(function () {
         
         console.log("UserNo: ", userNo, " CourseNo: ", courseNo);
 
-<<<<<<< HEAD
-        if (!courseNo || !userNo) {
-=======
         if (!courseNo || !userNo) { // 강좌번호나 유저번호 안 들어오면 안됨.
->>>>>>> 9894cfc (하승모 최종커밋)
             alert("강좌를 선택하고 로그인 상태를 확인해주세요.");
             isSubmitting = false;
             return;
@@ -256,19 +244,6 @@ $(function () {
                 url: "/markAttendance",
                 data: { userNo, courseNo, attendanceStatus },
                 success: function (response) {
-<<<<<<< HEAD
-                	if (response === 'successMarkAttendance') {
-                        alert('출석 성공');
-                    } else if (response === 'markedLate') {
-                        alert('지각으로 기록되었습니다.');
-                    } else {
-                        alert('출석 실패: ' + response);
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
-                    alert("!서버 에러!");
-=======
                     if (response === "successMarkAttendance") {
                         alert("출석 성공");
                     } else if (response === "markedLate") {
@@ -280,7 +255,7 @@ $(function () {
                 error: function (error) {
                     console.error("Error marking attendance:", error);
                     alert("출석 실패. 서버 오류.");
->>>>>>> 9894cfc (하승모 최종커밋)
+
                 }
             });// end of ajax
         }); // end of validateAttendance

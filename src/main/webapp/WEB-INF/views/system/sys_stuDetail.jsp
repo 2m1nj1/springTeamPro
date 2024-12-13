@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>교담 - 관리자</title>
 
 <!-- Custom fonts for this template-->
 <link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -84,7 +84,9 @@
 											<div class="col-3">
 												<div>
 													<div class="card mb-4">
-														<div class="card-body">프로필사진이 여기에 뜹니다~</div>
+														<div class="card-body">
+															<img src="/resources/img/profile_default.png" alt="이미지 설명">
+														</div>
 													</div>
 												</div>
 

@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>교담 - 관리자</title>
 
 <!-- Custom fonts for this template-->
 <link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -155,7 +155,7 @@
 					
 					<!-- 차트 -->
 					<div class="row">
-						<div class="col-8">
+						<div class="col">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 									<h6 class="m-0 font-weight-bold text-primary">월별 수강생 통계</h6>
@@ -239,14 +239,14 @@
 
 						</div>
 						
-						<div class="col-4">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">뭐넣지....</h6>
-								</div>	
-								<div class="card-body"></div>
-							</div>
-						</div>
+<!-- 						<div class="col-4"> -->
+<!-- 							<div class="card shadow mb-4"> -->
+<!-- 								<div class="card-header py-3"> -->
+<!-- 									<h6 class="m-0 font-weight-bold text-primary">뭐넣지....</h6> -->
+<!-- 								</div>	 -->
+<!-- 								<div class="card-body"></div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 					</div>
 					
 					

@@ -47,6 +47,11 @@ public class SysCourseDAOImpl implements SysCourseDAO {
 
 	@Override
 	public CourseVO selectCourseInfo(CourseVO vo) {
+//		CourseVO result = mybatis.selectOne("SysCourseDAO.selectCourseInfo", vo);
+//		
+//		System.out.println("-------------------------------");
+//		System.out.println(result.toString());
+//		System.out.println("-------------------------------");
 		return mybatis.selectOne("SysCourseDAO.selectCourseInfo", vo);
 	} // end of selectCourseInfo()
 

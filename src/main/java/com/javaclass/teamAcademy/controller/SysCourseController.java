@@ -5,14 +5,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaclass.teamAcademy.service.SysCourseService;
+import com.javaclass.teamAcademy.service.SystemService;
 import com.javaclass.teamAcademy.vo.CourseCateVO;
 import com.javaclass.teamAcademy.vo.CourseSchVO;
+import com.javaclass.teamAcademy.vo.CourseStaVO;
 import com.javaclass.teamAcademy.vo.CourseVO;
 import com.javaclass.teamAcademy.vo.LectureVO;
 import com.javaclass.teamAcademy.vo.LectureVOList;
@@ -21,7 +25,10 @@ import com.javaclass.teamAcademy.vo.LectureVOList;
 public class SysCourseController {
 
 	@Autowired
-	SysCourseService sysCourseService;
+	private SysCourseService sysCourseService;
+	
+	@Autowired
+	private SystemService systemService;
 	
 	// 강좌 분류 목록 불러오기 (JsTree)
 	@PostMapping("courseCateList")
@@ -77,11 +84,24 @@ public class SysCourseController {
 	//			   강좌 상세
 	// ---------------------------------
 	@GetMapping("courseDetail")
-	public String selectCourseDetail(CourseVO vo) {
-		//sysCourseService.selectCourseInfo(vo);
-		//sysCourseService.selectCourseSch(vo);
-		//sysCourseService.selectCourseLec(vo);
+	public String selectCourseDetail(CourseVO vo, Model m) {
+		// 강좌 분류
+		List<CourseStaVO> courseStaList = systemService.selectCourseStaList();
+		m.addAttribute("courseStaList", courseStaList);
+		
+		// 강좌 정보 
+		m.addAttribute("courseInfo", sysCourseService.selectCourseInfo(vo));
+		m.addAttribute("courseLec", sysCourseService.selectCourseLec(vo));
 		return "system/sys_courseDetail";
 	} // end of selectCourseDetail()
+	
+	// 강좌 일정
+	@PostMapping("selectCourseSch")
+	@ResponseBody
+	public List<CourseSchVO> selectCourseSch(@RequestParam String course_no) {
+		CourseVO vo = new CourseVO();
+		vo.setCourse_no(Integer.parseInt(course_no));
+		return sysCourseService.selectCourseSch(vo);
+	} // end of selectCourseSch()
 	
 } // end of SysCourseController

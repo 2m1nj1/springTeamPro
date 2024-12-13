@@ -28,5 +28,5 @@ public class CourseVO {
 	private String	attendance_rate;	// 강좌 출석률
 	
 	private List<String> course_sch_list;	// 강좌 일정 (묶음)
-	private String instructor_name;
+	private String instructor_name;			// 강사명
 } // end of CourseVO

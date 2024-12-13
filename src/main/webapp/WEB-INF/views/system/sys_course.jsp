@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>교담 - 관리자</title>
 
 <!-- Custom fonts for this template-->
 <link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -396,8 +396,8 @@
 						<div class="col-6"></div>
 						
 						<div class="col-2">
-							<a href="#" class="btn btn-primary btn-block"><span
-								class="text">일괄 등록</span></a>
+<!-- 							<a href="#" class="btn btn-primary btn-block"><span -->
+<!-- 								class="text">일괄 등록</span></a> -->
 						</div>
 						<div class="col-2">
 							<a href="sys_courseInsert.do" class="btn btn-primary btn-block"><span

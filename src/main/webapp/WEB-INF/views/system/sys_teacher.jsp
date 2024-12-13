@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>교담 - 관리자</title>
 
 <!-- Custom fonts for this template-->
 <link href="resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -58,7 +58,7 @@
 				<div class="container container-fluid">
 
 					<!-- 페이지 명 -->
-					<h1 class="h3 mb-4 text-gray-800">강사관리</h1>
+					<h1 class="h3 mb-4 text-gray-800">강사 관리</h1>
 
 					<!-- 간단 통계 -->
 					<div class="row">
@@ -240,8 +240,8 @@
 						<div class="col-6"></div>
 
 						<div class="col-2">
-							<a href="#" class="btn btn-primary btn-block"><span
-								class="text">일괄 등록</span></a>
+<!-- 							<a href="#" class="btn btn-primary btn-block"><span -->
+<!-- 								class="text">일괄 등록</span></a> -->
 						</div>
 
 						<div class="col-2">

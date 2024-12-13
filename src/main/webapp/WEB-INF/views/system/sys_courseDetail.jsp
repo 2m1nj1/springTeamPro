@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Dashboard</title>
+<title>교담 - 관리자</title>
 
 <!-- Custom fonts for this template-->
 <link href="/resources/static/vendor/fontawesome-free/css/all.min.css"
@@ -96,6 +96,7 @@
 								<div class="card-body">
 									<!-- 강좌 form -->
 									<form action="insertCourse" id="insertCourseForm" method="POST">
+										<input type="hidden" id="course_no" name="course_no" value="${courseInfo.course_no}">
 										<div class="row">
 											<div class="col-6">
 
@@ -103,7 +104,7 @@
 													<label class="col-sm-2 col-form-label">강좌명</label>
 													<div class="col-sm-10">
 														<input type="text" class="form-control form-control-sm"
-															id="course_name" name="course_name" value=""
+															id="course_name" name="course_name" value="${courseInfo.course_name}"
 															placeholder="강좌명을 입력하세요.">
 													</div>
 												</div>
@@ -115,12 +116,12 @@
 														<div class="row">
 															<div class="col">
 																<input type="date" class="form-control form-control-sm"
-																	id="course_startDate" name="course_startDate" value="">
+																	id="course_startDate" name="course_startDate" value="${courseInfo.course_startDate}">
 															</div>
 															~
 															<div class="col">
 																<input type="date" class="form-control form-control-sm"
-																	id="course_endDate" name="course_endDate" value="">
+																	id="course_endDate" name="course_endDate" value="${courseInfo.course_endDate}">
 															</div>
 														</div>
 													</div>
@@ -138,10 +139,10 @@
 														<div class="input-group">
 															<input type="hidden" class="form-control form-control-sm"
 																id="course_instructor_pk" name="course_instructor"
-																value="">
+																value="${courseInfo.course_instructor}">
 															<input type="text"
 																class="form-control form-control-sm"
-																id="course_instructor" value="" placeholder="" readonly>
+																id="course_instructor" value="${courseInfo.instructor_name}" placeholder="" readonly>
 															<button class="btnModal btn btn-sm btn-outline-primary"
 																type="button" id="btnModal_course_instructor">
 																<i class="fa-solid fa-magnifying-glass"></i>
@@ -154,7 +155,7 @@
 													<label class="col-sm-4 col-form-label">수강료</label>
 													<div class="col-sm-8">
 														<input type="number" class="form-control form-control-sm"
-															min="0" id="course_fee" name="course_fee">
+															min="0" id="course_fee" name="course_fee" value="${courseInfo.course_fee}">
 													</div>
 												</div>
 												<!-- end of 수강료 -->
@@ -163,7 +164,9 @@
 													<div class="col-sm-8">
 														<select class="custom-select custom-select-sm" name="course_status">
 															<c:forEach var="item" items="${courseStaList}">
-																	<option value="${item.course_status_name}">${item.course_status_name}</option>
+																	<option value="${item.course_status_name}"
+																	<c:if test="${courseInfo.course_status eq item.course_status_name}">selected</c:if>>
+																	${item.course_status_name}</option> 
 															</c:forEach>
 														</select>
 													</div>
@@ -180,9 +183,9 @@
 														<div class="input-group">
 															<input type="hidden" class="form-control form-control-sm"
 																id="course_classroom_pk" name="course_classroom"
-																value=""> <input type="text"
+																value="${courseInfo.course_classroom}"> <input type="text"
 																class="form-control form-control-sm"
-																id="course_classroom" value="" readonly>
+																id="course_classroom" value="${courseInfo.classroom_name}" readonly>
 															<button class="btnModal btn btn-sm btn-outline-primary"
 																type="button" id="btnModal_course_classroom">
 																<i class="fa-solid fa-magnifying-glass"></i>
@@ -196,13 +199,13 @@
 													<div class="col-sm-3">
 														<input type="number" class="form-control form-control-sm"
 															min="1" id="course_maxPerson" name="course_maxPerson"
-															value="" readonly>
+															value="${courseInfo.course_person}" readonly>
 													</div>
 													<span class="text">/</span>
 													<div class="col-sm-4">
 														<input type="number" class="form-control form-control-sm"
 															min="1" id="course_maxPerson" name="course_maxPerson"
-															value="1">
+															value="${courseInfo.course_maxPerson}">
 													</div>
 												</div>
 												<!-- end of 정원 -->
@@ -211,10 +214,10 @@
 													<div class="col-sm-8">
 														<div class="input-group">
 															<input type="hidden" id="courseCatePk" name="course_cate_no"
-																value="">
+																value="${courseInfo.course_cate_no}">
 															<input type="text"
 																class="form-control form-control-sm" id="courseCateText"
-																name="" value="" readonly>
+																name="" value="${courseInfo.course_cate_name}" readonly>
 															<button class="btnModal btn btn-sm btn-outline-primary"
 																type="button" id="btnModal_course_cate">
 																<i class="fa-solid fa-magnifying-glass"></i>
@@ -347,22 +350,25 @@
 												</thead>
 
 												<tbody>
-													<tr>
-														<td><input type="text"
-															class="form-control form-control-sm lectureNo" id=""
-															name="list[0].lecture_rownum" value="1" readonly></td>
-														<td><input type="text"
-															class="form-control form-control-sm lectureName" id=""
-															name="list[0].lecture_name" value=""></td>
-														<td><input type="text"
-															class="form-control form-control-sm lectureDetail" id=""
-															name="list[0].lecture_detail"
-															value=""></td>
-														<td><div
-																class="btn btn-sm btn-secondary btnDeleteLecture">
-																<i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
-															</div></td>
-													</tr>
+													<c:forEach var="item" items="${courseLec}">
+														<tr>
+															<td><input type="text"
+																class="form-control form-control-sm lectureNo" id=""
+																name="list[0].lecture_rownum" value="${item.lecture_rownum}" readonly></td>
+															<td><input type="text"
+																class="form-control form-control-sm lectureName" id=""
+																name="list[0].lecture_name" value="${item.lecture_name}"></td>
+															<td><input type="text"
+																class="form-control form-control-sm lectureDetail" id=""
+																name="list[0].lecture_detail"
+																value="${item.lecture_detail}"></td>
+															<td><div
+																	class="btn btn-sm btn-secondary btnDeleteLecture">
+																	<i class="fa-solid fa-xmark" style="color: #ffffff;"></i>
+																</div></td>
+															<td><input type="hidden" name="lecture_no" value="${item.lecture_no}"></td>
+														</tr>
+													</c:forEach>
 												</tbody>
 											</table>
 										</div>
@@ -432,7 +438,8 @@
 
 	<!-- 개인 추가 .js : 이민지 -->
 	<script type="text/javascript" src="/resources/js/system/sys_main.js"></script>
-	<script type="text/javascript" src="/resources/js/system/sys_courseInsert.js"></script>
+	<script type="text/javascript" src="/resources/js/system/sys_timePicker.js"></script>
+	<script type="text/javascript" src="/resources/js/system/sys_courseDetail.js"></script>
 
 	<!-- timepicker -->
 	<script

@@ -63,26 +63,11 @@ public class AttendanceDaoImpl implements AttendanceDao{
 
 	// 강좌 시간 기록 물어옴.
 	@Override
-<<<<<<< HEAD
-	public Map<String, String> fetchCourseTimings(int courseNo) {
-=======
 	public CourseSchVO fetchCourseTimings(int courseNo) {
->>>>>>> 9894cfc (하승모 최종커밋)
 		if (courseNo <= 0) {
 	        throw new IllegalArgumentException("Invalid courseNo: " + courseNo);
 	    }
 
-<<<<<<< HEAD
-	    Map<String, String> timings = sqlsession.selectOne("fetchCourseTimings) AttendanceDao.fetchCourseTimings", courseNo);
-	    if (timings == null || timings.isEmpty()) {
-	        throw new RuntimeException("fetchCourseTimings) No timings found for courseNo: " + courseNo);
-	    }
- 
-	    System.out.println("fetchCourseTimings) Fetched course timings: " + timings);
-	    return timings;
-	}// end of fetchCourseTimings
-}
-=======
 		System.out.println("fetchCourseTimings Dao : " + courseNo);
 		// CourseSchVO로 받아옴...
 		CourseSchVO cvo = sqlsession.selectOne("AttendanceDao.fetchCourseTimings", courseNo);
@@ -95,4 +80,3 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	    return cvo;
 	}// end of fetchCourseTimings
 }// end of AttendanceDao
->>>>>>> 9894cfc (하승모 최종커밋)
