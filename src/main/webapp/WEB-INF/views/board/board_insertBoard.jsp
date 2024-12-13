@@ -55,6 +55,9 @@
 				<jsp:include page="/resources/include/top_bar.jsp">
 					<jsp:param name="pageName" value="topBar" />
 				</jsp:include>
+				
+				<!-- Begin Page Content -->
+                <div class="container container-fluid">
 		
 		<!-- Begin Page Content -->
 			<!-- Page Heading -->
@@ -78,8 +81,8 @@
 			
 			                <!-- 제목 -->
 			                
-			                    <input type="text" class="form-control" id="board_Title" name="board_Title" placeholder="제목을 입력하세요" style="width: 60%;">
-			                	<input type="text" class="form-control" id="board_Writer" name="board_Writer" style="width: 20%;">
+			                    <input type="text" class="form-control" id="board_Title" name="board_Title" placeholder="제목을 입력하세요" style="width: 80%;">
+			                	<input type="hidden" class="form-control" id="board_Writer" name="board_Writer" value="${user_Name}" style="width: 20%;" readOnly>
 			                </div>
 		                </div>
 			            <!-- SmartEditor2 -->

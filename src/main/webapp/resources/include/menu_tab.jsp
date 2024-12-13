@@ -126,9 +126,9 @@
 	                </a>
 	                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 	                    <div class="bg-white py-2 collapse-inner rounded">
-	                        <a class="collapse-item" href="sstu_profileSetting.do?user_No=${user_No}">수강생개인정보</a>
+	                        <a class="collapse-item" href="sstu_profileSetting.do">수강생개인정보</a>
 	                        <a class="collapse-item" href="tch_info.do">강사개인정보</a>
-	                        <a class="collapse-item" href="sstu_profile.do?user_No=${user_No}">수강생프로필</a>
+	                        <a class="collapse-item" href="sstu_profile.do">수강생프로필</a>
 	                        <a class="collapse-item" href="tch_profile.do">강사프로필</a>
 	                        <a class="collapse-item" href="#">결제관리</a>
 	                    </div>

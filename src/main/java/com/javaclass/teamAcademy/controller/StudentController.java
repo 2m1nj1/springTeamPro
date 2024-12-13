@@ -474,5 +474,58 @@ public class StudentController {
         }
     }// end of insertGrade
     
+<<<<<<< HEAD
+=======
+    @RequestMapping("sstu_{view}.do")
+	public String returnView(@PathVariable String view,
+					        Model m,
+					        HttpSession session,
+					        @ModelAttribute("log") LogVO logvo) {
+		
+    	if (view.equals("profileSetting")) {
+            Integer user_No = (Integer) session.getAttribute("loginUserPK");
+            System.out.println(user_No);
+            
+            if (user_No == null) {
+                return "redirect:comm_loginform.do";
+            }
+
+            LogVO log = profileService.getUserProfile(user_No);
+            m.addAttribute("log", log);
+
+            return "student/sstu_" + view;
+
+        } else if (view.equals("profile")) {
+            m.addAttribute("log", logvo);
+
+            List<BoardVO> list = boardService.getBoardList();
+            m.addAttribute("boardList", list);
+
+            return "student/sstu_" + view;
+
+        } else {
+            return "student/sstu_" + view;
+        }
+    
+	} // end of returnView	
+
+    @RequestMapping("updateProfile1.do")
+	public String updateProfile(LogVO logvo, RedirectAttributes redirectAttributes) {
+		System.out.println("저장!!!!!!!!!!!!!!!");
+		System.out.println("입력값: " + logvo.toString());
+		
+		try {
+			profileService.updateProfile(logvo);	// 프로필 업데이트
+			redirectAttributes.addFlashAttribute("msg", "프로필 업데이트에 성공했습니다.");
+		} catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "프로필 업데이트에 실패했습니다.");
+        }
+		
+		redirectAttributes.addFlashAttribute("log", logvo);
+		
+		return "redirect:sstu_profile.do?user_No=" + logvo.getUser_No();
+		//return "redirect:stu_profile.do";
+	}
+>>>>>>> d17c6e1 (qweqwe)
      
 } // 컨트롤러 마감.

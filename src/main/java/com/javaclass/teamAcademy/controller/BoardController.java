@@ -1,6 +1,10 @@
 package com.javaclass.teamAcademy.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,10 +42,15 @@ public class BoardController {
 	}
 
 	@RequestMapping("board_getBoard.do")
-	public String getBoard(BoardVO vo, Model m) {
+	public String getBoard(BoardVO vo, Model m, Integer board_No) {
+		
+		// 게시글 상세 보기
 		BoardVO result = boardService.getBoard(vo);
 		m.addAttribute("board", result);
 
+		// 조회수 증가
+		boardService.updateBoardCnt(board_No);
+		
 		return "board/board_getBoard";
 	}
 
@@ -69,11 +78,23 @@ public class BoardController {
 	}
 
 	
-	@RequestMapping("board_{view}.do") 
-	public String returnView(@PathVariable String view) {
-		System.out.println("board컨트롤러 진입");
-		
-		return "board/board_" + view;
-	}
+//	@RequestMapping("board_{view}.do") 
+//	public String returnView(@PathVariable String view) {
+//		System.out.println("board컨트롤러 진입");
+//		
+//		return "board/board_" + view;
+//	}
 
+	@RequestMapping("board_insertBoard.do")
+	public String insertBoardPage(HttpSession session, Model model) {
+	    
+		// 세션에서 user_No 가져오기
+	    Object loginUserPK = session.getAttribute("loginUserPK");
+		
+	    // user_No를 모델에 추가하여 JSP에서 사용 가능하게 설정
+	    model.addAttribute("loginUserPK", loginUserPK);
+		
+		// 글쓰기 페이지로 이동
+	    return "board/board_insertBoard";
+	}
 }

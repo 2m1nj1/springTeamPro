@@ -1,6 +1,7 @@
 package com.javaclass.teamAcademy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,11 @@ public class BoardDaoImpl implements BoardDao{
 		mybatis.delete("BoardDAO.deleteBoard", vo);
 	}
 
+	// 조회수 증가
+	@Override
+	public void updateBoardCnt(Integer board_No) {
+		
+		mybatis.update("BoardDAO.updateBoardCnt", board_No);
+    }
 	
 }

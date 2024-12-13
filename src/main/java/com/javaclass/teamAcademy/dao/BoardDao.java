@@ -1,6 +1,7 @@
 package com.javaclass.teamAcademy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.javaclass.teamAcademy.vo.BoardVO;
 
@@ -15,4 +16,8 @@ public interface BoardDao {
 	public void updateBoard(BoardVO vo);
 	
 	public void deleteBoard(BoardVO vo);
+
+	void updateBoardCnt(Integer board_No);
+
+
 }

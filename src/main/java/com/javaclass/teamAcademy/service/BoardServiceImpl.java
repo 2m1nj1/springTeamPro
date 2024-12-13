@@ -1,6 +1,7 @@
 package com.javaclass.teamAcademy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,12 @@ public class BoardServiceImpl implements BoardService{
 		boardDAO.updateBoard(vo);
 		return vo;
 	}
+
+	// 조회수 증가
+	@Override
+	public void updateBoardCnt(Integer board_No) {
+		
+		boardDAO.updateBoardCnt(board_No);
+    }
 
 }

@@ -106,7 +106,7 @@
 
                                     <!-- 오른쪽: 개인정보 항목 -->
                                     <div class="col-md-8">
-                                    <form action="updateProfile.do" method="post">
+                                    <form action="updateProfile1.do" method="post">
                                         <div class="card-body">
                                         <input type="text" name="user_No" value="${log.user_No}" /> <%-- ${log.user_No} --%>
                                             <!-- 수강생 정보 항목 -->

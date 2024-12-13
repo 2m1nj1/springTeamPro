@@ -7,7 +7,7 @@
 	<select id="getBoardList" resultType="com.javaclass.teamAcademy.vo.BoardVO"  >			
 		SELECT *
 		FROM BOARD
-		ORDER BY BOARD_NO DESC		
+		ORDER BY BOARD_NO DESC
 	</select>
 	
 	<select id="getBoard" parameterType="com.javaclass.teamAcademy.vo.BoardVO" resultType="com.javaclass.teamAcademy.vo.BoardVO">
@@ -16,7 +16,7 @@
 		WHERE board_No = #{board_No}
 	</select>
 	
-	<insert id="insertBoard" parameterType="com.javaclass.teamAcademy.vo.BoardVO">
+	<insert id="insertBoard" parameterType="java.util.Map">
 		INSERT INTO BOARD(BOARD_NO
 						, BOARD_WRITER
 						, BOARD_CATE
@@ -31,7 +31,7 @@
 						, #{board_Title}
 						, #{board_Context}
 						, 0
-						, to_char(sysdate, 'YYYY-MM-DD')
+						, sysdate
 						)
 	</insert>
 
@@ -49,5 +49,11 @@
 		WHERE board_No = #{board_No}
 	</delete>
 
-
+	<!-- 조회수 증가 -->
+	<update id="updateBoardCnt">
+        UPDATE board
+        SET board_Cnt = board_Cnt + 1
+        WHERE board_No = #{board_No}
+    </update>
+	
 </mapper>
